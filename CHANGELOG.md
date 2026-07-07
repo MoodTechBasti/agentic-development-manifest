@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.8] — 2026-07-08
+
+### Review Template Governance
+
+- Added reusable review templates under `templates/reviews/` for Architect, Security, Performance, Cost, Simplifier, and Documentation reviews.
+- Added `templates/reviews/README.md` to document the separation between reusable templates and runtime review artifacts.
+- Updated `docs/OPERATING_SYSTEM.md` to specify that templates live in `templates/reviews/` and completed reviews live in `.ai/reviews/`.
+- Updated `spec/ADM_v1_DRAFT.md` to document review template governance and CI-readiness expectations.
+
 ## [v0.7] — 2026-07-07
 
 ### PR-Ready Agent Protocol
