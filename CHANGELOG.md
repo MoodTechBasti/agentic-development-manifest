@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.5] — 2026-07-07
+
+### ADR Exemptions and Agent Onboarding
+
+- Upgraded `scripts/check_limits.py` with accepted Decision Record exemption parsing.
+- Added machine-readable ADM exemption section to `templates/ADR_TEMPLATE.md`.
+- Added `prompts/master_prompt.md` for model-neutral CLI-agent onboarding.
+
 ## [v0.4] — 2026-07-07
 
 ### CI Quality Gate MVP
