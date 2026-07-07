@@ -11,7 +11,6 @@ EXCLUDE_FILES = {'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'poetry.loc
 EXTENSIONS = {'.py', '.go', '.rs', '.js', '.jsx', '.ts', '.tsx', '.java', '.c', '.h', '.cpp', '.cs', '.php', '.rb', '.sh', '.bash'}
 DECISION_DIRS = ('adr', 'docs/adr', 'docs/decisions', '.ai/decisions')
 EXEMPTION_RE = re.compile(r'(?:\*\*)?ADM-Exemption(?:\*\*)?:\s*`?([^`\s]+)`?\s*\(Max:\s*(\d+)\)', re.IGNORECASE)
-STATUS_RE = re.compile(r'(?:^|\n)\s*(?:Status\s*:\s*|\|\s*Status\s*\|\s*)(ACCEPTED|APPROVED)', re.IGNORECASE)
 
 
 def count_lines(path):
@@ -23,11 +22,16 @@ def normalize(path):
     return str(path).replace('\\', '/').strip().lstrip('./')
 
 
-def accepted_decision(text):
-    return bool(STATUS_RE.search(text))
+def status_allowed(text, allowed_statuses):
+    for status in allowed_statuses:
+        simple = re.search(rf'(^|\n)\s*Status\s*:\s*{status}\b', text, re.IGNORECASE)
+        table = re.search(rf'\|\s*Status\s*\|\s*{status}\s*\|', text, re.IGNORECASE)
+        if simple or table:
+            return True
+    return False
 
 
-def parse_exemptions(root):
+def parse_exemptions(root, allowed_statuses):
     exemptions = {}
     ignored = []
     for rel_dir in DECISION_DIRS:
@@ -39,7 +43,7 @@ def parse_exemptions(root):
             matches = EXEMPTION_RE.findall(text)
             if not matches:
                 continue
-            if not accepted_decision(text):
+            if not status_allowed(text, allowed_statuses):
                 ignored.append(str(md_file.relative_to(root)))
                 continue
             for file_path, max_lines in matches:
@@ -73,6 +77,7 @@ def main():
     parser.add_argument('--max-lines', type=int, default=300)
     parser.add_argument('--exclude-dir', action='append', default=[])
     parser.add_argument('--exclude-file', action='append', default=[])
+    parser.add_argument('--allow-proposed-exemptions', action='store_true')
     args = parser.parse_args()
 
     root = Path(args.path).resolve()
@@ -84,16 +89,21 @@ def main():
     EXCLUDE_DIRS = EXCLUDE_DIRS | set(args.exclude_dir)
     EXCLUDE_FILES = EXCLUDE_FILES | set(args.exclude_file)
 
-    exemptions, ignored = parse_exemptions(root)
+    allowed_statuses = {'ACCEPTED', 'APPROVED'}
+    if args.allow_proposed_exemptions:
+        allowed_statuses.add('PROPOSED')
+
+    exemptions, ignored = parse_exemptions(root, allowed_statuses)
     violations, scanned = scan(root, args.max_lines, exemptions)
 
     print('ADM line-limit check')
     print('Root:', root)
     print('Default max lines:', args.max_lines)
+    print('Allowed decision statuses:', ', '.join(sorted(allowed_statuses)))
     print('Scanned files:', scanned)
     print('Accepted exemptions:', len(exemptions))
     if ignored:
-        print('Ignored exemption files without accepted status:', ', '.join(ignored))
+        print('Ignored exemption files without allowed status:', ', '.join(ignored))
 
     if not violations:
         print('PASSED')
@@ -105,7 +115,7 @@ def main():
     for path, lines, allowed, exempted in sorted(violations, key=lambda item: item[1], reverse=True):
         suffix = ' ADR' if exempted else ''
         print(f'{path} | {lines} | {allowed}{suffix}')
-    print('Exemptions require an accepted Decision Record containing: ADM-Exemption: path/to/file (Max: lines)')
+    print('Exemptions require a Decision Record containing: ADM-Exemption: path/to/file (Max: lines)')
     return 1
 
 
