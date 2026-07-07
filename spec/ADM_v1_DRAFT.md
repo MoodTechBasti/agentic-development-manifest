@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.4 Draft)
+# ADM — Spezifikation (v0.5 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.4 Draft
-- Zustand: CI Quality Gate MVP
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken und erster automatisierter Durchsetzung
+- Version: v0.5 Draft
+- Zustand: ADR Exemptions and Agent Onboarding
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung und Agenten-Onboarding
 
 ## Entwicklungs-Lifecycle
 
@@ -93,7 +93,19 @@ Das erste verpflichtende Gate ist der Line-Limit-Check:
 - Standardlimit: 300 Zeilen pro Quellcodedatei
 - Ausführung: `push`, `pull_request` und manuell über `workflow_dispatch`
 
-Wichtig: Decision Records für Ausnahmen sind fachlich verpflichtend. Eine technische ADR-basierte Ausnahmeprüfung ist noch nicht implementiert und bleibt eine spätere Ausbaustufe.
+## ADM Exemptions
+
+Line-Limit-Ausnahmen werden vom Checker technisch ausgewertet, wenn sie in einem Decision Record stehen.
+
+Eine Ausnahme ist nur gültig, wenn:
+
+- der Decision Record den Status ACCEPTED oder APPROVED hat
+- die Ausnahme dieses Format nutzt: `ADM-Exemption: path/to/file.py (Max: 500)`
+- der Pfad repository-relativ ist
+
+## Agent Onboarding
+
+Frische CLI-Agenten starten mit `prompts/master_prompt.md`. Der Master Prompt definiert Lese-Reihenfolge, Initialisierung, Qualitätsregeln, Decision-Record-Pflicht und Handover-Pflicht.
 
 ## Agent Communication Protocol
 
