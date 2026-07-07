@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.7] — 2026-07-07
+
+### PR-Ready Agent Protocol
+
+- Updated `prompts/master_prompt.md` with a strict PR-ready quality-gate protocol.
+- Agents must run `scripts/check_limits.py` without proposed-exemption tolerance before marking work merge-ready.
+- Handover output must now state CI-readiness status.
+
 ## [v0.6] — 2026-07-07
 
 ### Branch-Aware Local DX
