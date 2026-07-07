@@ -9,7 +9,7 @@ on:
 
 jobs:
   line-limit-check:
-    name: Line-limit check
+    name: ADM quality checks
     runs-on: ubuntu-latest
 
     steps:
@@ -30,4 +30,12 @@ jobs:
           else
             echo "Error: ADM line-limit validator not found. Expected scripts/check_limits.py."
             exit 1
+          fi
+
+      - name: Run ADM review validator advisory check
+        run: |
+          if [ -f "scripts/validate_reviews.py" ]; then
+            python scripts/validate_reviews.py --path . --advisory
+          else
+            echo "ADM review validator not found; advisory check skipped."
           fi
