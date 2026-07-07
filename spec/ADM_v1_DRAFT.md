@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.8 Draft)
+# ADM — Spezifikation (v0.9 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.8 Draft
-- Zustand: Review Template Governance
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung und standardisierten Review-Protokollen
+- Version: v0.9 Draft
+- Zustand: Advisory Review Validation
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und advisory Review-Validierung
 
 ## Entwicklungs-Lifecycle
 
@@ -65,7 +65,7 @@ Keine größere Code-Änderung gilt als abgeschlossen, bevor folgende Punkte erf
 - exportierte Schnittstellen sind typisiert und dokumentiert
 - neue Codepfade sind durch passende Tests abgedeckt
 - Foundation-Code strebt mindestens 80 Prozent Testabdeckung an
-- keine Secrets oder Credentials sind im Repository hardcodiert
+- vertrauliche Zugangsdaten werden nicht im Repository abgelegt
 - neue Abhängigkeiten sind begründet
 - Duplikate und unnötige Abstraktionen wurden geprüft
 
@@ -99,6 +99,33 @@ Standardrollen:
 
 Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erforderliche Aktionen, finales Vote und CI-readiness enthalten.
 
+## Review Validation
+
+`scripts/validate_reviews.py` prüft ausgefüllte Review-Artefakte unter `.ai/reviews/`.
+
+Der Validator ist ohne externe Python-Pakete implementiert und prüft:
+
+- YAML-Frontmatter am Dateianfang
+- Pflichtfelder wie `template_id`, `review_type`, `review_id`, `review_status`, `runtime_target` und `ci_ready`
+- gültige Review-Typen und Review-ID-Präfixe
+- gültige Statuswerte
+- Konsistenz zwischen `review_status: PASSED` und `ci_ready: true`
+- optionalen Confidence Score zwischen 1 und 10
+
+Lokale strenge Ausführung:
+
+```bash
+python scripts/validate_reviews.py --path .
+```
+
+CI-Ausführung im Advisory-Modus:
+
+```bash
+python scripts/validate_reviews.py --path . --advisory
+```
+
+Ein hartes Review-Merge-Gate darf erst ergänzt werden, wenn klar definiert ist, welche Phasen, Branches oder Release-Typen vollständige Review-Sets verlangen.
+
 ## Automatisiertes CI Quality Gate
 
 ADM-konforme Repositories sollen Qualitätsregeln nicht nur dokumentieren, sondern automatisiert prüfen.
@@ -109,6 +136,8 @@ Das erste verpflichtende Gate ist der Line-Limit-Check:
 - Skript: `scripts/check_limits.py`
 - Standardlimit: 300 Zeilen pro Quellcodedatei
 - Ausführung: `push`, `pull_request` und manuell über `workflow_dispatch`
+
+Der Review-Validator läuft im gleichen Workflow zunächst nur im Advisory-Modus.
 
 ## ADM Exemptions
 
