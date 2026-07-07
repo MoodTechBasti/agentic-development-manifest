@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.4] — 2026-07-07
+
+### CI Quality Gate MVP
+
+- Added GitHub Actions workflow `.github/workflows/adm-quality-gate.yml`.
+- The workflow runs on `push`, `pull_request`, and manual `workflow_dispatch`.
+- The workflow executes `scripts/check_limits.py --path . --max-lines 300`.
+- The ADM specification now documents the automated CI Quality Gate and clarifies that ADR-based technical exception validation is not implemented yet.
+
 ## [v0.3] — 2026-07-07
 
 ### Operational Templates and Checks
