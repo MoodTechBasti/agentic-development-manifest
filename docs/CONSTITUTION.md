@@ -1,18 +1,47 @@
-# Constitution
+# ADM — Die Verfassung
 
-This document defines the non-negotiable principles for this project.
+Diese Prinzipien definieren die Denkweise, Arbeitsorganisation und Systemgrenzen ADM-konformer Projekte.
 
-## Principles
+## 1. Model Neutral
 
-1. Project memory belongs in the repository.
-2. Decisions must be written down.
-3. Research must separate evidence from opinion.
-4. Planning happens before implementation.
-5. Simplicity is preferred until complexity is justified.
-6. Security, reliability, testing, and documentation are part of the foundation.
-7. Tool-specific workflows are adapters, not the canonical standard.
-8. Every major change must leave a handover for the next contributor.
+ADM darf keine anbieterspezifischen Funktionen voraussetzen. Tool-spezifische Fähigkeiten sind erlaubt, aber nur als Adapter, nicht als Grundlage des Standards.
 
-## Quality bar
+## 2. Multi-Agent First
 
-A result is not complete when files exist. It is complete when the decision, implementation, tests, risks, and next steps are understandable from the repository.
+Komplexe Arbeit wird durch spezialisierte Rollen bearbeitet. Es gilt: so viele Spezialisten wie nötig, so wenige wie möglich.
+
+## 3. Agent Registry
+
+Jede aktive Rolle muss im Projekt registriert sein: Mission, Verantwortung, Abhängigkeiten, Schnittstellen und aktueller Status.
+
+## 4. Shared Knowledge
+
+Wichtige Erkenntnisse, Recherchen, Benchmarks und Entscheidungen fließen in eine gemeinsame, versionierte Wissensbasis zurück.
+
+## 5. Living Documentation
+
+Dokumentation ist Teil der Arbeit, nicht Nacharbeit. Architekturentscheidungen, Schnittstellen, Datenflüsse und Handovers werden während der Umsetzung aktualisiert.
+
+## 6. Project Memory
+
+Der Projektzustand liegt im Repository, nicht im Chatkontext eines einzelnen Modells.
+
+## 7. Agent Handover
+
+Jede Sitzung endet mit einer Übergabe: erledigt, offen, Risiken, geänderte Dateien, Tests, nächste logische Aufgabe.
+
+## 8. Artifact-Based Communication
+
+Agenten kommunizieren über Dateien, Entscheidungen, Reviews und Tasks. Unstrukturierte direkte Kommunikation ist keine zuverlässige Quelle.
+
+## 9. Vendor Independence
+
+Die Steuerungsstruktur gehört dem Projekt. Anbieter-CLIs dürfen daraus temporäre Konfigurationen ableiten, aber nicht die Kernstruktur besitzen.
+
+## 10. CLI Friendly
+
+ADM optimiert für Terminal, Git, Tests, Linter, Build-Systeme und reproduzierbare lokale Umgebungen. Eine visuelle IDE darf nie Voraussetzung sein.
+
+## Quality Bar
+
+Eine Aufgabe ist erst fertig, wenn Entscheidung, Umsetzung, Tests, Risiken und nächste Schritte aus dem Repository nachvollziehbar sind.
