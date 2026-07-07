@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.6] — 2026-07-07
+
+### Branch-Aware Local DX
+
+- Added `scripts/bootstrap.sh` to initialize the local `.ai/` workspace structure and install a local pre-commit hook.
+- Improved `scripts/check_limits.py` with an explicit `--allow-proposed-exemptions` mode for local feature work.
+- Kept CI merge-readiness strict: accepted exemptions require ACCEPTED or APPROVED Decision Records.
+- Updated the ADM specification to document local proposed exemptions, bootstrap behavior, and the strict CI distinction.
+
 ## [v0.5] — 2026-07-07
 
 ### ADR Exemptions and Agent Onboarding
