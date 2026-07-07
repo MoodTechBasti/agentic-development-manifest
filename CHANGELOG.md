@@ -8,6 +8,7 @@
 - Updated all review templates with runtime frontmatter fields required by the validator.
 - Added an advisory GitHub Actions step for review validation without making review completeness a hard merge gate.
 - Added `docs/REVIEW_VALIDATION.md` and updated `docs/OPERATING_SYSTEM.md` with the validation workflow.
+- Updated `spec/ADM_v1_DRAFT.md` to document advisory review validation.
 
 ## [v0.8] — 2026-07-08
 
