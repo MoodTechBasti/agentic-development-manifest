@@ -1,14 +1,7 @@
 # Specification
 
-Status: early outline.
+This file is kept as a compatibility pointer.
 
-This document will define the reusable project standard.
+Canonical specification:
 
-Initial sections:
-
-1. Mission
-2. Research
-3. Planning
-4. Review
-5. Build
-6. Verification
+- `spec/ADM_v1_DRAFT.md`
