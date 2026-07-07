@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.5 Draft)
+# ADM — Spezifikation (v0.6 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.5 Draft
-- Zustand: ADR Exemptions and Agent Onboarding
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung und Agenten-Onboarding
+- Version: v0.6 Draft
+- Zustand: Branch-Aware Local DX
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding und lokaler Workspace-Initialisierung
 
 ## Entwicklungs-Lifecycle
 
@@ -97,11 +97,17 @@ Das erste verpflichtende Gate ist der Line-Limit-Check:
 
 Line-Limit-Ausnahmen werden vom Checker technisch ausgewertet, wenn sie in einem Decision Record stehen.
 
-Eine Ausnahme ist nur gültig, wenn:
+Eine Ausnahme ist im strikten CI-Modus nur gültig, wenn:
 
 - der Decision Record den Status ACCEPTED oder APPROVED hat
 - die Ausnahme dieses Format nutzt: `ADM-Exemption: path/to/file.py (Max: 500)`
 - der Pfad repository-relativ ist
+
+Für lokale Feature-Arbeit kann `scripts/check_limits.py --allow-proposed-exemptions` genutzt werden. Dieser Modus akzeptiert zusätzlich PROPOSED, ist aber nicht der Merge-Readiness-Standard.
+
+## Workspace Bootstrap
+
+`scripts/bootstrap.sh` initialisiert die lokale `.ai/`-Struktur und installiert einen lokalen Pre-Commit-Hook. Der lokale Hook nutzt den vorgeschlagenen Exemption-Modus, damit frühe Feature-Arbeit nicht unnötig blockiert wird. Das CI-Gate bleibt streng.
 
 ## Agent Onboarding
 
