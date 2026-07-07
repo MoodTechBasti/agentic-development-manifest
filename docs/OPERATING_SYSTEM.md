@@ -1,4 +1,4 @@
-# ADM — Operating System (v0.8 Draft)
+# ADM — Operating System (v0.9 Draft)
 
 Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
@@ -53,6 +53,24 @@ Die Standard-Reviews des Multi-Agenten-Parlaments sind:
 | `templates/reviews/simplifier.md` | Simplifier | `REV-SIMP` |
 | `templates/reviews/documentation.md` | Documentation Reviewer | `REV-DOC` |
 
+## Review-Validierung
+
+Ausgefüllte Review-Artefakte unter `.ai/reviews/` können lokal geprüft werden:
+
+```bash
+python scripts/validate_reviews.py --path .
+```
+
+Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Review-Status, `runtime_target: .ai/reviews/`, `ci_ready` und optional den Confidence Score.
+
+Im GitHub-Workflow läuft die Review-Validierung vorerst im Advisory-Modus:
+
+```bash
+python scripts/validate_reviews.py --path . --advisory
+```
+
+Damit wird die Struktur sichtbar geprüft, ohne normale Entwicklungsarbeit durch fehlende Review-Instanzen hart zu blockieren. Ein hartes Merge-Gate für Review-Vollständigkeit kann später ergänzt werden.
+
 ## Sitzungs-Lifecycle
 
 1. Initialisierung: Manifest, Tasks, Entscheidungen und letzten Handover lesen.
@@ -60,8 +78,9 @@ Die Standard-Reviews des Multi-Agenten-Parlaments sind:
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
 5. Review: Self-Review und Spezialreviews ausführen.
-6. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
-7. Commit: Änderungen versionieren.
+6. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
+7. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
+8. Commit: Änderungen versionieren.
 
 ## Erweitertes Handover-Protokoll
 
@@ -92,6 +111,7 @@ Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 
 - ausgeführte Review-Vorlagen
 - Review-Dateien unter `.ai/reviews/`
+- Ergebnis von `scripts/validate_reviews.py`, falls Reviews erzeugt wurden
 - blockierende Votes
 - CI-readiness status
 
