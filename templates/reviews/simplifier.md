@@ -4,9 +4,17 @@ template_type: review
 review_type: simplifier
 role: Simplifier
 template_status: accepted
-version: 1.0.0
+version: 1.1.0
 last_updated: 2026-07-08
 runtime_target: .ai/reviews/
+review_id: ""
+review_status: PENDING
+review_date: ""
+reviewer_agent: ""
+target: ""
+target_files: []
+ci_ready: false
+confidence_score: null
 ---
 
 # ADM Review Template: Simplifier
@@ -20,8 +28,9 @@ runtime_target: .ai/reviews/
 | Reviewer agent | Simplifier |
 | Target | [ADR ID, commit hash, feature, or path] |
 | Target files | [repo-relative paths] |
-| Status | PENDING / PASSED / FAILED / NEEDS_REVISION |
+| Review status | PENDING / PASSED / FAILED / NEEDS_REVISION |
 | Confidence score | [1-10] |
+| CI-ready | true / false |
 
 ## 2. Simplicity Gates
 
@@ -60,4 +69,4 @@ runtime_target: .ai/reviews/
 
 - Vote: APPROVED / APPROVED_WITH_CONDITIONS / REJECTED
 - Blocking reason if rejected:
-- CI-ready: YES / NO
+- CI-ready: true / false
