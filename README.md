@@ -1,1 +1,3 @@
-# agentic-development-manifest
+# Agentic Development Manifest
+
+Initial repository.
