@@ -14,10 +14,10 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 
 - `docs/VISION.md` — Vision und Philosophie
 - `docs/CONSTITUTION.md` — 10 Kernprinzipien
-- `docs/AI_OPERATING_SYSTEM.md` — `.ai/` als dateibasiertes Betriebssystem
+- `docs/OPERATING_SYSTEM.md` — `.ai/` als dateibasiertes Betriebssystem
 - `docs/MULTI_AGENT_PARLIAMENT.md` — Rollen und Entscheidungsprozess
 - `docs/SAAS_FOUNDATION_BLUEPRINT.md` — technischer SaaS-Blueprint
-- `docs/specification.md` — Spezifikation und ACP
+- `spec/ADM_v1_DRAFT.md` — Spezifikation und ACP
 
 ## Status
 
