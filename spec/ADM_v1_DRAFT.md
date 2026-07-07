@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.2 Draft)
+# ADM — Spezifikation (v0.4 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.2 Draft
-- Zustand: Quality Hardening
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken
+- Version: v0.4 Draft
+- Zustand: CI Quality Gate MVP
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken und erster automatisierter Durchsetzung
 
 ## Entwicklungs-Lifecycle
 
@@ -81,6 +81,19 @@ Ein Phasenübergang ist nur freigegeben, wenn passende Review-Artefakte vorliege
 6. Documentation Review
 
 Kritische Einwände blockieren den Übergang, bis sie gelöst oder bewusst akzeptiert und dokumentiert wurden.
+
+## Automatisiertes CI Quality Gate
+
+ADM-konforme Repositories sollen Qualitätsregeln nicht nur dokumentieren, sondern automatisiert prüfen.
+
+Das erste verpflichtende Gate ist der Line-Limit-Check:
+
+- Workflow: `.github/workflows/adm-quality-gate.yml`
+- Skript: `scripts/check_limits.py`
+- Standardlimit: 300 Zeilen pro Quellcodedatei
+- Ausführung: `push`, `pull_request` und manuell über `workflow_dispatch`
+
+Wichtig: Decision Records für Ausnahmen sind fachlich verpflichtend. Eine technische ADR-basierte Ausnahmeprüfung ist noch nicht implementiert und bleibt eine spätere Ausbaustufe.
 
 ## Agent Communication Protocol
 
