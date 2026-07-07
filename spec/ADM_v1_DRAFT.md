@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.6 Draft)
+# ADM — Spezifikation (v0.8 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.6 Draft
-- Zustand: Branch-Aware Local DX
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding und lokaler Workspace-Initialisierung
+- Version: v0.8 Draft
+- Zustand: Review Template Governance
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung und standardisierten Review-Protokollen
 
 ## Entwicklungs-Lifecycle
 
@@ -82,6 +82,23 @@ Ein Phasenübergang ist nur freigegeben, wenn passende Review-Artefakte vorliege
 
 Kritische Einwände blockieren den Übergang, bis sie gelöst oder bewusst akzeptiert und dokumentiert wurden.
 
+## Review Template Governance
+
+Wiederverwendbare Review-Vorlagen liegen unter `templates/reviews/`.
+
+Ausgefüllte Review-Artefakte liegen unter `.ai/reviews/` und müssen aus einer passenden Vorlage abgeleitet werden.
+
+Standardrollen:
+
+- `templates/reviews/architect.md`
+- `templates/reviews/security.md`
+- `templates/reviews/performance.md`
+- `templates/reviews/cost.md`
+- `templates/reviews/simplifier.md`
+- `templates/reviews/documentation.md`
+
+Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erforderliche Aktionen, finales Vote und CI-readiness enthalten.
+
 ## Automatisiertes CI Quality Gate
 
 ADM-konforme Repositories sollen Qualitätsregeln nicht nur dokumentieren, sondern automatisiert prüfen.
@@ -136,4 +153,4 @@ Format:
 
 ## Quality Gate
 
-Eine Phase darf erst abgeschlossen werden, wenn Entscheidungen, Risiken, offene Fragen, Tests, Metriken und nächste Schritte dokumentiert sind.
+Eine Phase darf erst abgeschlossen werden, wenn Entscheidungen, Risiken, offene Fragen, Tests, Metriken, Review-Status und nächste Schritte dokumentiert sind.
