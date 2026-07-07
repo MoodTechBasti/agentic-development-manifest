@@ -38,11 +38,19 @@ Before changing production code, perform these steps:
 
 Before marking work complete, run the relevant available checks.
 
-Minimum check for ADM repositories:
+Minimum strict check for ADM repositories:
 
 ```bash
 python scripts/check_limits.py --path . --max-lines 300
 ```
+
+Local feature work may temporarily use proposed exemptions:
+
+```bash
+python scripts/check_limits.py --path . --max-lines 300 --allow-proposed-exemptions
+```
+
+The proposed-exemption mode is not merge-ready. It is only for local iteration before formal approval.
 
 If checks cannot be run, explain why in the handover.
 
@@ -63,7 +71,25 @@ Decision Records with line-limit exemptions must use this machine-readable line:
 ADM-Exemption: path/to/file.py (Max: 500)
 ```
 
-The Decision Record must have status ACCEPTED or APPROVED before the exemption is valid.
+The Decision Record must have status ACCEPTED or APPROVED before the exemption is merge-ready. PROPOSED may be used only for local work with `--allow-proposed-exemptions`.
+
+## PR-ready check before push
+
+Before committing final work or opening a Pull Request, perform this strict verification:
+
+1. Run the line-limit checker without proposed-exemption tolerance:
+
+```bash
+python scripts/check_limits.py --path . --max-lines 300
+```
+
+2. If the strict check fails because a changed file exceeds the limit, inspect the relevant Decision Record.
+
+3. If the exception was formally reviewed and approved, update the Decision Record status from DRAFT or PROPOSED to ACCEPTED or APPROVED, then rerun the strict check.
+
+4. If the Decision Record is still PROPOSED, do not mark the work merge-ready. Continue local iteration or request review.
+
+5. The final handover must clearly state whether the branch is CI-ready or still requires Decision Record approval.
 
 ## Handover rules
 
@@ -76,7 +102,8 @@ Before ending the session, write or update a handover containing:
 - known risks,
 - quality-rule exceptions,
 - next logical task,
-- recommended next role.
+- recommended next role,
+- CI-readiness status.
 
 ## Output expectation
 
@@ -86,4 +113,5 @@ When reporting to the human operator, be direct:
 - why it changed,
 - which files changed,
 - which checks passed or failed,
+- whether the branch is CI-ready,
 - what remains next.
