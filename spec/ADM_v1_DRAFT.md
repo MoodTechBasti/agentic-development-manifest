@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.1 Draft)
+# ADM — Spezifikation (v0.2 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.1 Draft
-- Zustand: in Entstehung
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung
+- Version: v0.2 Draft
+- Zustand: Quality Hardening
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken
 
 ## Entwicklungs-Lifecycle
 
@@ -30,7 +30,7 @@ Aktuelle Informationen werden recherchiert, wenn sie für Architektur, Sicherhei
 
 ## Phase 2 — Architecture Competition
 
-Mindestens mehrere Architekturvarianten werden verglichen, bevor eine Richtung gewählt wird.
+Mehrere Architekturvarianten werden verglichen, bevor eine Richtung gewählt wird.
 
 Beispiele:
 
@@ -56,6 +56,32 @@ Die Umsetzung wird in Abhängigkeiten, Meilensteine und überprüfbare Arbeitspa
 
 Zuerst entsteht die SaaS-Foundation. Produktfeatures folgen erst danach.
 
+## Definition of Done für Code-Änderungen
+
+Keine größere Code-Änderung gilt als abgeschlossen, bevor folgende Punkte erfüllt oder begründet abgewichen sind:
+
+- neue oder geänderte Quellcodedateien bleiben unter 300 Zeilen
+- Ausnahmen sind in einem Decision Record begründet
+- exportierte Schnittstellen sind typisiert und dokumentiert
+- neue Codepfade sind durch passende Tests abgedeckt
+- Foundation-Code strebt mindestens 80 Prozent Testabdeckung an
+- keine Secrets oder Credentials sind im Repository hardcodiert
+- neue Abhängigkeiten sind begründet
+- Duplikate und unnötige Abstraktionen wurden geprüft
+
+## Quality Gates bei Phasenübergängen
+
+Ein Phasenübergang ist nur freigegeben, wenn passende Review-Artefakte vorliegen:
+
+1. Architect Review
+2. Security Review
+3. Performance Review
+4. Cost Review
+5. Simplification Review
+6. Documentation Review
+
+Kritische Einwände blockieren den Übergang, bis sie gelöst oder bewusst akzeptiert und dokumentiert wurden.
+
 ## Agent Communication Protocol
 
 Wichtige Entscheidungen werden strukturiert dokumentiert.
@@ -79,4 +105,4 @@ Format:
 
 ## Quality Gate
 
-Eine Phase darf erst abgeschlossen werden, wenn Entscheidungen, Risiken, offene Fragen, Tests und nächste Schritte dokumentiert sind.
+Eine Phase darf erst abgeschlossen werden, wenn Entscheidungen, Risiken, offene Fragen, Tests, Metriken und nächste Schritte dokumentiert sind.
