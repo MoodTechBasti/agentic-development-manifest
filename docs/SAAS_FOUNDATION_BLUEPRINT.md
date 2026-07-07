@@ -1,4 +1,4 @@
-# ADM — SaaS Foundation Blueprint
+# ADM — SaaS Foundation Blueprint (v0.2 Draft)
 
 Der SaaS Foundation Blueprint beschreibt die technologischen Mindestbereiche für ein neues, skalierbares und wartbares SaaS-System.
 
@@ -30,6 +30,7 @@ Vorbereiten:
 - Tenant-Konfiguration
 - Tenant-Branding
 - getrennte Storage-Pfade oder Buckets, wenn nötig
+- Datenbankseitige Isolation, wenn der Stack sie unterstützt
 
 ## 2. Entitlements & Quotas
 
@@ -69,7 +70,9 @@ Kostenintensive Aktivitäten werden gemessen:
 - Exporte
 - externe Provider-Kosten
 
-Ziel ist Kostenklarheit pro User, Workspace, Tenant und Feature.
+Das Kostenmodell muss Kosten pro User, Workspace, Tenant, Feature, API-Request, Worker-Sekunde und KI-Aufruf aggregieren können.
+
+Usage Tracking ohne Kostenmodell reicht nicht aus.
 
 ## 5. Queue & Workers
 
@@ -114,6 +117,15 @@ Mindeststandard:
 - Schutz gegen API-Missbrauch
 - Tenant-Isolation-Checks
 
+KI-spezifische Risiken müssen explizit geprüft werden:
+
+- Prompt Injection
+- Token Leakage
+- Cost Explosion durch Endlosschleifen oder Rekursion
+- API-Missbrauch
+- Tenant Escape
+- ungewollte Weitergabe sensibler Daten an externe Provider
+
 ## 8. Developer Experience
 
 ADM priorisiert schnelle lokale Produktivität.
@@ -133,7 +145,32 @@ Mindeststandard:
 
 Die Foundation braucht Unit-, Integrations-, Contract- und E2E-Tests. Optional folgen Performance-, Security-, Mutation- und Chaos-Tests.
 
-## 10. Final Audit
+## 10. Performance Budget
+
+Default-Grenzwerte verhindern unkontrolliertes Latenzwachstum. Abweichungen sind erlaubt, müssen aber im Decision Record begründet werden.
+
+- Standard-API-Requests: unter 150 ms
+- Frontend-Ladezeit: unter 2 s
+- Cold Starts: unter 500 ms
+- Worker-Jobs: maximal 5 Minuten pro Ausführung
+- KI- oder Drittanbieter-Requests: eigenes Budget, typischerweise 1500 ms bis 5000 ms; interaktive Langläufer müssen Streaming oder Fortschrittsanzeige nutzen
+
+## 11. Data Lifecycle
+
+Jede relevante Datenklasse braucht einen definierten Lebenszyklus:
+
+1. Upload oder Import
+2. Processing
+3. Archive
+4. Delete
+5. Backup
+6. Restore
+
+Der Lifecycle gilt besonders für Uploads, Exporte, Logs, KI-Artefakte, temporäre Dateien und Caches.
+
+Ziel: keine Datenmüllhalden, keine ungeplanten Speicherkosten, keine unklare Löschlogik.
+
+## 12. Final Audit
 
 Vor Release wird objektiv geprüft:
 
