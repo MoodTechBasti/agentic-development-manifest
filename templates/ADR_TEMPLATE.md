@@ -63,13 +63,30 @@ Document at least two alternatives and why they were rejected.
 - Long-term risks:
 - Mitigation plan:
 
-## 7. Affected Files
+## 7. ADM Exemptions
+
+Use this section only when an implementation must intentionally exceed an ADM quality rule.
+
+Line-limit exemptions must use this exact machine-readable format so `scripts/check_limits.py` can detect them:
+
+```text
+ADM-Exemption: src/path/to/file.py (Max: 500)
+```
+
+Rules:
+
+- The ADR status must be ACCEPTED or APPROVED before the exemption is valid.
+- The path must be repository-relative.
+- The maximum line count must be explicit.
+- The reason must be explained in sections 1, 3, 5, and 6.
+
+## 8. Affected Files
 
 Use repository-relative paths.
 
 - [ ] `path/to/file`
 
-## 8. Review Log
+## 9. Review Log
 
 - [ ] Principal Architect: APPROVED / REJECTED / COMMENT — [comment]
 - [ ] Devil's Advocate: APPROVED / REJECTED / COMMENT — [comment]
@@ -78,6 +95,6 @@ Use repository-relative paths.
 - [ ] Performance Lead: APPROVED / REJECTED / COMMENT — [comment]
 - [ ] Simplifier: APPROVED / REJECTED / COMMENT — [comment]
 
-## 9. Final Outcome
+## 10. Final Outcome
 
 State whether the decision was accepted, rejected, or postponed, and explain the next step.
