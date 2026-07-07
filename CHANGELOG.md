@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.9] — 2026-07-08
+
+### Advisory Review Validation
+
+- Added `scripts/validate_reviews.py` for dependency-free frontmatter validation of completed review artifacts under `.ai/reviews/`.
+- Updated all review templates with runtime frontmatter fields required by the validator.
+- Added an advisory GitHub Actions step for review validation without making review completeness a hard merge gate.
+- Added `docs/REVIEW_VALIDATION.md` and updated `docs/OPERATING_SYSTEM.md` with the validation workflow.
+
 ## [v0.8] — 2026-07-08
 
 ### Review Template Governance
