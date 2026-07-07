@@ -1,0 +1,33 @@
+name: ADM Quality Gate
+
+on:
+  push:
+    branches: [main, master, dev]
+  pull_request:
+    branches: [main, master, dev]
+  workflow_dispatch:
+
+jobs:
+  line-limit-check:
+    name: Line-limit check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run ADM line-limit validator
+        run: |
+          if [ -f "scripts/check_limits.py" ]; then
+            python scripts/check_limits.py --path . --max-lines 300
+          elif [ -f "check-limits.py" ]; then
+            python check-limits.py --path . --max-lines 300
+          else
+            echo "Error: ADM line-limit validator not found. Expected scripts/check_limits.py."
+            exit 1
+          fi
