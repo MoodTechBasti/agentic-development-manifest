@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.3] — 2026-07-07
+
+### Operational Templates and Checks
+
+- Added ADR template for structured architecture decisions.
+- Added session handover template for metric-based agent handoffs.
+- Added source file line-limit validator script.
+
 ## [v0.2] — 2026-07-07
 
 ### Quality Hardening
