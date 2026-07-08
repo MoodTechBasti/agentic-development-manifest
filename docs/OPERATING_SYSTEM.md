@@ -1,6 +1,6 @@
 # ADM — Operating System
 
-> Status: v0.27 synchronized draft
+> Status: v0.28 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
@@ -97,6 +97,7 @@ ADM trennt wiederverwendbare Vorlagen von ausgefüllten Laufzeit-Artefakten.
 - Archivierte historische Review-Sets dürfen später unter `.ai/reviews/archive/<review_set_id>/` liegen.
 - Wiederverwendbare Handover-Vorlagen liegen unter `templates/HANDOVER_TEMPLATE.md`.
 - Ausgefüllte, konkrete Handovers liegen unter `.ai/handover/`.
+- Die Handover-Discovery- und Continuity-Policy liegt unter `.ai/handover/README.md`.
 - Wiederverwendbare Adapter-Prompts liegen unter `prompts/adapters/`.
 - Leere Templates dürfen nicht in `.ai/reviews/` oder `.ai/handover/` abgelegt werden.
 - Ausgefüllte Reviews nutzen ihren `review_id` als Dateiname, nicht statische Rollennamen.
@@ -120,8 +121,8 @@ Ein Review-Set ist eine zusammengehörige Freigabe-Einheit aus sechs Rollen-Revi
 
 Jedes ausgefüllte Review-Artefakt muss die folgenden Scope-Felder enthalten:
 
-- `review_set_id`: gemeinsame Set-ID, zum Beispiel `RSV-20260708-review-archive-policy`,
-- `target_ref`: Zielreferenz, zum Beispiel `adm-v026-review-archive-policy`,
+- `review_set_id`: gemeinsame Set-ID, zum Beispiel `RSV-20260708-session-continuity-baseline`,
+- `target_ref`: Zielreferenz, zum Beispiel `adm-v028-session-continuity-baseline`,
 - `target_commit`: Git-Commit-SHA des geprüften Codes oder der geprüften Dokumentation.
 
 `target_commit` bezeichnet den geprüften Stand. Es ist nicht zwingend der Workflow-Commit, der die Review-Artefakte enthält.
@@ -178,9 +179,40 @@ Spätere Tools dürfen Handovers aus Git-Status, Branch-Informationen, Review-Da
 
 Handover Automation darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Rollen, Freigaben oder abgeschlossene Arbeit erfinden. Sie darf keine PRs mergen, Tags setzen, Branch Protection ändern oder Chatverlauf, hidden model memory, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-Roadmap Phase 7 bleibt nach v0.27 offen. v0.27 implementiert keinen Handover-Linter und keine Handover-Automation.
+v0.28 implementiert keinen Handover-Linter, keine Runtime und keine Handover-Automation-Erweiterung.
 
-## 10. Foundation Standards
+## 10. Session Continuity
+
+Session Continuity beschreibt, wie zukünftige Agenten eine Sitzung aus repository-owned evidence fortsetzen.
+
+Ein Agent muss vor Umsetzung prüfen:
+
+1. den aktuellen Git-Zustand,
+2. die kanonischen ADM-Dokumente und akzeptierten ADRs,
+3. relevante Reviews und Review-Archive,
+4. `.ai/handover/` und `.ai/handover/README.md`, wenn vorherige Sitzungsevidenz relevant ist,
+5. `.ai/tasks/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/decisions/` und `.ai/agents/`, wenn sie für den Scope relevant sind.
+
+Latest-Handover-Discovery:
+
+1. Explizite `Timestamp:` Felder im Handover haben Vorrang.
+2. Dateiname `Handoff-YYYYMMDD-HHMM-<scope>.md` ist Fallback.
+3. Bei widersprüchlichen, fehlenden oder mehreren plausiblen neuesten Handovers muss der Agent `AMBIGUOUS` melden.
+4. Wenn kein relevanter Handover existiert, ist der Continuity-Zustand `UNKNOWN`.
+5. Chatverlauf, hidden model memory, Tool-State, lokale Profile, Scratch-Dateien und Rohlogs dürfen keine fehlende Repository-Evidenz ersetzen.
+
+Continuity status values:
+
+| Status | Bedeutung |
+| --- | --- |
+| `READY` | Genug Repository-Evidenz für den nächsten Arbeitsschritt vorhanden; keine Freigabe. |
+| `PARTIAL` | Fortsetzung möglich, aber fehlende Checks, Scope-Fragen oder Risiken müssen zuerst geprüft werden. |
+| `BLOCKED` | Ein benannter Blocker verhindert Fortsetzung. |
+| `UNKNOWN` | Der Fortsetzungszustand ist aus Repository-Evidenz nicht belastbar. |
+
+`READY` ist keine CI-, Review-, Merge-, Release- oder Tag-Freigabe.
+
+## 11. Foundation Standards
 
 ### SaaS Foundation Standard
 
@@ -202,13 +234,13 @@ Ein AI-bezogener Agent muss prüfen, ob sein Task Provider-Abstraktion, Modellf�
 
 Roadmap Phase 3 ist kein Implementierungsauftrag für Provider-SDKs, Modellaufrufe, Tool-Ausführung, Prompt-Datenbanken, Validatoren, Workflows oder produktspezifische KI-Features.
 
-## 11. Prompt Standards
+## 12. Prompt Standards
 
 ### Master Prompt Standard
 
 Der Master Prompt Standard ist der Roadmap-Phase-4-Architekturblock für modellneutrales CLI-Agenten-Onboarding. Die kanonische Beschreibung liegt in `docs/MASTER_PROMPT_STANDARD.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-master-prompt-standard.md`.
 
-Ein Master-Prompt-bezogener Agent muss Autoritätsmodell, Required Initialization, Scope Declaration, Operating Rules, Decision Rules, Quality Gate Contract, Review Contract, Foundation Trigger, Handover Contract und Adapter Boundary beachten.
+Ein Master-Prompt-bezogener Agent muss Autoritätsmodell, Required Initialization, Scope Declaration, Operating Rules, Decision Rules, Quality Gate Contract, Review Contract, Foundation Trigger, Handover Contract, Session Continuity Contract und Adapter Boundary beachten.
 
 Roadmap Phase 4 ist kein Implementierungsauftrag für Runtime-Code, Provider- oder Tool-Integration, CLI-spezifische Adapter-Prompts, lokale Tool-Profile, MCP-Integration, Schemas, Validatoren oder Workflows.
 
@@ -220,30 +252,32 @@ Adapter Prompts verhindern, dass tool-spezifische Bedienhinweise in den kanonisc
 
 Roadmap Phase 5 ist kein Implementierungsauftrag für Runtime-Code, Provider-SDKs, echte Tool-Integration, lokale Tool-Profile, MCP-Integration, Schemas, Validatoren, Workflows, Release-Automation oder Provider-Secrets.
 
-## 12. Sitzungs-Lifecycle
+## 13. Sitzungs-Lifecycle
 
 1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, Adapter-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
-2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
-3. Task-Übernahme: Aufgabe als aktiv markieren.
-4. Ausführung: lokal arbeiten, testen und dokumentieren.
-5. Review: Self-Review und Spezialreviews ausführen.
-6. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
-7. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
-8. Commit: Änderungen versionieren.
+2. Continuity-Prüfung: neuesten relevanten Handover, Repository-Evidenz, offene Risiken und Ambiguitäten prüfen.
+3. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
+4. Task-Übernahme: Aufgabe als aktiv markieren.
+5. Ausführung: lokal arbeiten, testen und dokumentieren.
+6. Review: Self-Review und Spezialreviews ausführen.
+7. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
+8. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
+9. Commit: Änderungen versionieren.
 
-## 13. Erweitertes Handover-Protokoll
+## 14. Erweitertes Handover-Protokoll
 
 Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 
 1. Session identity: `session_id`, Timestamp, outgoing agent, aktive Registry-Rolle und Ziel-Empfänger.
-2. Task State: abgeschlossene, offene und blockierte Tasks sowie relevante Task-Dateien.
-3. Changed Files: neue, geänderte und gelöschte repository-relative Pfade.
-4. Checks Run: ausgeführte Befehle, Resultate und Evidenz. Nicht gelaufene Checks müssen `NOT RUN` bleiben.
-5. Performance und Budgets: Messwerte, Nicht-Anwendbarkeit oder Decision Record für Verstöße.
-6. Review-Status: Review-Dateien, Validator-Modus, `review_set_id`, `target_ref`, stabiler `target_commit`, blockierende Votes und CI-readiness.
-7. Agent Routing: aktive Rolle, empfohlene nächste Registry-Rolle und Routing-Grund.
-8. Risikoanalyse: neu erkannte Risiken, offene Fragen und blockierende Annahmen.
-9. Nächste Schritte: konkrete nächste Aufgabe und empfohlene Rolle.
-10. Notes for next agent: knappe, nicht-sensitive Hinweise für die nächste Sitzung.
+2. Continuity state: `READY`, `PARTIAL`, `BLOCKED` oder `UNKNOWN`, plus latest repo evidence checked.
+3. Task State: abgeschlossene, offene und blockierte Tasks sowie relevante Task-Dateien.
+4. Changed Files: neue, geänderte und gelöschte repository-relative Pfade.
+5. Checks Run: ausgeführte Befehle, Resultate und Evidenz. Nicht gelaufene Checks müssen `NOT RUN` bleiben.
+6. Performance und Budgets: Messwerte, Nicht-Anwendbarkeit oder Decision Record für Verstöße.
+7. Review-Status: Review-Dateien, Validator-Modus, `review_set_id`, `target_ref`, stabiler `target_commit`, blockierende Votes und CI-readiness.
+8. Agent Routing: aktive Rolle, empfohlene nächste Registry-Rolle und Routing-Grund.
+9. Risikoanalyse: neu erkannte Risiken, offene Fragen und blockierende Annahmen.
+10. Nächste Schritte: konkrete nächste Aufgabe und empfohlene Rolle.
+11. Notes for next agent: knappe, nicht-sensitive Hinweise für die nächste Sitzung.
 
 Kein Agent darf eine größere Arbeit als abgeschlossen markieren, wenn der Handover nicht nachvollziehbar erklärt, was getan wurde, was geprüft wurde und was als Nächstes passieren muss.

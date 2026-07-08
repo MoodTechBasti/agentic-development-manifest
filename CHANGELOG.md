@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.28] — 2026-07-08
+
+### Roadmap Phase 7 Session Continuity Baseline
+
+- Added `docs/decisions/ADR-20260708-session-continuity-baseline.md` to accept Roadmap Phase 7 as the Session Continuity Baseline.
+- Added `.ai/handover/README.md` to define durable handover discovery, metadata, continuity status, evidence, and commit policy.
+- Hardened `templates/HANDOVER_TEMPLATE.md` with continuity status, target ref, target commit, review set ID, and latest repository evidence fields.
+- Synchronized `.ai/README.md`, `docs/OPERATING_SYSTEM.md`, `spec/ADM_v1_DRAFT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md` for repository-owned Session Continuity semantics.
+- Kept v0.28 intentionally narrow: no runtime code, real automation, Handover linter, new validator mode, workflow change, release automation, provider SDK integration, MCP integration, local tool profile, Gemini CLI adapter, Antigravity CLI adapter, branch-protection change, review archive migration, Phase 8 work, or v1 release-candidate claim.
+
 ## [v0.27] — 2026-07-08
 
 ### Review Archive Migration Batch 1
