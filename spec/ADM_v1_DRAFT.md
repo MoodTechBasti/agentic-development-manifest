@@ -240,6 +240,23 @@ Review Archive Migration Batch 2 ist der kanonische v0.30-Archivierungsmigration
 
 Foundation Hygiene Cleanup ist der kanonische v0.31-Pre-Phase-9-Hygieneblock. Er finalisiert stale ADR-Review-Evidenz, schärft Release-Evidence-Semantik, verbessert PR-Validation-Evidence und macht complete-set Validator-Ausgabe klarer, ohne Validierungssemantik oder Workflow-Verhalten zu ändern.
 
+Roadmap Phase 9 ist der kanonische v0.32-Kriterienblock für einen späteren v1 Release Candidate. v0.32 definiert die Kriterien; es deklariert ADM nicht als v1-ready und erzeugt keinen v1- oder v1-RC-Tag.
+
+### v1 Release Candidate Criteria
+
+Ein v1 Release Candidate ist nur zulässig, wenn der konkrete Zielzustand durch folgende Evidenz belegbar ist:
+
+- README, ROADMAP, CHANGELOG, Spezifikation und relevante Governance-Dokumente sind synchron.
+- Alle abgeschlossenen Roadmap-Phasen und Governance-Baselines haben akzeptierte ADR-Abdeckung.
+- Deferred Adapter wie Gemini CLI und Antigravity CLI gelten nicht als akzeptiert, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
+- Für den v1-RC-Zielzustand existiert ein neues vollständiges sechs Rollen Review-Set.
+- Das v1-RC-Review-Set ist mit explizitem `review_set_id`, `target_ref` und `target_commit` an den stabilen geprüften Zustand gebunden.
+- Release-grade `complete-set`-Validierung ist vor einem v1-RC-Tag erfolgreich gelaufen.
+- Governance-relevante v1-RC-Releases enthalten manuelle GitHub Ruleset-Audit-Evidenz.
+- Die direkte aktive `.ai/reviews/`-Zone ist für den v1-RC-Gate nicht mehrdeutig; historische Review-Sets sind entweder archiviert oder ausdrücklich als nicht zum v1-RC-Scope gehörend dokumentiert.
+
+Nicht erforderlich für v1-RC sind Runtime-Code, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Workflow-Änderungen, neue Validator-Modi, Release-Automation, Review Index, zusätzliche Review-Archivmigration, Handover-Linting oder Adapter-Expansion, solange diese nicht durch spätere explizite Roadmap-Phasen und ADRs akzeptiert werden.
+
 v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand. Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
 
 ## 19. PR Hygiene Policy
