@@ -1,14 +1,21 @@
 # Session Handover Template
 
-Session ID: Handoff-[YYYYMMDD]-[HHMM]
+Session ID: Handoff-[YYYYMMDD]-[HHMM]-[short-scope]
 Timestamp: [YYYY-MM-DD HH:MM:SS TZ]
 Outgoing agent: [agent name and role]
 Active registry role: [agent_id or not applicable]
 Target recipient: [next agent, maintainer, or general]
+Continuity status: READY / PARTIAL / BLOCKED / UNKNOWN
+Target ref: [branch, PR, release target, or N/A]
+Target commit: [git sha, UNKNOWN, or N/A]
+Review set id: [review_set_id, UNKNOWN, or N/A]
+Latest repo evidence checked: [git status/log, handover path, review path, CI source, or NOT RUN]
 
 ## 1. Session Summary
 
 Write a short evidence-based summary of what was achieved in this session.
+
+Do not use chat history, hidden model memory, local scratch files, raw logs, local tool profiles, or tool caches as authoritative project truth.
 
 ## 2. Task State
 
@@ -33,11 +40,13 @@ Use repository-relative paths only.
 | Review validator tests | `python3 scripts/test_validate_reviews.py` | PASSED / FAILED / NOT RUN | [short evidence] |
 | Existing-strict review validation | `python3 scripts/validate_reviews.py --path . --mode existing-strict` | PASSED / FAILED / NOT RUN | [short evidence] |
 | Complete-set validation | [command with review_set_id, target_ref, target_commit] | PASSED / FAILED / NOT RUN / N/A | [short evidence] |
-| Linter | [command] | CLEAN / WARNINGS / ERRORS / NOT RUN | [short evidence] |
-| Typecheck or compiler | [command] | CLEAN / ERRORS / NOT RUN | [short evidence] |
-| Build | [command] | PASSED / FAILED / NOT RUN | [short evidence] |
+| Linter | [command] | CLEAN / WARNINGS / ERRORS / NOT RUN / N/A | [short evidence] |
+| Typecheck or compiler | [command] | CLEAN / ERRORS / NOT RUN / N/A | [short evidence] |
+| Build | [command] | PASSED / FAILED / NOT RUN / N/A | [short evidence] |
 
 Do not mark a check as passed unless it was actually executed or proven by a cited CI run.
+
+Use `UNKNOWN` only when repository evidence cannot establish the result. Prefer `NOT RUN` when the check simply was not executed.
 
 ## 5. Performance and Budget Status
 
@@ -57,6 +66,8 @@ Budget violations require a referenced Decision Record.
 - stable reviewed `target_commit`:
 - Blocking review votes:
 - CI-readiness status:
+
+Do not invent review votes, CI-readiness, target commits, or validation results.
 
 ## 7. Agent Routing
 
@@ -85,3 +96,12 @@ Do not invent a registry role. If no matching role exists, document the gap as a
 ## 11. Notes for the Next Agent
 
 Include traps, assumptions, incomplete context, or verification steps. Keep notes concise, non-sensitive, and repository-relevant.
+
+## 12. Continuity Verification
+
+- Latest handover discovery source:
+- Ambiguity found: YES / NO
+- Stale or conflicting evidence:
+- Facts that remain UNKNOWN:
+
+If continuity evidence is ambiguous, stop and report it before implementation. Do not reconstruct state from memory.
