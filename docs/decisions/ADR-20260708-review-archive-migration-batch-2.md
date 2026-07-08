@@ -12,9 +12,9 @@
 | Confidence level | 9 |
 | Affected modules | `.ai/reviews/`, `.ai/reviews/archive/`, `.ai/README.md`, `README.md`, `ROADMAP.md`, `CHANGELOG.md`, `docs/OPERATING_SYSTEM.md`, `spec/ADM_v1_DRAFT.md` |
 | New dependencies | no |
-| Security review | pending review set |
-| Cost review | pending review set |
-| Performance review | pending review set |
+| Security review | PASSED via `RSV-20260708-review-archive-migration-batch-2` |
+| Cost review | PASSED via `RSV-20260708-review-archive-migration-batch-2` |
+| Performance review | PASSED via `RSV-20260708-review-archive-migration-batch-2` |
 
 ## 1. Context and Reason
 
@@ -99,4 +99,4 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 
 ## 9. Final Outcome
 
-Pending six-role review set after the stable non-review target commit is created.
+Six-role review set was completed under `RSV-20260708-review-archive-migration-batch-2` and release-grade validation passed before tagging v0.30.

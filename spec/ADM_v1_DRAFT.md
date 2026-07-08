@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.30 Draft)
+# ADM — Spezifikation (v0.31 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.30 Draft
-- **Zustand**: Review Archive Migration Batch 2 Accepted
+- **Version**: v0.31 Draft
+- **Zustand**: Foundation Hygiene Cleanup Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar oder klar als extern markiert.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Review Archive Migration, Handovers, Session Continuity, Tool Verification, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Review Archive Migration, Handovers, Session Continuity, Tool Verification, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening, Foundation Consistency and Release Hygiene sowie Foundation Hygiene Cleanup müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -72,16 +72,17 @@ Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 | `existing-strict` | Prüft vorhandene Reviews strikt auf Struktur. | Pull Requests, normale Pushes. |
 | `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
-v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht. v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in dieses Archivmodell. v0.30 migriert abgeschlossene v0.26-, v0.27- und v0.28-Review-Sets in dasselbe Archivmodell, ohne Review-Metadaten oder Produktionsvalidatorlogik zu ändern.
+v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht. v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in dieses Archivmodell. v0.30 migriert abgeschlossene v0.26-, v0.27- und v0.28-Review-Sets in dasselbe Archivmodell, ohne Review-Metadaten oder Produktionsvalidatorlogik zu ändern. v0.31 verbessert nur die complete-set Ausgabeklarheit; Validierungssemantik, Rollenpflichten, Scope-Bindung und Archivverhalten bleiben unverändert.
 
 ## 7. Release Gate Policy
 
-Ein Release oder Git-Tag ist nur zulässig, wenn ein vollständiges Review-Set vorliegt und manuell validiert wurde.
+Ein Release oder Git-Tag ist nur zulässig, wenn ein vollständiges Review-Set vorliegt und release-grade validiert wurde.
 
-- **Manual Release Validation**: Vor dem Tagging muss der Workflow `ADM Quality Gate` manuell auf `main` mit Modus `complete-set` gestartet werden.
-- **Parameter**: `review_set_id`, `target_ref` und `reviewed_commit` müssen explizit angegeben werden.
+- **Release-grade Validation**: Vor dem Tagging muss `complete-set` auf dem finalen `main`-Zustand mit dokumentierter Evidenz grün sein.
+- **Evidence Paths**: GitHub manual `workflow_dispatch`, lokale Terminalvalidierung und Ruleset-Audit sind getrennte Evidenzarten und dürfen nicht vermischt werden.
+- **Parameter**: `review_set_id`, `target_ref` und `reviewed_commit` beziehungsweise `target_commit` müssen explizit angegeben werden.
 - **Stable reviewed commit**: Der `target_commit` in Review-Artefakten ist der stabile nicht-review Commit, der geprüft wurde.
-- **Final tag commit**: Der Release-Tag zeigt auf den finalen `main`-Commit nach Merge der Review-Artefakte und erfolgreicher manueller release-grade Validation.
+- **Final tag commit**: Der Release-Tag zeigt auf den finalen `main`-Commit nach Merge der Review-Artefakte und erfolgreicher release-grade Validation.
 - **Referenz**: Details siehe `docs/RELEASE_RUNBOOK.md`.
 
 ## 8. Runtime Artifact Policy (`.ai/`)
@@ -237,6 +238,8 @@ Tool Verification Discovery Baseline ist der kanonische v0.29-Roadmap-Phase-8-Bl
 
 Review Archive Migration Batch 2 ist der kanonische v0.30-Archivierungsmigrationsblock. Er verschiebt abgeschlossene Review-Sets von v0.26 bis v0.28 nach `.ai/reviews/archive/<review_set_id>/`, ohne Review-Metadaten umzuschreiben und ohne v0.29 als aktive Release-Evidenz zu archivieren.
 
+Foundation Hygiene Cleanup ist der kanonische v0.31-Pre-Phase-9-Hygieneblock. Er finalisiert stale ADR-Review-Evidenz, schärft Release-Evidence-Semantik, verbessert PR-Validation-Evidence und macht complete-set Validator-Ausgabe klarer, ohne Validierungssemantik oder Workflow-Verhalten zu ändern.
+
 v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand. Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
 
 ## 19. PR Hygiene Policy
@@ -246,6 +249,7 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Inhalt**: PR-Bodies dürfen keine ungelösten Platzhalter, leere Pflichtfelder oder ungeprüfte Checkboxen enthalten.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
+- **Validation Evidence**: PRs müssen lokale Validierung, GitHub Actions PR Gate, manuelle release-grade Workflow-Runs und `NOT RUN`-Gründe klar trennen.
 
 ## 20. Agent Onboarding Contract
 
@@ -274,6 +278,6 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - **Session Continuity**: Agenten müssen repository-owned Handover- und Projektzustandsevidenz prüfen, Ambiguität melden und nicht aus Chatverlauf, hidden memory, lokalen Profilen oder Scratch rekonstruieren.
 - **Roadmap and Review Validation**: Roadmap-Phasen müssen von Lifecycle-Phasen getrennt bleiben; v1-Readiness-Kriterien dürfen keine deferred oder nicht akzeptierten Mechanismen als umgesetzt behandeln; normale PR-Gates dürfen nicht versehentlich zu release-grade `complete-set`-Gates werden.
 - **Review Archive Policy**: Archivierte Review-Sets bleiben historische Evidenz; aktuelle Validatorfehler dürfen nicht durch Archivierung versteckt werden.
-- **Release Hygiene**: Reviews müssen auf den stabilen geprüften Commit zeigen; der Release-Tag darf erst nach Merge der Reviews und manueller release-grade Validation auf dem finalen `main`-Commit gesetzt werden.
+- **Release Hygiene**: Reviews müssen auf den stabilen geprüften Commit zeigen; der Release-Tag darf erst nach Merge der Reviews und release-grade Validation auf dem finalen `main`-Commit gesetzt werden; lokale, GitHub-Workflow- und Ruleset-Evidenz müssen eindeutig getrennt dokumentiert werden.
 - **Repository Ruleset Audit**: Governance-relevante Releases brauchen manuelle externe Ruleset-Prüfung; Source-Dateien allein sind kein Beweis.
 - **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle, Continuity Status und nächste Schritte nachvollziehbar dokumentiert.

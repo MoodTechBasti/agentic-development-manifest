@@ -1,10 +1,10 @@
 # ADM — Operating System
 
-> Status: v0.30 synchronized draft
+> Status: v0.31 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Review-Archive, Memory, Standards, Tool Verification und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Review-Archive, Memory, Standards, Tool Verification, Foundation Hygiene Cleanup und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht aus Chat-Erinnerung, hidden model memory, Tool-Cache oder lokalen Scratch-Dateien rekonstruieren müssen.
 
@@ -149,6 +149,8 @@ Der Standardpfad validiert direkte `.ai/reviews/*.md` Dateien und ignoriert `.ai
 
 v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in `.ai/reviews/archive/<review_set_id>/`. v0.30 migriert abgeschlossene Review-Sets von v0.26 bis v0.28 in das Archiv, während v0.29 als aktive Release-Evidenz direkt unter `.ai/reviews/` bleibt. Diese Migrationen ändern keine Review-Metadaten und ändern keine Produktionsvalidatorlogik.
 
+v0.31 ändert keine Validator-Semantik. Es macht nur in der `complete-set`-Ausgabe explizit, dass Scope-Filter nach struktureller Validierung angewendet werden.
+
 ## 8. Release Hygiene
 
 Release-Hygiene ist Teil des Operating Systems, aber keine Release-Automation.
@@ -157,9 +159,15 @@ Vor einem Release müssen Agenten und Maintainer unterscheiden:
 
 - stabiler geprüfter Commit: der nicht-review Commit, auf den Reviews zeigen,
 - Review-Artefakt-Commit: der spätere Commit mit `.ai/reviews/`,
-- finaler Tag-Commit: der `main`-Commit nach Merge der Reviews und erfolgreicher manueller `complete-set`-Validierung.
+- finaler Tag-Commit: der `main`-Commit nach Merge der Reviews und erfolgreicher release-grade `complete-set`-Validierung,
+- lokale Terminal-Evidenz: reproduzierbare Checks aus einem lokalen Checkout,
+- GitHub PR-Gate-Evidenz: normaler `ADM Quality Gate` Lauf auf Pull Requests,
+- GitHub manual workflow evidence: manuell gestarteter `workflow_dispatch` Lauf auf `main`,
+- Ruleset-Audit-Evidenz: manuelle Prüfung externer GitHub-Repository-Einstellungen.
 
 GitHub-Rulesets sind externe Repository-Einstellungen. Sie müssen manuell auditiert werden, wenn Governance-, Review-, Release- oder Branch-Protection-Reife behauptet wird. Source-Dateien allein beweisen diesen Audit nicht.
+
+Lokale release-grade Validation darf als zusätzliche oder Fallback-Evidenz verwendet werden, muss aber ausdrücklich als lokal bezeichnet werden. Sie darf nicht als GitHub manual workflow evidence beschrieben werden.
 
 ## 9. Handover Automation
 
@@ -262,20 +270,29 @@ Tool Verification ist kein Implementierungsauftrag für Gemini CLI Adapter, Anti
 
 Gemini CLI und Antigravity CLI bleiben deferred candidates, bis aktuelles Tool-Verhalten dokumentiert, reviewed und explizit in einem späteren Adapter-PR freigegeben wurde.
 
-## 14. Sitzungs-Lifecycle
+## 14. Foundation Hygiene Cleanup
+
+Foundation Hygiene Cleanup ist der v0.31 Pre-Phase-9-Hygieneblock. Die kanonische Entscheidung liegt in `docs/decisions/ADR-20260708-foundation-hygiene-cleanup.md`.
+
+Ein hygiene-bezogener Agent muss prüfen, ob sein Task ADR-Review-Evidenz, Release-Evidence-Pfade, PR-Validation-Evidence, Validator-Ausgabe, Dokumentationsdrift oder Foundation-Restwidersprüche betrifft.
+
+Foundation Hygiene Cleanup ist kein Implementierungsauftrag für Roadmap Phase 9, v1 Release Candidate, Workflow-Änderungen, Release-Automation, neue Validator-Modi, Review Index, rekursive Archivvalidierung, Runtime-Code, Provider-SDKs, MCP-Integration, Adapter-Erweiterung, Handover-Linting oder Branch-Protection-Änderungen.
+
+## 15. Sitzungs-Lifecycle
 
 1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, Adapter-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
 2. Tool-Verification-Prüfung: `docs/TOOL_VERIFICATION.md` lesen, wenn deferred oder future Adapter, Tool-Verhalten, CLI-Fähigkeiten oder Tool-State-Grenzen betroffen sind.
-3. Continuity-Prüfung: neuesten relevanten Handover, Repository-Evidenz, offene Risiken und Ambiguitäten prüfen.
-4. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
-5. Task-Übernahme: Aufgabe als aktiv markieren.
-6. Ausführung: lokal arbeiten, testen und dokumentieren.
-7. Review: Self-Review und Spezialreviews ausführen.
-7. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
-8. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
-9. Commit: Änderungen versionieren.
+3. Foundation-Hygiene-Prüfung: `docs/decisions/ADR-20260708-foundation-hygiene-cleanup.md` und `docs/RELEASE_RUNBOOK.md` lesen, wenn Release-Evidence, PR-Evidence, ADR-Status oder Validator-Ausgabe betroffen sind.
+4. Continuity-Prüfung: neuesten relevanten Handover, Repository-Evidenz, offene Risiken und Ambiguitäten prüfen.
+5. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
+6. Task-Übernahme: Aufgabe als aktiv markieren.
+7. Ausführung: lokal arbeiten, testen und dokumentieren.
+8. Review: Self-Review und Spezialreviews ausführen.
+9. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
+10. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
+11. Commit: Änderungen versionieren.
 
-## 14. Erweitertes Handover-Protokoll
+## 16. Erweitertes Handover-Protokoll
 
 Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 

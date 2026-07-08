@@ -100,6 +100,7 @@ def test_valid_complete_set():
         write_set(root)
         result = run_validator(root, *complete_set_args())
         assert_result('valid complete-set passes', result, 0, 'PASSED: review set')
+        assert_result('complete-set explains scoped filtering', result, 0, 'Complete-set scope filters are applied after structural validation.')
 
 
 def test_missing_role_fails():

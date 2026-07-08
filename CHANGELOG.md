@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.31] — 2026-07-08
+
+### Foundation Hygiene Cleanup
+
+- Added `docs/decisions/ADR-20260708-foundation-hygiene-cleanup.md` to accept v0.31 as a pre-Phase-9 foundation hygiene cleanup.
+- Finalized stale review-evidence wording in the accepted v0.29 and v0.30 ADRs after their review sets and release tags already existed.
+- Clarified `docs/RELEASE_RUNBOOK.md` so local terminal validation, GitHub PR quality gates, manual `workflow_dispatch` release-grade validation, and manual ruleset audits are recorded as distinct evidence paths.
+- Strengthened `.github/pull_request_template.md` to require explicit validation evidence instead of mixing local and GitHub workflow claims.
+- Improved `scripts/validate_reviews.py` complete-set output clarity without changing validator semantics, archive behavior, required roles, or scope binding.
+- Added fixture coverage for the new complete-set scope-filtering message.
+- Kept v0.31 intentionally narrow: no Roadmap Phase 9 implementation, v1 release-candidate claim, workflow change, release automation, new validator mode, recursive archive validation, review index generation, runtime code, provider SDK integration, MCP integration, adapter expansion, Handover linting, or branch-protection change.
+
 ## [v0.30] — 2026-07-08
 
 ### Review Archive Migration Batch 2

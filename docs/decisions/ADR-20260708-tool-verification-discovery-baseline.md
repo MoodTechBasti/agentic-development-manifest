@@ -12,9 +12,9 @@
 | Confidence level | 9 |
 | Affected modules | `ROADMAP.md`, `README.md`, `CHANGELOG.md`, `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/TOOL_VERIFICATION.md`, `docs/ADAPTER_PROMPT_STANDARD.md`, `docs/MASTER_PROMPT_STANDARD.md`, `prompts/master_prompt.md`, `prompts/adapters/README.md` |
 | New dependencies | no |
-| Security review | pending review set |
-| Cost review | pending review set |
-| Performance review | pending review set |
+| Security review | PASSED via `RSV-20260708-tool-verification-discovery-baseline` |
+| Cost review | PASSED via `RSV-20260708-tool-verification-discovery-baseline` |
+| Performance review | PASSED via `RSV-20260708-tool-verification-discovery-baseline` |
 
 ## 1. Context and Reason
 
@@ -188,13 +188,13 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 
 ## 13. Review Log
 
-- [ ] Principal Architect: pending
-- [ ] Security Lead: pending
-- [ ] Performance Lead: pending
-- [ ] Cost Engineer: pending
-- [ ] Simplifier: pending
-- [ ] Documentation Reviewer: pending
+- [x] Principal Architect: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
+- [x] Security Lead: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
+- [x] Performance Lead: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
+- [x] Cost Engineer: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
+- [x] Simplifier: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
+- [x] Documentation Reviewer: PASSED via `RSV-20260708-tool-verification-discovery-baseline`
 
 ## 14. Final Outcome
 
-Pending six-role review set after the stable non-review target commit is created.
+Six-role review set was completed under `RSV-20260708-tool-verification-discovery-baseline` and release-grade validation passed before tagging v0.29.
