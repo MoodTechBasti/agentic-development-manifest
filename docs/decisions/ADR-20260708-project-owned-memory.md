@@ -110,6 +110,7 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 - [x] `spec/ADM_v1_DRAFT.md`
 - [x] `docs/OPERATING_SYSTEM.md`
 - [x] `.ai/README.md`
+- [x] `prompts/master_prompt.md`
 - [x] `README.md`
 - [x] `ROADMAP.md`
 - [x] `CHANGELOG.md`
