@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-COST-20260708-review-archive-policy
 review_set_id: RSV-20260708-review-archive-policy
 target_ref: adm-v026-review-archive-policy
-target_commit: f57680d7eb8be7455a61793362b00d748083f45d
+target_commit: 4900491e4c6c186999d3226de4bca20f17cd6129
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Cost Engineer
