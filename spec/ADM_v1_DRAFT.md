@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.25 Draft)
+# ADM — Spezifikation (v0.26 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.25 Draft
-- **Zustand**: Foundation Consistency and Release Hygiene Baseline Accepted
+- **Version**: v0.26 Draft
+- **Zustand**: Review Archive Policy Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar oder klar als extern markiert.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -59,7 +59,7 @@ Ein vollständiges Review-Set besteht aus sechs Rollen:
 ### Review-Artefakte
 
 - Templates liegen unter `templates/reviews/`.
-- Ausgefüllte Berichte liegen unter `.ai/reviews/`.
+- Ausgefüllte aktive Berichte liegen unter `.ai/reviews/`; archivierte historische Review-Sets dürfen später unter `.ai/reviews/archive/<review_set_id>/` liegen.
 - Dateinamen müssen der `review_id` entsprechen, zum Beispiel `REV-ARCH-YYYYMMDD-slug.md`.
 
 ## 6. Review-Validierungsmodi
@@ -72,7 +72,7 @@ Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 | `existing-strict` | Prüft vorhandene Reviews strikt auf Struktur. | Pull Requests, normale Pushes. |
 | `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
-v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden.
+v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht.
 
 ## 7. Release Gate Policy
 
@@ -88,7 +88,7 @@ Ein Release oder Git-Tag ist nur zulässig, wenn ein vollständiges Review-Set v
 
 Das `.ai/` Verzeichnis dient als persistente Memory Layer für Agenten.
 
-- **Versioniert**: `.ai/reviews/`, `.ai/decisions/`, `.ai/handover/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/`, `.ai/README.md`.
+- **Versioniert**: `.ai/reviews/`, `.ai/reviews/archive/`, `.ai/decisions/`, `.ai/handover/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/`, `.ai/README.md`.
 - **Ignoriert oder lokal behandelt**: `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/`, `.ai/local/`, `.ai/sessions/`.
 - **Regel**: Keine temporären Chat-Marker, Rohlogs, Secrets, privaten lokalen Pfade oder flüchtigen Notizen im Repository.
 
@@ -99,7 +99,7 @@ Project-owned memory ist dauerhaftes Projektwissen, das dem Repository gehört u
 Autoritätshierarchie:
 
 1. Kanonische Repository-Dokumente: Spezifikation, Constitution, Governance, Foundation Standards, Master Prompt Standard, Adapter Prompt Standard, ADRs, Runbooks.
-2. Versionierte Runtime-Artefakte: Reviews, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
+2. Versionierte Runtime-Artefakte: Reviews, Review-Archive, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
 3. Working-Artefakte: Tasks, Planung, offene Fragen, geprüfte Research-Zusammenfassungen.
 4. Lokale transiente Artefakte: Scratch, Logs, Cache, Experimente.
 5. Hidden model memory und Chatverlauf: nie autoritative Projektwahrheit.
@@ -140,7 +140,7 @@ Handover Automation darf keine Checks, Commits, Review-Votes, Rollen, CI-Ergebni
 
 Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memory, Chatverlauf, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-v0.25 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
+v0.26 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
 
 ## 12. SaaS Foundation Standard
 
@@ -238,4 +238,4 @@ Roadmap Phase 6 bis Phase 9 sind dokumentierte künftige Blöcke nach den ersten
 
 v1-Readiness erfordert synchronisierte Spezifikation, Roadmap, Changelog, ADRs und Review-Artefakte. Ein v1 Release Candidate braucht ein vollständiges sechs Rollen Review-Set und manuelle release-grade `complete-set` Validierung.
 
-v1 erfordert keine Runtime, Provider-SDKs, MCP-Integration, lokalen Tool-Profile, Workflow-Änderungen oder Release-Automation, solange diese nicht durch spätere explizite Roadmap-Phasen und ADRs akzeptiert werden.
+v1 erfordert keine Runtime, Provider-SDKs, MCP-Integration, lokalen Tool-Profile, Workflow-Änderungen, Release-Automation oder Review-Archivmigration, solange diese nicht durch spätere explizite Roadmap-Phasen und ADRs akzeptiert werden.
