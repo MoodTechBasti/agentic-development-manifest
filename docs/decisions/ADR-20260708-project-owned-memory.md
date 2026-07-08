@@ -1,7 +1,7 @@
 # ADR-20260708-project-owned-memory
 
 > ID: ADR-20260708-project-owned-memory
-> Status: PROPOSED
+> Status: ACCEPTED
 > Last updated: 2026-07-08
 > Owner: Principal Architect
 
@@ -12,9 +12,9 @@
 | Confidence level | 9 |
 | Affected modules | `docs/OPERATING_SYSTEM.md`, `.ai/README.md`, `spec/ADM_v1_DRAFT.md`, `prompts/master_prompt.md` |
 | New dependencies | no |
-| Security review | PENDING |
-| Cost review | PENDING |
-| Performance review | PENDING |
+| Security review | PASSED |
+| Cost review | PASSED |
+| Performance review | PASSED |
 
 ## 1. Context and Reason
 
@@ -117,13 +117,14 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 
 ## 9. Review Log
 
-- [ ] Principal Architect: PENDING — review artifact required before acceptance.
-- [ ] Devil's Advocate: PENDING — covered by Simplifier review artifact.
-- [ ] Security Lead: PENDING — review artifact required before acceptance.
-- [ ] Cost Engineer: PENDING — review artifact required before acceptance.
-- [ ] Performance Lead: PENDING — review artifact required before acceptance.
-- [ ] Simplifier: PENDING — review artifact required before acceptance.
+- [x] Principal Architect: APPROVED — `REV-ARCH-20260708-project-owned-memory.md`
+- [x] Devil's Advocate: APPROVED — covered by `REV-SIMP-20260708-project-owned-memory.md`
+- [x] Security Lead: APPROVED — `REV-SEC-20260708-project-owned-memory.md`
+- [x] Cost Engineer: APPROVED — `REV-COST-20260708-project-owned-memory.md`
+- [x] Performance Lead: APPROVED — `REV-PERF-20260708-project-owned-memory.md`
+- [x] Simplifier: APPROVED — `REV-SIMP-20260708-project-owned-memory.md`
+- [x] Documentation Reviewer: APPROVED — `REV-DOC-20260708-project-owned-memory.md`
 
 ## 10. Final Outcome
 
-This ADR is proposed for v0.16. It should be promoted to ACCEPTED only after the v0.16 review set passes and the human maintainer approves the decision.
+Accepted for v0.16 after maintainer approval and successful local validation of the full review set.
