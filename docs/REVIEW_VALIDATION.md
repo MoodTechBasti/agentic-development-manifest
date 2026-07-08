@@ -1,6 +1,6 @@
 # ADM Review Validation
 
-This document describes the advisory validation layer for completed ADM review artifacts.
+This document describes the validation layer for completed ADM review artifacts.
 
 ## Scope
 
@@ -10,19 +10,24 @@ Completed review artifacts live in `.ai/reviews/`.
 
 The validator checks completed review artifacts only. It does not validate reusable templates as if they were completed reviews.
 
-## Command
+## Commands
 
-Strict local validation:
+- `python scripts/validate_reviews.py --path . --mode advisory`
+- `python scripts/validate_reviews.py --path . --mode existing-strict`
+- `python scripts/validate_reviews.py --path . --mode complete-set`
+- `python scripts/validate_reviews.py --path . --advisory` remains a compatibility alias for advisory mode.
 
-```bash
-python scripts/validate_reviews.py --path .
-```
+## Validation modes
 
-Advisory validation:
+| Mode | Blocks malformed existing reviews | Requires all 6 reviews | Intended use |
+| --- | --- | --- | --- |
+| `advisory` | No | No | Feature branches, local exploration, early agent work |
+| `existing-strict` | Yes | No | PRs to `main` / `master`, strict syntax and metadata checks |
+| `complete-set` | Yes | Yes | Release branches and manual release-readiness checks |
 
-```bash
-python scripts/validate_reviews.py --path . --advisory
-```
+`complete-set` requires one passing, CI-ready review for every standard ADM review type: `architect`, `security`, `performance`, `cost`, `simplifier`, and `documentation`.
+
+Each completed artifact in `complete-set` mode must use `review_status: PASSED` and `ci_ready: true`.
 
 ## Validated fields
 
@@ -63,14 +68,16 @@ Review IDs must match their review type:
 | `simplifier` | `REV-SIMP` |
 | `documentation` | `REV-DOC` |
 
-Example:
-
-```text
-REV-SEC-20260708-ai-routing
-```
+Example: `REV-SEC-20260708-ai-routing`
 
 ## CI mode
 
-The GitHub workflow runs the validator in advisory mode. This surfaces malformed review artifacts without turning every feature branch into a hard review-gate branch.
+The GitHub workflow selects the review mode by branch context:
 
-A hard review gate can be added later when ADM defines which phases, branches, or release types require complete review sets.
+- feature branches and `dev`: `advisory`
+- pull requests to `main` / `master`: `existing-strict`
+- pushes to `main` / `master`: `existing-strict`
+- `release/**` branches and pull requests targeting `release/**`: `complete-set`
+- manual `workflow_dispatch`: selected by input, defaulting to `existing-strict`
+
+This prevents normal feature work from deadlocking while still letting release branches enforce complete review-set readiness.
