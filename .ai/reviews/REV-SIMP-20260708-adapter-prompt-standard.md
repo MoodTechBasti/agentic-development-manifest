@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-SIMP-20260708-adapter-prompt-standard
 review_set_id: RSV-20260708-adapter-prompt-standard
 target_ref: adm-v022-adapter-prompt-standard
-target_commit: 9a04eb2bbd6770848fddac5afc2813cdec498977
+target_commit: d798d859af514e3ea445515c649e0f5440a9f1ee
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Simplifier
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed whether the Adapter Prompt Standard solves the Roadmap Phase 5 problem without overbuilding tool profiles, validators, workflows, or runtime integration.
+Reviewed whether the Adapter Prompt Standard solves the Roadmap Phase 5 problem without overbuilding tool profiles, validators, workflows, runtime integration, or competing authority layers.
 
 ## Findings
 
@@ -32,6 +32,7 @@ Reviewed whether the Adapter Prompt Standard solves the Roadmap Phase 5 problem 
 - Strengths: The initial adapter set avoids adding every candidate tool at once.
 - Strengths: The generic CLI adapter covers unknown tools without creating speculative Gemini or Antigravity files.
 - Strengths: No schema, validator, workflow, MCP, provider, runtime, or local profile layer is added.
+- Strengths: Runtime evidence is not demoted beneath adapter guidance.
 - Risk: Future adapter prompts can become mini master prompts if canonical content is copied instead of referenced.
 
 ## Simplification Gates
@@ -40,6 +41,7 @@ Reviewed whether the Adapter Prompt Standard solves the Roadmap Phase 5 problem 
 - [x] No premature schema or validator added.
 - [x] No broad speculative adapter set added.
 - [x] Canonical master prompt remains central.
+- [x] Adapter authority remains downstream from runtime evidence.
 
 ## Review Vote
 
