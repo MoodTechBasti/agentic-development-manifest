@@ -16,6 +16,10 @@ on:
           - advisory
           - existing-strict
           - complete-set
+      review_set_id:
+        description: Optional review_set_id for complete-set runs
+        required: false
+        type: string
 
 jobs:
   line-limit-check:
@@ -48,7 +52,11 @@ jobs:
           BASE_REF: ${{ github.base_ref }}
           REF_NAME: ${{ github.ref_name }}
           REF: ${{ github.ref }}
+          SHA: ${{ github.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           DISPATCH_MODE: ${{ inputs.review_gate_mode }}
+          DISPATCH_REVIEW_SET_ID: ${{ inputs.review_set_id }}
         run: |
           set -eu
 
@@ -58,6 +66,13 @@ jobs:
           fi
 
           mode="advisory"
+          target_ref="$REF_NAME"
+          target_commit="$SHA"
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            target_ref="PR-$PR_NUMBER"
+            target_commit="${PR_HEAD_SHA:-$SHA}"
+          fi
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             mode="${DISPATCH_MODE:-existing-strict}"
@@ -70,4 +85,14 @@ jobs:
           fi
 
           echo "ADM review validation mode: $mode"
-          python scripts/validate_reviews.py --path . --mode "$mode"
+          echo "ADM review target_ref: $target_ref"
+          echo "ADM review target_commit: $target_commit"
+
+          cmd=(python scripts/validate_reviews.py --path . --mode "$mode")
+          if [ "$mode" = "complete-set" ]; then
+            cmd+=(--target-ref "$target_ref" --target-commit "$target_commit")
+            if [ -n "${DISPATCH_REVIEW_SET_ID:-}" ]; then
+              cmd+=(--review-set-id "$DISPATCH_REVIEW_SET_ID")
+            fi
+          fi
+          "${cmd[@]}"
