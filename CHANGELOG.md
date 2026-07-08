@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.30] — 2026-07-08
+
+### Review Archive Migration Batch 2
+
+- Added `docs/decisions/ADR-20260708-review-archive-migration-batch-2.md` to accept v0.30 as Review Archive Migration Batch 2.
+- Moved completed v0.26, v0.27, and v0.28 review sets from direct `.ai/reviews/*.md` files into `.ai/reviews/archive/<review_set_id>/`.
+- Kept the v0.29 Tool Verification Discovery Baseline review set directly under `.ai/reviews/` as current active release evidence.
+- Preserved original review file contents and metadata; no historical `review_set_id`, `target_ref`, `target_commit`, review vote, `review_status`, or `ci_ready` value is retargeted.
+- Kept v0.30 intentionally narrow: no production validator logic change, workflow change, release automation, review index generation, Roadmap Phase 9 implementation, v1 release-candidate claim, runtime code, provider SDK integration, MCP integration, adapter expansion, Handover linting, or branch-protection change.
+
 ## [v0.29] — 2026-07-08
 
 ### Roadmap Phase 8 Tool Verification Discovery Baseline
