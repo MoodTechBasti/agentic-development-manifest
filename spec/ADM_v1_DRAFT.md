@@ -1,20 +1,20 @@
-# ADM — Spezifikation (v0.15 Draft)
+# ADM — Spezifikation (v0.16 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.15 Draft
-- **Zustand**: Specification & Agent Compliance Alignment
+- **Version**: v0.16 Draft
+- **Zustand**: Project-owned Memory Architecture Proposed
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
 
 ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modellunabhängigkeit garantieren:
 
-1.  **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
-2.  **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3.  **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen und Reviews müssen als Dateien versioniert sein.
+1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
+2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen und Reviews müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -42,7 +42,9 @@ ADM-konforme Repositories unterliegen strengen Sicherheits- und Prozessregeln:
 Jede wesentliche Änderung erfordert ein strukturiertes Review-Set.
 
 ### Review-Rollen
+
 Ein vollständiges Review-Set besteht aus sechs Rollen:
+
 - **Architect Review**: Architektur, Wartbarkeit, Skalierbarkeit.
 - **Security Review**: Bedrohungsmodelle, Datensicherheit, Tenant-Isolation.
 - **Performance Review**: Latenzen, Ressourcen-Effizienz, Budgets.
@@ -51,6 +53,7 @@ Ein vollständiges Review-Set besteht aus sechs Rollen:
 - **Documentation Review**: Vollständigkeit der Doku, Runbooks, ADRs.
 
 ### Review-Artefakte
+
 - Templates liegen unter `templates/reviews/`.
 - Ausgefüllte Berichte liegen unter `.ai/reviews/`.
 - Dateinamen müssen der `review_id` entsprechen (z.B. `REV-ARCH-YYYYMMDD-slug.md`).
@@ -77,11 +80,35 @@ Ein Release (Git Tag) ist nur zulässig, wenn ein vollständiges Review-Set vorl
 
 Das `.ai/` Verzeichnis dient als persistente Memory Layer für Agenten.
 
-- **Versioniert**: `.ai/reviews/`, `.ai/decisions/`, `.ai/handover/`, `.ai/README.md`.
-- **Ignoriert (lokal)**: `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/`.
-- **Regel**: Keine temporären Chat-Marker oder flüchtige Notizen im Repository.
+- **Versioniert**: `.ai/reviews/`, `.ai/decisions/`, `.ai/handover/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/README.md`.
+- **Ignoriert oder lokal behandelt**: `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/`, `.ai/local/`, `.ai/sessions/`.
+- **Regel**: Keine temporären Chat-Marker, Rohlogs, Secrets, privaten lokalen Pfade oder flüchtigen Notizen im Repository.
 
-## 9. PR Hygiene Policy
+## 9. Project-owned Memory
+
+Project-owned memory ist dauerhaftes Projektwissen, das dem Repository gehört und nicht einem Modell, Chatfenster oder lokalen Tool-Profil.
+
+### Autoritätshierarchie
+
+1. Kanonische Repository-Dokumente: Spezifikation, Constitution, Governance, ADRs, Runbooks.
+2. Versionierte Runtime-Artefakte: Reviews, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
+3. Working-Artefakte: Tasks, Planung, offene Fragen, geprüfte Research-Zusammenfassungen.
+4. Lokale transiente Artefakte: Scratch, Logs, Cache, Experimente.
+5. Hidden model memory und Chatverlauf: nie autoritative Projektwahrheit.
+
+### Speicherklassen
+
+| Klasse | Zweck | Beispiel |
+| --- | --- | --- |
+| `canonical` | Normative Projektwahrheit | `spec/`, `docs/decisions/`, `docs/REPOSITORY_GOVERNANCE.md` |
+| `runtime` | Ausgeführte Agentenarbeit | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` |
+| `working` | Koordination kommender Arbeit | `.ai/tasks/`, `.ai/planning/` |
+| `knowledge` | Kuratierte Recherche und Projektkontext | `.ai/knowledge/`, `.ai/memory/` |
+| `transient` | Lokale Tool-Ausgaben | `.ai/tmp/`, `.ai/cache/`, `.ai/logs/` |
+
+Memory-Dateien müssen knapp, quellenbewusst, nicht-sensitiv und für zukünftige Agenten prüfbar sein.
+
+## 10. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -89,14 +116,15 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 10. Agent Onboarding Contract
+## 11. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
+
 - Die notwendige Initialisierung (Lese-Reihenfolge der Doku).
 - Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
 - Die Regeln für Handover und Decision Records.
 
-## 11. Quality Gates / Definition of Done
+## 12. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
