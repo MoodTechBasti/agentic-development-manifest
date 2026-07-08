@@ -1,4 +1,4 @@
-# ADM — Operating System (v0.17 Draft)
+# ADM — Operating System (v0.18 Draft)
 
 Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
@@ -111,10 +111,12 @@ ADM trennt wiederverwendbare Vorlagen von ausgefüllten Laufzeit-Artefakten.
 
 - Wiederverwendbare Review-Vorlagen liegen unter `templates/reviews/`.
 - Ausgefüllte, konkrete Review-Berichte liegen unter `.ai/reviews/`.
-- Leere Templates dürfen nicht in `.ai/reviews/` abgelegt werden.
+- Wiederverwendbare Handover-Vorlagen liegen unter `templates/HANDOVER_TEMPLATE.md`.
+- Ausgefüllte, konkrete Handovers liegen unter `.ai/handover/`.
+- Leere Templates dürfen nicht in `.ai/reviews/` oder `.ai/handover/` abgelegt werden.
 - Ausgefüllte Reviews nutzen ihren `review_id` als Dateiname, nicht statische Rollennamen.
 
-Diese Trennung verhindert, dass Projektgedächtnis, Review-Historie und wiederverwendbare Schablonen vermischt werden.
+Diese Trennung verhindert, dass Projektgedächtnis, Review-Historie, Handover-Historie und wiederverwendbare Schablonen vermischt werden.
 
 ## Review-Vorlagen
 
@@ -183,6 +185,37 @@ Die Workflow-Automation ermittelt den stabilen geprüften Commit standardmäßig
 
 Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges und commit-gebundenes Review-Gate erhalten.
 
+## Handover Automation
+
+Handover Automation beschreibt, welche Übergabeinformationen später sicher vorbefüllt, gelintet oder validiert werden dürfen.
+
+### Maschinenprüfbare Feldgruppen
+
+| Feldgruppe | Beispiele | Automationsgrenze |
+| --- | --- | --- |
+| Identität | `session_id`, `timestamp`, `outgoing_agent`, `active_role` | Format und Vorhandensein prüfbar |
+| Scope | `changed_files`, `target_ref`, `target_commit`, `review_set_id` | Pfade und Git-/Review-Referenzen prüfbar |
+| Qualität | Checks, Review-Status, CI-readiness | Statuswerte prüfbar, Wahrheitsgehalt nur mit Evidenz |
+| Routing | nächster Registry-Agent, Routing-Grund | Role-ID prüfbar, Begründung human-review |
+| Zustand | erledigte, offene und blockierte Tasks | Struktur prüfbar, Inhalt human-review |
+
+### Zulässige Automatisierung
+
+Spätere Tools dürfen Handovers aus Git-Status, Branch-Informationen, Review-Dateien, aktiven Tasks und Agent Registry vorbefüllen oder prüfen.
+
+Sie dürfen fehlende Pflichtfelder, nicht repository-relative Pfade, inkonsistente Review-Scope-Daten oder fehlende Routing-Rollen melden.
+
+### Verbotene Automatisierung
+
+Handover Automation darf nicht:
+
+- Checks, Commits, CI-Ergebnisse oder Review-Votes erfinden,
+- Arbeit als abgeschlossen markieren, wenn Validierung fehlt,
+- Risiken entfernen, um einen grünen Status zu erzeugen,
+- PRs mergen, Tags setzen oder Branch Protection ändern,
+- Chatverlauf, hidden model memory, Scratch-Dateien oder Rohlogs als autoritative Quelle nutzen,
+- Secrets, private URLs, private lokale Pfade oder sensitive Daten versionieren.
+
 ## Sitzungs-Lifecycle
 
 1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen und letzten Handover lesen.
@@ -198,53 +231,16 @@ Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review
 
 Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 
-### 1. Task State
-
-- abgeschlossene Tasks
-- offene oder blockierte Tasks
-- betroffene Dateien
-
-### 2. Technische Metriken
-
-- Linter-Status
-- Compiler- oder Typecheck-Status
-- Teststatus
-- Coverage, falls verfügbar
-- Dateien über 300 Zeilen
-- Decision Records für begründete Ausnahmen
-
-### 3. Performance und Budgets
-
-- gemessene Latenzen, falls relevant
-- Budget-Verstöße
-- Begründung oder Decision Record für akzeptierte Abweichungen
-
-### 4. Review-Status
-
-- ausgeführte Review-Vorlagen
-- Review-Dateien unter `.ai/reviews/`
-- Ergebnis von `scripts/validate_reviews.py`, inklusive Modus und Scope
-- `review_set_id`, `target_ref` und stabiler geprüfter `target_commit`
-- blockierende Votes
-- CI-readiness status
-
-### 5. Agent Routing
-
-- aktive Agentenrolle, falls relevant
-- nächster empfohlener Registry-Agent oder Rollenfamilie
-- Grund für das empfohlene Handover-Routing
-
-### 6. Risikoanalyse
-
-- neu erkannte Architektur-, Sicherheits-, Kosten- oder Betriebsrisiken
-- offene Fragen
-- blockierende Annahmen
-
-### 7. Nächste Schritte
-
-- nächste logische Aufgabe
-- empfohlene Rolle für die nächste Sitzung
-- Hinweise für den nächsten Agenten
+1. Session identity: `session_id`, Timestamp, outgoing agent, aktive Registry-Rolle und Ziel-Empfänger.
+2. Task State: abgeschlossene, offene und blockierte Tasks sowie relevante Task-Dateien.
+3. Changed Files: neue, geänderte und gelöschte repository-relative Pfade.
+4. Checks Run: ausgeführte Befehle, Resultate und Evidenz. Nicht gelaufene Checks müssen `NOT RUN` bleiben.
+5. Performance und Budgets: Messwerte, Nicht-Anwendbarkeit oder Decision Record für Verstöße.
+6. Review-Status: Review-Dateien, Validator-Modus, `review_set_id`, `target_ref`, stabiler `target_commit`, blockierende Votes und CI-readiness.
+7. Agent Routing: aktive Rolle, empfohlene nächste Registry-Rolle und Routing-Grund.
+8. Risikoanalyse: neu erkannte Risiken, offene Fragen und blockierende Annahmen.
+9. Nächste Schritte: konkrete nächste Aufgabe und empfohlene Rolle.
+10. Notes for next agent: knappe, nicht-sensitive Hinweise für die nächste Sitzung.
 
 ## Handover-Regel
 
