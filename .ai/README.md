@@ -43,7 +43,7 @@ Archived review files should keep their original frontmatter unless a later acce
 
 The standard review validator path validates direct `.ai/reviews/*.md` files only. It does not recursively validate `.ai/reviews/archive/**` during normal `existing-strict` or `complete-set` runs against `.ai/reviews/`.
 
-v0.26 defines this policy. v0.27 migrates completed historical review sets up to v0.25 into the archive path while keeping current release evidence active under `.ai/reviews/`.
+v0.26 defines this policy. v0.27 migrates completed historical review sets up to v0.25 into the archive path. v0.30 migrates completed v0.26, v0.27, and v0.28 review sets into the archive path while keeping current v0.29 release evidence active under `.ai/reviews/`.
 
 ## Agent Registry
 

@@ -1,6 +1,6 @@
 # ADM — Operating System
 
-> Status: v0.29 synchronized draft
+> Status: v0.30 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
@@ -147,7 +147,7 @@ Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Re
 
 Der Standardpfad validiert direkte `.ai/reviews/*.md` Dateien und ignoriert `.ai/reviews/archive/**` nicht-rekursiv.
 
-v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in `.ai/reviews/archive/<review_set_id>/`. Diese Migration ändert keine Review-Metadaten und ändert keine Produktionsvalidatorlogik.
+v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in `.ai/reviews/archive/<review_set_id>/`. v0.30 migriert abgeschlossene Review-Sets von v0.26 bis v0.28 in das Archiv, während v0.29 als aktive Release-Evidenz direkt unter `.ai/reviews/` bleibt. Diese Migrationen ändern keine Review-Metadaten und ändern keine Produktionsvalidatorlogik.
 
 ## 8. Release Hygiene
 
