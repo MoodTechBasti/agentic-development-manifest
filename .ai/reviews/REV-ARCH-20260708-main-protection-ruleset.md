@@ -10,12 +10,12 @@ runtime_target: .ai/reviews/
 review_id: REV-ARCH-20260708-main-protection-ruleset
 review_set_id: RSV-20260708-main-protection-ruleset
 target_ref: adm-v013-repository-governance
-target_commit: d48c34b6140101012a89ac221c52368556967c38
+target_commit: cf2866eaf6cf772f6d9937f21b84e07fb6d9e648
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Principal Architect
 target: v0.13 repository governance and release gate policy
-target_files: [docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
+target_files: [.github/workflows/adm-quality-gate.yml, docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
 ci_ready: true
 confidence_score: 9
 ---
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed the v0.13 documentation and governance decision for protecting `main` through a GitHub ruleset and documenting the release gate policy.
+Reviewed the v0.13 documentation, governance decision, and required-check name alignment for protecting `main` through a GitHub ruleset and documenting the release gate policy.
 
 ## Findings
 
@@ -37,7 +37,7 @@ Reviewed the v0.13 documentation and governance decision for protecting `main` t
 
 - [x] The change preserves ADM's repository-as-truth architecture.
 - [x] The protected branch policy fits the existing PR-template and CI-gate model.
-- [x] No runtime architecture or validator logic changed.
+- [x] The CI job display name is aligned with the required status check expected by the ruleset.
 - [x] The release gate is clearly separated from the normal PR gate.
 
 ## Required Actions Before Merge
