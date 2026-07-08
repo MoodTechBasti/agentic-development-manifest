@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.9 Draft)
+# ADM — Spezifikation (v0.10 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.9 Draft
-- Zustand: Advisory Review Validation
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und advisory Review-Validierung
+- Version: v0.10 Draft
+- Zustand: Explicit Review Validation Modes
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und dreistufiger Review-Validierung
 
 ## Entwicklungs-Lifecycle
 
@@ -112,19 +112,35 @@ Der Validator ist ohne externe Python-Pakete implementiert und prüft:
 - Konsistenz zwischen `review_status: PASSED` und `ci_ready: true`
 - optionalen Confidence Score zwischen 1 und 10
 
-Lokale strenge Ausführung:
+ADM definiert drei Review-Validierungsmodi:
+
+| Modus | Bedeutung | Blocking |
+| --- | --- | --- |
+| `advisory` | Vorhandene Review-Artefakte prüfen, Fehler melden, Entwicklung nicht blockieren | Nein |
+| `existing-strict` | Vorhandene Review-Artefakte strikt prüfen, aber kein vollständiges Set verlangen | Ja, bei fehlerhaften vorhandenen Reviews |
+| `complete-set` | Alle sechs Standardreviews müssen vorhanden, `PASSED` und `ci_ready: true` sein | Ja |
+
+Lokale advisory Ausführung:
 
 ```bash
-python scripts/validate_reviews.py --path .
+python scripts/validate_reviews.py --path . --mode advisory
 ```
 
-CI-Ausführung im Advisory-Modus:
+Lokale strenge Ausführung für vorhandene Reviews:
 
 ```bash
-python scripts/validate_reviews.py --path . --advisory
+python scripts/validate_reviews.py --path . --mode existing-strict
 ```
 
-Ein hartes Review-Merge-Gate darf erst ergänzt werden, wenn klar definiert ist, welche Phasen, Branches oder Release-Typen vollständige Review-Sets verlangen.
+Vollständiges Release-Gate:
+
+```bash
+python scripts/validate_reviews.py --path . --mode complete-set
+```
+
+Der ältere Befehl `--advisory` bleibt als Alias für `--mode advisory` gültig.
+
+Das harte vollständige Review-Gate ist an `complete-set` gebunden und darf nur für Release-Kontexte, manuelle Release-Readiness-Prüfungen oder explizit definierte Phasenübergänge verwendet werden.
 
 ## Automatisiertes CI Quality Gate
 
@@ -137,7 +153,15 @@ Das erste verpflichtende Gate ist der Line-Limit-Check:
 - Standardlimit: 300 Zeilen pro Quellcodedatei
 - Ausführung: `push`, `pull_request` und manuell über `workflow_dispatch`
 
-Der Review-Validator läuft im gleichen Workflow zunächst nur im Advisory-Modus.
+Der Review-Validator läuft im gleichen Workflow mit kontextabhängigem Modus:
+
+| Kontext | Modus |
+| --- | --- |
+| Feature-Branch / `dev` | `advisory` |
+| PR nach `main` / `master` | `existing-strict` |
+| Push auf `main` / `master` | `existing-strict` |
+| `release/**` | `complete-set` |
+| Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
 
 ## ADM Exemptions
 
