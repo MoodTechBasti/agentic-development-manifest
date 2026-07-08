@@ -1,4 +1,4 @@
-# ADM — Operating System (v0.16 Draft)
+# ADM — Operating System (v0.17 Draft)
 
 Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
@@ -30,6 +30,45 @@ Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht
 └── playbooks/
 ```
 
+## Agent Registry
+
+Die Agent Registry unter `.ai/agents/` beschreibt repository-owned Agentenrollen. Sie ist keine lokale Tool-Konfiguration und keine versteckte Modell-Memory.
+
+### Zweck
+
+Die Registry macht explizit:
+
+- welche Rolle ein Agent ausführt,
+- welchen Kontext er vor Arbeitsbeginn lesen muss,
+- welche Bereiche er im Task-Scope ändern darf,
+- welche Bereiche ohne explizite Freigabe tabu sind,
+- an welche Rolle sinnvoll übergeben werden soll.
+
+### Minimalfelder
+
+| Feld | Bedeutung |
+| --- | --- |
+| `agent_id` | stabiler repository-lokaler Rollen-Identifier |
+| `role` | menschlich lesbarer Rollenname |
+| `mission` | Hauptverantwortung |
+| `reads` | Pflichtkontext vor Arbeitsbeginn |
+| `writes` | erwartete Schreibbereiche im Scope |
+| `forbidden` | Bereiche ohne explizite Freigabe tabu |
+| `handover_to` | empfohlene nächste Rolle oder Rollenfamilie |
+| `review_scope` | Review-Verantwortung, falls vorhanden |
+
+### Grenzen
+
+Die Agent Registry ist Governance-Metadokumentation. Sie ersetzt nicht:
+
+- GitHub Rulesets,
+- Branch Protection,
+- CI-Checks,
+- Code Review,
+- lokale Sandbox- oder Tool-Permissions.
+
+Ein Agent muss seine aktive Rolle und seinen Scope vor der Umsetzung nennen, wenn die Registry für den Task relevant ist.
+
 ## Project-owned Memory
 
 Project-owned memory ist kuratiertes Projektwissen, das dem Repository gehört. Es darf nicht mit versteckter Modell-Memory, Chatverlauf, Tool-Cache oder lokalen Scratch-Dateien verwechselt werden.
@@ -40,13 +79,13 @@ Project-owned memory ist kuratiertes Projektwissen, das dem Repository gehört. 
 | --- | --- | --- |
 | 1 | `spec/`, `docs/`, accepted ADRs | Kanonische Projektwahrheit |
 | 2 | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
-| 3 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/` | Kuratierter Kontext und Arbeitszustand |
+| 3 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/` | Kuratierter Kontext, Rollen und Arbeitszustand |
 | 4 | `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/` | Lokale transiente Daten |
 | 5 | Chatverlauf oder hidden model memory | Nicht autoritativ |
 
 ### Commit-Regeln
 
-Versioniert werden darf nur, was zukünftige Agenten oder Maintainer brauchen, um Entscheidungen, Zustand, Risiken oder nächste Schritte zu rekonstruieren.
+Versioniert werden darf nur, was zukünftige Agenten oder Maintainer brauchen, um Entscheidungen, Zustand, Rollen, Risiken oder nächste Schritte zu rekonstruieren.
 
 Nicht versioniert werden dürfen:
 
@@ -146,7 +185,7 @@ Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review
 
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Tasks, Memory, Entscheidungen und letzten Handover lesen.
+1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen und letzten Handover lesen.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
@@ -189,13 +228,19 @@ Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 - blockierende Votes
 - CI-readiness status
 
-### 5. Risikoanalyse
+### 5. Agent Routing
+
+- aktive Agentenrolle, falls relevant
+- nächster empfohlener Registry-Agent oder Rollenfamilie
+- Grund für das empfohlene Handover-Routing
+
+### 6. Risikoanalyse
 
 - neu erkannte Architektur-, Sicherheits-, Kosten- oder Betriebsrisiken
 - offene Fragen
 - blockierende Annahmen
 
-### 6. Nächste Schritte
+### 7. Nächste Schritte
 
 - nächste logische Aufgabe
 - empfohlene Rolle für die nächste Sitzung
