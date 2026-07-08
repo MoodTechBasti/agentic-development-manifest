@@ -1,226 +1,104 @@
-# ADM — Spezifikation (v0.11.1 Draft)
+# ADM — Spezifikation (v0.15 Draft)
 
-Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
+Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
-## Status
+## 1. Status / Version
 
-- Version: v0.11.1 Draft
-- Zustand: Stable Reviewed-Code SHA for Review Gates
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und commit-gebundener Review-Validierung
+- **Version**: v0.15 Draft
+- **Zustand**: Specification & Agent Compliance Alignment
+- **Letztes Update**: 2026-07-08
 
-## Entwicklungs-Lifecycle
+## 2. ADM Prinzipien
 
-ADM arbeitet sequenziell. Jede Phase endet mit Review und Quality Gate.
+ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modellunabhängigkeit garantieren:
 
-1. Phase 0 — Mission & Standards
-2. Phase 1 — Research Engine
-3. Phase 2 — Architecture Competition
-4. Phase 3 — Devil's Advocate
-5. Phase 4 — Simplification
-6. Phase 5 — Roadmap & Plan
-7. Phase 6 — Foundation Build
+1.  **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
+2.  **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
+3.  **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen und Reviews müssen als Dateien versioniert sein.
 
-## Phase 0 — Mission & Standards
+## 3. Entwicklungs-Lifecycle
 
-Ziele, Nicht-Ziele, Zielgruppen, Risiken, Einschränkungen und Qualitätsstandards werden definiert.
+ADM definiert einen strukturierten Prozess für architekturrelevante Änderungen. Jede Phase endet mit einem expliziten Quality Gate:
 
-## Phase 1 — Research Engine
+- **Phase 0 — Mission & Standards**: Definition von Zielen, Risiken und Qualitätsleitplanken.
+- **Phase 1 — Research Engine**: Recherche kritischer Informationen für Architektur, Sicherheit und Kosten.
+- **Phase 2 — Architecture Competition**: Vergleich von Varianten (z.B. DDD, Hexagonal, Event-Driven).
+- **Phase 3 — Devil's Advocate**: Aggressive Prüfung auf Schwächen, Kosten und technische Schulden.
+- **Phase 4 — Simplification**: Entfernung unnötiger Komplexität vor der Umsetzung.
+- **Phase 5 — Roadmap & Plan**: Zerlegung in überprüfbare Arbeitspakete.
+- **Phase 6 — Foundation Build**: Aufbau der SaaS-Foundation vor den Produktfeatures.
 
-Aktuelle Informationen werden recherchiert, wenn sie für Architektur, Sicherheit, Frameworks, Standards oder Kosten relevant sind.
+## 4. Repository Governance
 
-## Phase 2 — Architecture Competition
+ADM-konforme Repositories unterliegen strengen Sicherheits- und Prozessregeln:
 
-Mehrere Architekturvarianten werden verglichen, bevor eine Richtung gewählt wird.
+- **Branch Protection**: Der Default-Branch (meist `main`) ist geschützt. Direkte Pushes sind verboten.
+- **Rulesets**: Ein aktives GitHub-Ruleset (z.B. `main-protection`) muss PRs, Konversations-Auflösung und erfolgreiche Status-Checks erzwingen.
+- **Merge-Pfad**: Änderungen fließen ausnahmslos über Feature-Branches und Pull Requests nach `main`.
+- **No-Bypass**: Es gibt keine Ausnahmen von der Governance-Regel für einzelne Benutzer oder Agenten.
 
-Beispiele:
+## 5. Review Governance
 
-- Modular Monolith
-- DDD Lite
-- Hexagonal Architecture
-- Vertical Slice
-- Event-Driven Architecture
+Jede wesentliche Änderung erfordert ein strukturiertes Review-Set.
 
-## Phase 3 — Devil's Advocate
+### Review-Rollen
+Ein vollständiges Review-Set besteht aus sechs Rollen:
+- **Architect Review**: Architektur, Wartbarkeit, Skalierbarkeit.
+- **Security Review**: Bedrohungsmodelle, Datensicherheit, Tenant-Isolation.
+- **Performance Review**: Latenzen, Ressourcen-Effizienz, Budgets.
+- **Cost Review**: Token-Verbrauch, API-Kosten, Infrastruktur-Ausgaben.
+- **Simplifier Review**: Komplexitätsreduktion, Abhängigkeitsprüfung.
+- **Documentation Review**: Vollständigkeit der Doku, Runbooks, ADRs.
 
-Die gewählte Richtung wird aggressiv auf Schwächen, Kosten, Risiken und spätere technische Schulden geprüft.
+### Review-Artefakte
+- Templates liegen unter `templates/reviews/`.
+- Ausgefüllte Berichte liegen unter `.ai/reviews/`.
+- Dateinamen müssen der `review_id` entsprechen (z.B. `REV-ARCH-YYYYMMDD-slug.md`).
 
-## Phase 4 — Simplification
+## 6. Review-Validierungsmodi
 
-Unnötige Module, Abstraktionen und Abhängigkeiten werden entfernt, bevor gebaut wird.
+Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 
-## Phase 5 — Roadmap & Plan
-
-Die Umsetzung wird in Abhängigkeiten, Meilensteine und überprüfbare Arbeitspakete zerlegt.
-
-## Phase 6 — Foundation Build
-
-Zuerst entsteht die SaaS-Foundation. Produktfeatures folgen erst danach.
-
-## Definition of Done für Code-Änderungen
-
-Keine größere Code-Änderung gilt als abgeschlossen, bevor folgende Punkte erfüllt oder begründet abgewichen sind:
-
-- neue oder geänderte Quellcodedateien bleiben unter 300 Zeilen
-- Ausnahmen sind in einem Decision Record begründet
-- exportierte Schnittstellen sind typisiert und dokumentiert
-- neue Codepfade sind durch passende Tests abgedeckt
-- Foundation-Code strebt mindestens 80 Prozent Testabdeckung an
-- vertrauliche Zugangsdaten werden nicht im Repository abgelegt
-- neue Abhängigkeiten sind begründet
-- Duplikate und unnötige Abstraktionen wurden geprüft
-
-## Quality Gates bei Phasenübergängen
-
-Ein Phasenübergang ist nur freigegeben, wenn passende Review-Artefakte vorliegen:
-
-1. Architect Review
-2. Security Review
-3. Performance Review
-4. Cost Review
-5. Simplification Review
-6. Documentation Review
-
-Kritische Einwände blockieren den Übergang, bis sie gelöst oder bewusst akzeptiert und dokumentiert wurden.
-
-## Review Template Governance
-
-Wiederverwendbare Review-Vorlagen liegen unter `templates/reviews/`.
-
-Ausgefüllte Review-Artefakte liegen unter `.ai/reviews/` und müssen aus einer passenden Vorlage abgeleitet werden.
-
-Standardrollen:
-
-- `templates/reviews/architect.md`
-- `templates/reviews/security.md`
-- `templates/reviews/performance.md`
-- `templates/reviews/cost.md`
-- `templates/reviews/simplifier.md`
-- `templates/reviews/documentation.md`
-
-Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erforderliche Aktionen, finales Vote, CI-readiness und Review-Set-Scope enthalten.
-
-## Review Set Scoping
-
-Ein Review-Set ist die logische Einheit aus sechs zusammengehörigen Rollen-Reviews für denselben Zielstand.
-
-Jedes ausgefüllte Review-Artefakt muss diese Scope-Felder enthalten:
-
-- `review_set_id`: gemeinsame Set-ID im Format `RSV-YYYYMMDD-feature-slug`
-- `target_ref`: Zielreferenz wie `PR-2`, Branch-Name oder Release-Ref
-- `target_commit`: stabiler Git-Commit-SHA des geprüften Codes
-
-`target_commit` bezeichnet den geprüften Code-Stand. Es ist nicht zwingend der spätere Workflow-Commit, der die Review-Artefakte enthält. Review-Dateien sollen deshalb nach dem Code-Commit entstehen und auf diesen stabilen Code-Commit zeigen.
-
-Ausgefüllte Review-Dateien sollen nicht unter statischen Rollennamen wie `.ai/reviews/architect.md` gespeichert werden. Stattdessen soll der `review_id` als Dateiname genutzt werden, zum Beispiel `.ai/reviews/REV-ARCH-20260708-review-set-scoping.md`.
-
-## Review Validation
-
-`scripts/validate_reviews.py` prüft ausgefüllte Review-Artefakte unter `.ai/reviews/`.
-
-Der Validator ist ohne externe Python-Pakete implementiert und prüft:
-
-- YAML-Frontmatter am Dateianfang
-- Pflichtfelder wie `template_id`, `review_type`, `review_id`, `review_set_id`, `target_ref`, `target_commit`, `review_status`, `runtime_target` und `ci_ready`
-- gültige Review-Typen und Review-ID-Präfixe
-- gültige Review-Set-ID-Struktur
-- gültige Statuswerte
-- Konsistenz zwischen `review_status: PASSED` und `ci_ready: true`
-- optionalen Confidence Score zwischen 1 und 10
-
-ADM definiert drei Review-Validierungsmodi:
-
-| Modus | Bedeutung | Blocking |
+| Modus | Beschreibung | Einsatzbereich |
 | --- | --- | --- |
-| `advisory` | Vorhandene Review-Artefakte prüfen, Fehler melden, Entwicklung nicht blockieren | Nein |
-| `existing-strict` | Vorhandene Review-Artefakte strikt prüfen, aber kein vollständiges Set verlangen | Ja, bei fehlerhaften vorhandenen Reviews |
-| `complete-set` | Alle sechs Standardreviews müssen vorhanden, `PASSED`, `ci_ready: true` und identisch gescoped sein | Ja |
+| `advisory` | Meldet Fehler, blockiert aber nicht. | Feature-Branches, frühe Entwicklung. |
+| `existing-strict` | Prüft vorhandene Reviews strikt auf Struktur. | Pull Requests, normale Pushes. |
+| `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
-Lokale advisory Ausführung:
+## 7. Release Gate Policy
 
-```bash
-python scripts/validate_reviews.py --path . --mode advisory
-```
+Ein Release (Git Tag) ist nur zulässig, wenn ein vollständiges Review-Set vorliegt und manuell validiert wurde.
 
-Lokale strenge Ausführung für vorhandene Reviews:
+- **Manual Release Validation**: Vor dem Tagging muss der Workflow `ADM Quality Gate` manuell auf `main` mit Modus `complete-set` gestartet werden.
+- **Parameter**: `review_set_id`, `target_ref` (Override) und `reviewed_commit` (SHA) müssen explizit angegeben werden.
+- **Referenz**: Details siehe `docs/RELEASE_RUNBOOK.md`.
 
-```bash
-python scripts/validate_reviews.py --path . --mode existing-strict
-```
+## 8. Runtime Artifact Policy (`.ai/`)
 
-Vollständiges Release-Gate mit Scope-Bindung:
+Das `.ai/` Verzeichnis dient als persistente Memory Layer für Agenten.
 
-```bash
-python scripts/validate_reviews.py --path . --mode complete-set --review-set-id RSV-20260708-review-set-scoping --target-ref PR-2 --target-commit <git-sha>
-```
+- **Versioniert**: `.ai/reviews/`, `.ai/decisions/`, `.ai/handover/`, `.ai/README.md`.
+- **Ignoriert (lokal)**: `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/`.
+- **Regel**: Keine temporären Chat-Marker oder flüchtige Notizen im Repository.
 
-Der ältere Befehl `--advisory` bleibt als Alias für `--mode advisory` gültig. `--strict`, `--set-id` und `--dir` bleiben als Kompatibilitätsformen für ältere Review-Skripte verfügbar.
+## 9. PR Hygiene Policy
 
-Das harte vollständige Review-Gate ist an `complete-set` gebunden und darf nur für Release-Kontexte, manuelle Release-Readiness-Prüfungen oder explizit definierte Phasenübergänge verwendet werden.
+Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
-## Automatisiertes CI Quality Gate
+- **Inhalt**: PR-Bodies dürfen keine ungelösten Platzhalter, leere Pflichtfelder oder ungeprüfte Checkboxen enthalten.
+- **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
+- **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-ADM-konforme Repositories sollen Qualitätsregeln nicht nur dokumentieren, sondern automatisiert prüfen.
+## 10. Agent Onboarding Contract
 
-Das erste verpflichtende Gate ist der Line-Limit-Check:
+Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
+- Die notwendige Initialisierung (Lese-Reihenfolge der Doku).
+- Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
+- Die Regeln für Handover und Decision Records.
 
-- Workflow: `.github/workflows/adm-quality-gate.yml`
-- Skript: `scripts/check_limits.py`
-- Standardlimit: 300 Zeilen pro Quellcodedatei
-- Ausführung: `push`, `pull_request` und manuell über `workflow_dispatch`
+## 11. Quality Gates / Definition of Done
 
-Der Review-Validator läuft im gleichen Workflow mit kontextabhängigem Modus:
-
-| Kontext | Modus |
-| --- | --- |
-| Feature-Branch / `dev` | `advisory` |
-| PR nach `main` / `master` | `existing-strict` |
-| Push auf `main` / `master` | `existing-strict` |
-| `release/**` | `complete-set` mit `target_ref` und stabilem geprüftem `target_commit` |
-| Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
-
-Für Pull Requests nutzt CI `target_ref: PR-<number>`. Für Pushes nutzt CI den Branch-Namen. Für `complete-set` ermittelt CI den stabilen geprüften Commit standardmäßig als letzten Commit außerhalb `.ai/reviews/`. Manuelle Runs können diesen Wert mit `reviewed_commit` überschreiben.
-
-## ADM Exemptions
-
-Line-Limit-Ausnahmen werden vom Checker technisch ausgewertet, wenn sie in einem Decision Record stehen.
-
-Eine Ausnahme ist im strikten CI-Modus nur gültig, wenn:
-
-- der Decision Record den Status ACCEPTED oder APPROVED hat
-- die Ausnahme dieses Format nutzt: `ADM-Exemption: path/to/file.py (Max: 500)`
-- der Pfad repository-relativ ist
-
-Für lokale Feature-Arbeit kann `scripts/check_limits.py --allow-proposed-exemptions` genutzt werden. Dieser Modus akzeptiert zusätzlich PROPOSED, ist aber nicht der Merge-Readiness-Standard.
-
-## Workspace Bootstrap
-
-`scripts/bootstrap.sh` initialisiert die lokale `.ai/`-Struktur und installiert einen lokalen Pre-Commit-Hook. Der lokale Hook nutzt den vorgeschlagenen Exemption-Modus, damit frühe Feature-Arbeit nicht unnötig blockiert wird. Das CI-Gate bleibt streng.
-
-## Agent Onboarding
-
-Frische CLI-Agenten starten mit `prompts/master_prompt.md`. Der Master Prompt definiert Lese-Reihenfolge, Initialisierung, Qualitätsregeln, Decision-Record-Pflicht und Handover-Pflicht.
-
-## Agent Communication Protocol
-
-Wichtige Entscheidungen werden strukturiert dokumentiert.
-
-Format:
-
-```markdown
-### Decision: [Titel]
-
-- Reason:
-- Evidence:
-- Confidence:
-- Alternatives:
-- Tradeoffs:
-- Risks:
-- Files:
-- Dependencies:
-- Owner:
-- Status:
-```
-
-## Quality Gate
-
-Eine Phase darf erst abgeschlossen werden, wenn Entscheidungen, Risiken, offene Fragen, Tests, Metriken, Review-Status und nächste Schritte dokumentiert sind.
+- **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
+- **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
+- **Testing**: Neue Logik muss durch Tests abgedeckt sein.
+- **Handover**: Jede Sitzung endet mit einem strukturierten Handover.

@@ -10,11 +10,12 @@
 
 ## Phase 1: Agentic Operating System
 
-- Define project-owned memory.
-- Define agent registry.
-- Define handover format.
-- Define decision records.
-- Define research and review protocols.
+- [x] Define decision records.
+- [x] Define research and review protocols.
+- [x] Define repository governance and release hardening.
+- [ ] Define project-owned memory (next major architecture block).
+- [ ] Define agent registry.
+- [ ] Define handover automation.
 
 ## Phase 2: SaaS Foundation Standard
 
