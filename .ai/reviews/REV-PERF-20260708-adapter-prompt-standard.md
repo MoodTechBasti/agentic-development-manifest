@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-PERF-20260708-adapter-prompt-standard
 review_set_id: RSV-20260708-adapter-prompt-standard
 target_ref: adm-v022-adapter-prompt-standard
-target_commit: 9a04eb2bbd6770848fddac5afc2813cdec498977
+target_commit: d798d859af514e3ea445515c649e0f5440a9f1ee
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: SRE and Performance Lead
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed onboarding overhead, adapter scope size, documentation length, and runtime performance impact.
+Reviewed onboarding overhead, adapter scope size, documentation length, runtime evidence ordering, and runtime performance impact.
 
 ## Findings
 
@@ -32,6 +32,7 @@ Reviewed onboarding overhead, adapter scope size, documentation length, and runt
 - Strengths: Adapter prompts reference canonical files instead of duplicating the full specification.
 - Strengths: The change adds no runtime path, workflow, validator, schema, or CI behavior, so system performance is unaffected.
 - Strengths: Deferred Gemini CLI and Antigravity CLI adapters reduce maintenance overhead until tool behavior is verified.
+- Strengths: Runtime evidence remains above adapter prompts without adding more onboarding work.
 - Risk: Agents may over-read adapter files for non-adapter tasks if relevance checks are ignored.
 
 ## Performance Gates
