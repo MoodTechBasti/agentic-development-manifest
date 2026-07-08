@@ -10,7 +10,7 @@
 | Metric | Value |
 | --- | --- |
 | Confidence level | 9 |
-| Affected modules | `docs/AI_FOUNDATION_STANDARD.md`, `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `prompts/master_prompt.md` |
+| Affected modules | `docs/AI_FOUNDATION_STANDARD.md`, `docs/SAAS_FOUNDATION_BLUEPRINT.md`, `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `prompts/master_prompt.md` |
 | New dependencies | no |
 | Security review | PASSED |
 | Cost review | PASSED |
@@ -91,9 +91,9 @@ AI features must attach to the SaaS boundaries instead of creating parallel user
 ## 5. Evidence
 
 - `ROADMAP.md` names Roadmap Phase 3 as AI Foundation Standard and lists provider abstraction, prompt registry, tool registry, evaluation, cost tracking, routing, fallback, caching, and safety rules.
-- `docs/SAAS_FOUNDATION_BLUEPRINT.md` explicitly excludes deep AI provider architecture, Prompt Registry, Evaluation Framework and model routing from Roadmap Phase 2.
-- `spec/ADM_v1_DRAFT.md` already preserves model-neutrality and requires ADRs for AI provider behavior.
-- `prompts/master_prompt.md` already warns against vendor lock-in and requires documentation of significant architecture decisions.
+- `docs/SAAS_FOUNDATION_BLUEPRINT.md` excludes deep AI provider architecture, Prompt Registry, Evaluation Framework and model routing from Roadmap Phase 2 and now points those concerns to `docs/AI_FOUNDATION_STANDARD.md`.
+- `spec/ADM_v1_DRAFT.md` preserves model-neutrality and defines the Roadmap Phase 3 AI Foundation boundary separately from lifecycle phases.
+- `prompts/master_prompt.md` warns against vendor lock-in and requires documentation of significant architecture decisions.
 
 ## 6. Alternatives
 
@@ -143,6 +143,7 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 
 - [x] `docs/decisions/ADR-20260708-ai-foundation-standard.md`
 - [x] `docs/AI_FOUNDATION_STANDARD.md`
+- [x] `docs/SAAS_FOUNDATION_BLUEPRINT.md`
 - [x] `spec/ADM_v1_DRAFT.md`
 - [x] `docs/OPERATING_SYSTEM.md`
 - [x] `prompts/master_prompt.md`
