@@ -145,6 +145,22 @@ def test_stale_complete_set_does_not_satisfy_new_scope():
         assert_result('stale complete set cannot satisfy new scope', result, 1, 'missing PASSED ci-ready review types')
 
 
+def test_archive_subdirectory_ignored_by_standard_path():
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        write_set(root)
+        archive_dir = root / '.ai' / 'reviews' / 'archive' / 'RSV-20260708-archived-fixture'
+        archive_dir.mkdir(parents=True)
+        (archive_dir / 'REV-SEC-20260708-broken-archive.md').write_text(
+            '# archived malformed review intentionally ignored by standard path\n',
+            encoding='utf-8',
+        )
+        result = run_validator(root, '--mode', 'existing-strict')
+        assert_result('archive subdirectory ignored by existing-strict', result, 0, 'All completed review artifacts are valid.')
+        result = run_validator(root, *complete_set_args())
+        assert_result('archive subdirectory ignored by complete-set', result, 0, 'PASSED: review set')
+
+
 def test_duplicate_role_fails():
     with tempfile.TemporaryDirectory() as temp:
         root = Path(temp)
@@ -181,6 +197,7 @@ def main():
         test_wrong_review_set_filter_fails,
         test_wrong_target_ref_filter_fails,
         test_stale_complete_set_does_not_satisfy_new_scope,
+        test_archive_subdirectory_ignored_by_standard_path,
         test_duplicate_role_fails,
         test_invalid_metadata_fails,
     ]
