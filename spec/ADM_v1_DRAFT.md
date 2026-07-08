@@ -5,7 +5,7 @@ Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter S
 ## 1. Status / Version
 
 - **Version**: v0.16 Draft
-- **Zustand**: Project-owned Memory Architecture Proposed
+- **Zustand**: Project-owned Memory Architecture Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien

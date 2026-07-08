@@ -31,4 +31,4 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.16 Draft. Project-owned memory is proposed as the next Phase 1 architecture block.
+v0.16 Draft. Project-owned memory architecture is accepted. The next Phase 1 architecture block is Agent Registry.
