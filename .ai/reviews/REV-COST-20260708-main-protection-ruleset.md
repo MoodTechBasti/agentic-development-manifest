@@ -10,12 +10,12 @@ runtime_target: .ai/reviews/
 review_id: REV-COST-20260708-main-protection-ruleset
 review_set_id: RSV-20260708-main-protection-ruleset
 target_ref: adm-v013-repository-governance
-target_commit: d48c34b6140101012a89ac221c52368556967c38
+target_commit: cf2866eaf6cf772f6d9937f21b84e07fb6d9e648
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Cost Reviewer
 target: v0.13 repository governance and release gate policy
-target_files: [docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
+target_files: [.github/workflows/adm-quality-gate.yml, docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
 ci_ready: true
 confidence_score: 9
 ---
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed the cost impact of documenting branch protection and release gate policy.
+Reviewed the cost impact of documenting branch protection, release gate policy, and aligning the required check name.
 
 ## Findings
 
@@ -38,6 +38,7 @@ Reviewed the cost impact of documenting branch protection and release gate polic
 - [x] No paid dependency added.
 - [x] No new workflow run class added.
 - [x] No model-call cost added.
+- [x] The CI change is a job display-name alignment only.
 - [x] The additional review artifacts are static files only.
 
 ## Required Actions Before Merge
