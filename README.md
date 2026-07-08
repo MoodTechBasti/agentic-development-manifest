@@ -1,4 +1,4 @@
-# Agentic Development Manifest (ADM) — v0.26 Draft
+# Agentic Development Manifest (ADM) — v0.27 Draft
 
 Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem für autonome Multi-Agenten-Softwareentwicklung.
 
@@ -6,7 +6,7 @@ Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem
 
 ADM definiert einen standardisierten, dateibasierten Prozess für moderne KI-Coding-Agenten wie Claude Code CLI, Codex CLI, Antigravity, Gemini CLI und GPT-Modelle.
 
-Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening, Foundation Consistency and Release Hygiene sowie Review Archive Policy als Single Source of Truth des Projekts.
+Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy sowie Review Archive Migration als Single Source of Truth des Projekts.
 
 Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 
@@ -35,6 +35,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/decisions/ADR-20260708-review-validation-hardening-baseline.md` — Roadmap Phase 6 review and validation hardening baseline decision
 - `docs/decisions/ADR-20260708-foundation-consistency-release-hygiene-baseline.md` — Foundation consistency and release hygiene baseline decision
 - `docs/decisions/ADR-20260708-review-archive-policy.md` — Review Archive Policy baseline decision
+- `docs/decisions/ADR-20260708-review-archive-migration-batch-1.md` — Review Archive Migration Batch 1 decision
 - `.ai/agents/README.md` — Agent Registry runtime policy
 - `templates/HANDOVER_TEMPLATE.md` — reusable structured handover template
 - `prompts/adapters/` — tool-specific adapter prompts layered below the canonical master prompt
@@ -48,8 +49,10 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.26 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, Roadmap Phase 5 Adapter Prompt Standard, Roadmap Continuation with v1 Readiness Criteria, Roadmap Phase 6 Review and Validation Hardening Baseline, Foundation Consistency and Release Hygiene Baseline, and Review Archive Policy architecture are accepted.
+v0.27 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, Roadmap Phase 5 Adapter Prompt Standard, Roadmap Continuation with v1 Readiness Criteria, Roadmap Phase 6 Review and Validation Hardening Baseline, Foundation Consistency and Release Hygiene Baseline, Review Archive Policy, and Review Archive Migration Batch 1 architecture are accepted.
 
-v0.26 defines the Review Archive Policy baseline. Historical review sets may later be moved under `.ai/reviews/archive/<review_set_id>/`, but v0.26 does not move existing review artifacts. The standard validator path continues to validate direct `.ai/reviews/*.md` files only.
+v0.26 defines the Review Archive Policy baseline. Historical review sets may live under `.ai/reviews/archive/<review_set_id>/`, and the standard validator path continues to validate direct `.ai/reviews/*.md` files only.
 
-Roadmap Phase 7 remains open. v0.26 does not implement Handover linting, Handover Automation expansion, workflow changes, release automation, runtime code, MCP integration, provider SDKs, Gemini CLI adapter, Antigravity CLI adapter, branch-protection changes, historical review migration, review index generation, or a v1 release candidate.
+v0.27 migrates completed historical review sets up to v0.25 into `.ai/reviews/archive/<review_set_id>/` while keeping the current v0.26 review set active under `.ai/reviews/`.
+
+Roadmap Phase 7 remains open. v0.27 does not implement Handover linting, Handover Automation expansion, workflow changes, release automation, runtime code, MCP integration, provider SDKs, Gemini CLI adapter, Antigravity CLI adapter, branch-protection changes, review index generation, or a v1 release candidate.

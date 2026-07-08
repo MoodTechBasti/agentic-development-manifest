@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.27] — 2026-07-08
+
+### Review Archive Migration Batch 1
+
+- Added `docs/decisions/ADR-20260708-review-archive-migration-batch-1.md` to accept v0.27 as Review Archive Migration Batch 1.
+- Moved completed historical review sets up to v0.25 from direct `.ai/reviews/*.md` files into `.ai/reviews/archive/<review_set_id>/`.
+- Kept the v0.26 Review Archive Policy review set directly under `.ai/reviews/` as current active release evidence.
+- Preserved original review file contents and metadata; no historical `review_set_id`, `target_ref`, `target_commit`, review vote, `review_status`, or `ci_ready` value is retargeted.
+- Kept v0.27 intentionally narrow: no production validator logic change, workflow hardening, release automation, review index generation, Roadmap Phase 7 implementation, runtime code, provider SDK integration, MCP integration, Gemini CLI adapter, Antigravity CLI adapter, branch-protection change, or v1 release-candidate claim.
+
 ## [v0.26] — 2026-07-08
 
 ### Review Archive Policy
