@@ -202,40 +202,93 @@ Pflichtbereiche:
 
 | Bereich | Mindestentscheidung |
 | --- | --- |
-| Authority Order | Repository-Dokumente, `.ai/`-Artefakte und Chatverlauf werden klar priorisiert |
-| Required Initialization | Agenten lesen relevante kanonische Dokumente vor Umsetzung |
-| Scope Declaration | Rolle, Ziel, Scope, Non-Scope und Risiken werden vor Umsetzung genannt |
-| Operating Rules | Keine erfundenen Fakten, Checks, Commits, Rollen, Reviews oder Freigaben |
-| Quality Gate Contract | Checks, Review-Status und CI-Readiness werden belegbar gemeldet |
-| Review Contract | Complete-set und Review-Artefakte bleiben versioniert und scoped |
-| Foundation Triggers | SaaS- und AI-Foundation werden bei passenden Tasks aktiviert |
-| Handover Contract | Signifikante Sitzungen enden mit prüfbarer Übergabe |
-| Adapter Boundary | Tool-spezifische Prompts bleiben dünne Schichten unterhalb des Master Prompts |
+| Authority Order | Repository-Dokumente, `.ai/`-Artefakte und kuratierter Kontext vor Chat, hidden memory oder Tool-Cache |
+| Required Initialization | Pflichtlektüre und relevante `.ai/`-Prüfung vor Umsetzung |
+| Scope Declaration | Rolle, Ziel, betroffene Bereiche, ausgeschlossene Bereiche, Annahmen, Risiken und nächste Aktion |
+| Operating Rules | Verbot erfundener Dateien, Commits, Checks, Rollen, CI-Ergebnisse, Review-Votes oder Freigaben |
+| Decision Rules | ADR-Auslöser und proportionale Governance für kleine Änderungen |
+| Quality Gate Contract | Lokale Checks, Review-Validatoren und vollständige Review-Sets für Governance-Änderungen |
+| Review Contract | Sechs Rollen, gemeinsamer `review_set_id`, `target_ref` und stabiler `target_commit` |
+| Release Hygiene Contract | stabile reviewed commits, finaler tag commit und manuelle release-grade Validation |
+| Foundation Triggers | Pflichtkontext für SaaS Foundation und AI Foundation bei betroffenen Aufgaben |
+| Handover Contract | Strukturierte Übergabe mit Checks, Risiken, geänderten Dateien, Review-Status und nächsten Schritten |
+| Adapter Boundary | Trennung zwischen kanonischem Master Prompt und späteren tool-spezifischen Adapter-Prompts |
 
-Roadmap Phase 4 implementiert keinen Tool-Adapter, keine Runtime, keine Provider-Integration, keine Workflow-Änderung und keinen MCP.
+Roadmap Phase 4 implementiert keine Runtime, keine Provider- oder Tool-Integration, keine CLI-spezifischen Adapter-Prompts, keine lokalen Tool-Profile, keine MCP-Integration, keine Schemas, keine Validatoren und keine Workflow-Änderungen ohne gesondertes GO.
 
 ## 15. Adapter Prompt Standard
 
-Der Adapter Prompt Standard ist der kanonische **Roadmap-Phase-5-Block** für tool-spezifische CLI-Agenten-Prompts.
+Der Adapter Prompt Standard ist der kanonische **Roadmap-Phase-5-Block** für tool-spezifische CLI-Agenten-Prompts. Das ist bewusst von **Lifecycle Phase 5 — Roadmap & Plan** aus Abschnitt 3 getrennt.
 
-Adapter sind dünne, untergeordnete Schichten unter `prompts/master_prompt.md`. Sie dürfen Tool-Bedienung erklären, aber keine ADM-Regel abschwächen.
+Ziel ist eine dünne Adapter-Schicht unterhalb des kanonischen Master Prompts. Adapter Prompts helfen konkreten CLI-Tools beim Arbeiten, ersetzen aber weder die ADM-Spezifikation noch `prompts/master_prompt.md`.
 
 Pflichtbereiche:
 
 | Bereich | Mindestentscheidung |
 | --- | --- |
-| Canonical dependency | Adapter verweisen auf `prompts/master_prompt.md` und ersetzen ihn nicht |
-| Tool capability boundary | Adapter unterscheiden Tool-Fähigkeit von Tool-Wahrheit |
-| Tool state boundary | Hidden memory, Chatverlauf, lokale Profile und Cache bleiben nicht autoritativ |
-| Forbidden overrides | Adapter dürfen Governance, Reviews, ADRs, Checks und Handover nicht umgehen |
-| Deferred adapters | Nicht geprüfte Tools bleiben explizit zurückgestellt |
+| Canonical Dependency | Verweis auf `prompts/master_prompt.md` als autoritativen Startpunkt |
+| Supported Tool | Konkrete CLI oder generische Tool-Familie |
+| Tool Capabilities | Welche Tool-Funktionen als Arbeitshilfe genutzt werden dürfen |
+| Tool State Boundary | Hidden memory, Chatverlauf, Tool-Cache und lokale Profile sind nie Projektwahrheit |
+| Forbidden Overrides | Keine Abschwächung von ADM-Regeln, Checks, Reviews, ADRs, PR-Hygiene, Release Hygiene oder Handover |
+| Quality Gate Handling | Checks müssen mit Evidenz berichtet werden; unrun checks bleiben `NOT RUN` |
+| Handover Handling | Handover bleibt repository-owned und evidenzbasiert |
+| Deferred Candidates | Nicht akzeptierte Adapter dürfen nicht als implementiert gelten |
 
-Roadmap Phase 5 implementiert keinen Runtime-Code, keine Provider-SDKs, keine MCP-Integration, keine lokale Tool-Profile und keine zusätzlichen Tool-Adapter ohne aktuelle Verifikation.
+Roadmap Phase 5 implementiert keine Runtime, keine Provider-SDKs, keine echte Tool-Integration, keine lokalen Tool-Profile, keine MCP-Integration, keine Schemas, keine Validatoren, keine Workflows, keine Release-Automation und keine Provider-Secrets.
 
-## 16. Roadmap Continuation and v1 Readiness
+Initial akzeptierte Adapter sind Claude Code CLI, Codex CLI und Generic CLI Agent. Gemini CLI und Antigravity CLI bleiben deferred candidates bis zu späterer expliziter Freigabe.
 
-Roadmap Phase 6 bis Phase 9 sind dokumentierte künftige Blöcke nach den ersten fünf Roadmap-Phasen.
+## 16. Roadmap Continuation, Review Hardening, and Foundation Hygiene
 
-v1-Readiness erfordert synchronisierte Spezifikation, Roadmap, Changelog, ADRs und Review-Artefakte. Ein v1 Release Candidate braucht ein vollständiges sechs Rollen Review-Set und manuelle release-grade `complete-set` Validierung.
+Roadmap Continuation ist der kanonische v0.23-Planungsblock nach Roadmap Phase 5. Er definiert Roadmap Phase 6 bis Roadmap Phase 9 und v1-Readiness-Kriterien, ohne die späteren Mechanismen zu implementieren.
 
-v1 erfordert keine Runtime, Provider-SDKs, MCP-Integration, lokalen Tool-Profile, Workflow-Änderungen, Release-Automation oder Review-Archivmigration, solange diese nicht durch spätere explizite Roadmap-Phasen und ADRs akzeptiert werden.
+Review and Validation Hardening Baseline ist der kanonische v0.24-Roadmap-Phase-6-Block. Er akzeptiert die bestehenden Review-Validation-Modi und Review-Set-Scoping-Semantik, korrigiert ADR-Status-Drift und ergänzt gezielte Scope-Regressionstests.
+
+Foundation Consistency and Release Hygiene Baseline ist der kanonische v0.25-Konsolidierungsblock. Er synchronisiert Status- und Versionssprache, modernisiert Release-Hygiene, präzisiert manuelle Ruleset-Audits und hält Roadmap Phase 7 bewusst offen.
+
+Review Archive Policy ist der kanonische v0.26-Archivierungsregelblock. Er definiert `.ai/reviews/archive/<review_set_id>/` als spätere historische Review-Ablage, ohne alte Reviews zu verschieben oder Produktionsvalidatorlogik zu ändern.
+
+Das ist bewusst von Lifecycle Phase 5 — Roadmap & Plan und Lifecycle Phase 6 — Foundation Build aus Abschnitt 3 getrennt.
+
+v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand.
+
+Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
+
+v0.26 implementiert keine Roadmap Phase 7, Handover-Automation, Workflow-Härtung, Release-Automation, Runtime, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Gemini CLI Adapter, Antigravity CLI Adapter, Review-Archivmigration oder Provider-Secrets.
+
+## 17. PR Hygiene Policy
+
+Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
+
+- **Inhalt**: PR-Bodies dürfen keine ungelösten Platzhalter, leere Pflichtfelder oder ungeprüfte Checkboxen enthalten.
+- **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
+- **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
+
+## 18. Agent Onboarding Contract
+
+Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
+
+- Die notwendige Initialisierung.
+- Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
+- Die Regeln für Handover und Decision Records.
+- Die Pflicht, `docs/MASTER_PROMPT_STANDARD.md` zu lesen, wenn eine Aufgabe Agenten-Onboarding, Prompt-Verhalten, Autoritätsmodell, Scope-Deklaration, Checks, Review-Routing, Handover-Regeln oder Adapter-Grenzen betrifft.
+- Die Pflicht, `docs/ADAPTER_PROMPT_STANDARD.md` und relevante Dateien unter `prompts/adapters/` zu lesen, wenn eine Aufgabe tool-spezifische Adapter-Prompts, CLI-Agenten-Verhalten, Tool-State-Grenzen oder Adapter-Grenzen betrifft.
+- Die Pflicht, `docs/SAAS_FOUNDATION_BLUEPRINT.md` zu lesen, wenn eine Aufgabe SaaS-Architektur, Mandanten, Billing, Jobs, Observability, Admin, Data Lifecycle oder Foundation-Standards betrifft.
+- Die Pflicht, `docs/AI_FOUNDATION_STANDARD.md` zu lesen, wenn eine Aufgabe KI-Provider, Prompts, Tools, Evaluation, Routing, Fallback, Caching, Safety, AI Cost Tracking, KI-Artefakte oder AI Foundation Standards betrifft.
+- Die Pflicht, `docs/RELEASE_RUNBOOK.md` zu lesen, wenn eine Aufgabe Release-Hygiene, Review-Tagging, stable target commits oder release-grade Validation betrifft.
+
+## 19. Quality Gates / Definition of Done
+
+- **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
+- **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
+- **Testing**: Neue Logik muss durch Tests abgedeckt sein.
+- **SaaS Foundation**: Produktfeatures dürfen Foundation-Grenzen wie Tenant, Permissions, Billing Readiness, Quotas, Jobs, Observability und Data Lifecycle nicht implizit oder undokumentiert umgehen.
+- **AI Foundation**: KI-Features dürfen Provider, Prompts, Tools, Evaluation, Kosten, Routing, Fallback, Caching, Safety, Observability und KI-Artefakt-Lifecycle nicht implizit oder undokumentiert umgehen.
+- **Master Prompt**: Agenten dürfen Autoritätsmodell, Scope-Deklaration, Quality-Gate-Evidenz, Review-Scope, Handover-Pflichten oder Adapter-Grenzen nicht implizit umgehen.
+- **Adapter Prompt**: Adapter dürfen den kanonischen Master Prompt nicht ersetzen, Tool-State nicht als Wahrheit nutzen und keine ADM-Governance umgehen.
+- **Roadmap and Review Validation**: Roadmap-Phasen müssen von Lifecycle-Phasen getrennt bleiben; v1-Readiness-Kriterien dürfen keine deferred oder nicht akzeptierten Mechanismen als umgesetzt behandeln; normale PR-Gates dürfen nicht versehentlich zu release-grade `complete-set`-Gates werden.
+- **Review Archive Policy**: Archivierte Review-Sets bleiben historische Evidenz; aktuelle Validatorfehler dürfen nicht durch Archivierung versteckt werden.
+- **Release Hygiene**: Reviews müssen auf den stabilen geprüften Commit zeigen; der Release-Tag darf erst nach Merge der Reviews und manueller release-grade Validation auf dem finalen `main`-Commit gesetzt werden.
+- **Repository Ruleset Audit**: Governance-relevante Releases brauchen manuelle externe Ruleset-Prüfung; Source-Dateien allein sind kein Beweis.
+- **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.
