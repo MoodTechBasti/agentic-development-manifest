@@ -1,0 +1,66 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Node and package manager artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build and generated output
+dist/
+build/
+.out/
+out/
+.tmp/
+tmp/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ADM transient local agent runtime data
+.ai/tmp/
+.ai/temp/
+.ai/scratch/
+.ai/logs/
+.ai/cache/
+.ai/local/
+.ai/workspace/
+.ai/sessions/
+.ai/transient/
+*.scratch.md
+
+# Keep versioned ADM governance artifacts visible
+!.ai/README.md
+!.ai/reviews/
+!.ai/reviews/*.md
+!.ai/decisions/
+!.ai/decisions/*.md
+!.ai/handover/
+!.ai/handover/*.md
