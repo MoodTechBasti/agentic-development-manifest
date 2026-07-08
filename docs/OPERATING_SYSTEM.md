@@ -185,7 +185,9 @@ Handover Automation darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Rol
 
 ## SaaS Foundation Standard
 
-Der SaaS Foundation Standard ist der Phase-2-Architekturblock für neue SaaS-Systeme. Die kanonische Beschreibung liegt in `docs/SAAS_FOUNDATION_BLUEPRINT.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-saas-foundation-standard.md`.
+Der SaaS Foundation Standard ist der Roadmap-Phase-2-Architekturblock für neue SaaS-Systeme. Die kanonische Beschreibung liegt in `docs/SAAS_FOUNDATION_BLUEPRINT.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-saas-foundation-standard.md`.
+
+Das ist bewusst von Lifecycle Phase 2 — Architecture Competition aus `spec/ADM_v1_DRAFT.md` getrennt.
 
 ### Zweck
 
@@ -203,7 +205,7 @@ Ein SaaS-bezogener Agent muss prüfen, ob sein Task eine der folgenden Grenzen b
 
 ### Grenzen
 
-Phase 2 ist kein Implementierungsauftrag für Microservices, Payment-Provider, AI Provider Architecture, Prompt Registry oder Produktfeatures.
+Roadmap Phase 2 ist kein Implementierungsauftrag für Microservices, Payment-Provider, AI Provider Architecture, Prompt Registry oder Produktfeatures.
 
 Wenn ein Agent SaaS Foundation Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
 
