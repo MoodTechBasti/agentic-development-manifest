@@ -16,9 +16,9 @@ Use this authority order when resolving project state:
 
 1. Canonical repository documents: `spec/`, `docs/`, `ROADMAP.md`, `README.md`, accepted ADRs, governance and release runbooks.
 2. Canonical master prompt: `prompts/master_prompt.md`.
-3. Tool-specific adapter prompts under `prompts/adapters/`, only where they do not conflict with higher authority.
-4. Versioned runtime artifacts: `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/`, `.ai/agents/`.
-5. Curated project context: `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`.
+3. Versioned runtime artifacts: `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/`, `.ai/agents/`.
+4. Curated project context: `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`.
+5. Tool-specific adapter prompts under `prompts/adapters/`, only where they do not conflict with higher authority.
 6. Local transient files only as non-authoritative working notes.
 7. Chat history, hidden model memory, local scratch files, local tool profiles, and tool caches are never authoritative project truth.
 
