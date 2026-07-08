@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-PERF-20260708-ai-foundation-standard
 review_set_id: RSV-20260708-ai-foundation-standard
 target_ref: adm-v020-ai-foundation-standard
-target_commit: aad1a74cb6dfa4936c55148d45f101e0e768a2a7
+target_commit: cb2db83def70d0dc36bea39fad6c4d303014d8ac
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: SRE and Performance Lead
