@@ -1,4 +1,8 @@
-# ADM — SaaS Foundation Standard (v0.19 Draft)
+# ADM — SaaS Foundation Standard
+
+> Origin: accepted in v0.19 as Roadmap Phase 2
+> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Scope: architecture standard, not product implementation
 
 Der SaaS Foundation Standard definiert die Mindestarchitektur für neue SaaS-Produkte, bevor produktbezogene Features gebaut werden.
 
@@ -79,12 +83,7 @@ Zulässige Grundmodelle:
 | Workspace-first | Produktivitätstools mit mehreren Arbeitsbereichen pro Organisation. |
 | Tenant-first | Systeme, bei denen Isolation wichtiger ist als kaufmännische Struktur. |
 
-Die Entscheidung muss dokumentieren:
-
-- Wer besitzt Daten?
-- Wer verwaltet Mitglieder?
-- Wo hängen Billing, Quotas und Audit?
-- Wie werden Einladungen, Deaktivierung und Besitzwechsel behandelt?
+Die Entscheidung muss dokumentieren, wer Daten besitzt, wer Mitglieder verwaltet, wo Billing, Quotas und Audit hängen, und wie Einladungen, Deaktivierung und Besitzwechsel behandelt werden.
 
 ## 5. Rollen und Berechtigungen
 
@@ -118,53 +117,23 @@ Vorbereiten:
 - Billing-relevante Audit-Ereignisse.
 - Entitlements, die aus Plan und Sonderfreigaben berechnet werden.
 
-Nicht erforderlich in der Foundation:
-
-- echter Zahlungsanbieter,
-- echte Rechnungsstellung,
-- Steuerlogik,
-- komplexe Revenue-Recognition.
+Nicht erforderlich in der Foundation: echter Zahlungsanbieter, echte Rechnungsstellung, Steuerlogik oder komplexe Revenue Recognition.
 
 ## 7. Entitlements, Quotas und Usage
 
 Features und Nutzung müssen steuerbar sein.
 
-Typische Entitlements:
+Typische Entitlements: Teamgröße, Projekt- oder Workspace-Anzahl, Exporte, Importe, KI-Funktionen, API-Zugriff, Admin- und Audit-Funktionen.
 
-- Teamgröße.
-- Projekt- oder Workspace-Anzahl.
-- Export- oder Importfunktionen.
-- KI-Funktionen.
-- API-Zugriff.
-- Admin- oder Audit-Funktionen.
+Typische Quotas: API-Requests, Jobs, Worker-Laufzeit, Speicher, Exporte, KI-Tokens, KI-Aufrufe und externe Provider-Kosten.
 
-Typische Quotas:
-
-- API-Requests.
-- Jobs.
-- Worker-Laufzeit.
-- Speicher.
-- Exporte.
-- KI-Tokens oder KI-Aufrufe.
-- externe Provider-Kosten.
-
-Usage Tracking muss Kosten pro User, Workspace, Tenant, Feature, Request, Worker-Zeit und KI-Aufruf aggregieren können.
-
-Usage Tracking ohne Kostenmodell reicht nicht aus.
+Usage Tracking muss Kosten pro User, Workspace, Tenant, Feature, Request, Worker-Zeit und KI-Aufruf aggregieren können. Usage Tracking ohne Kostenmodell reicht nicht aus.
 
 ## 8. Jobs, Queues und Worker
 
 Langlaufende oder fehleranfällige Aufgaben gehören nicht in den Webserver-Request-Pfad.
 
-Worker übernehmen zum Beispiel:
-
-- PDF-Erzeugung.
-- Bildgenerierung.
-- Datenimporte.
-- KI-Analysen.
-- E-Mail-Versand.
-- Webhook-Verarbeitung.
-- Batch-Exporte.
+Worker übernehmen zum Beispiel PDF-Erzeugung, Bildgenerierung, Datenimporte, KI-Analysen, E-Mail-Versand, Webhook-Verarbeitung oder Batch-Exporte.
 
 Mindestanforderungen:
 
@@ -224,8 +193,6 @@ Jede relevante Datenklasse braucht einen definierten Lebenszyklus:
 8. Restore.
 
 Der Lifecycle gilt besonders für Uploads, Exporte, Logs, KI-Artefakte, temporäre Dateien, Caches und Worker-Zwischenstände.
-
-Ziel: keine Datenmüllhalden, keine ungeplanten Speicherkosten, keine unklare Löschlogik.
 
 ## 12. Developer Experience
 
