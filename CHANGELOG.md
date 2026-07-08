@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.12] — 2026-07-08
+
+### Validator Fixture Tests and Review Runbook
+
+- Added `scripts/test_validate_reviews.py` with dependency-free fixture tests for the ADM review validator.
+- Added positive complete-set coverage for a fully scoped six-role review set.
+- Added negative fixture coverage for empty complete-set runs, missing roles, duplicate roles, mismatched target commits, invalid `ci_ready`, and invalid `review_id` metadata.
+- Updated `.github/workflows/adm-quality-gate.yml` to run the validator fixture tests in CI.
+- Added `docs/REVIEW_RUNBOOK.md` with the operational happy path and common failure modes for complete ADM review sets.
+
 ## [v0.11.1] — 2026-07-08
 
 ### Stable Reviewed-Code SHA
