@@ -1,6 +1,6 @@
-# ADM — Operating System (v0.19 Draft)
+# ADM — Operating System (v0.20 Draft)
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards, AI-Foundation-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 ## Zweck
 
@@ -209,9 +209,36 @@ Roadmap Phase 2 ist kein Implementierungsauftrag für Microservices, Payment-Pro
 
 Wenn ein Agent SaaS Foundation Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
 
+## AI Foundation Standard
+
+Der AI Foundation Standard ist der Roadmap-Phase-3-Architekturblock für KI-Funktionen. Die kanonische Beschreibung liegt in `docs/AI_FOUNDATION_STANDARD.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-ai-foundation-standard.md`.
+
+Das ist bewusst von Lifecycle Phase 3 — Devil's Advocate aus `spec/ADM_v1_DRAFT.md` getrennt.
+
+### Zweck
+
+Die Foundation verhindert, dass produktbezogene KI-Features vor den tragenden KI-Grenzen entstehen.
+
+Ein AI-bezogener Agent muss prüfen, ob sein Task eine der folgenden Grenzen betrifft:
+
+- Provider-Abstraktion, Modellfähigkeiten oder Provider-spezifische Features.
+- Prompt Registry, Prompt-Versionen, Prompt-Owner oder Prompt-Änderungsregeln.
+- Tool Registry, Tool-Permissions, Side Effects, Human Approval oder Audit.
+- Evaluation, Golden Cases, Negative Cases, Qualitätskriterien oder Regressionen.
+- AI Cost Tracking, Token, Latenz, Cache Hits, Providerkosten oder Budgetgrenzen.
+- Routing, Fallback, Degradation, Timeouts oder lokale Ausführung.
+- Caching, Embeddings, KI-Artefakte, Evaluationsdaten oder KI-Data-Lifecycle.
+- Safety-Regeln für Datenklassen, Prompt Injection, PII, Secrets, Logs, Cache oder Tool-Nutzung.
+
+### Grenzen
+
+Roadmap Phase 3 ist kein Implementierungsauftrag für Provider-SDKs, Modellaufrufe, Tool-Ausführung, Prompt-Datenbanken, Validatoren, Workflows oder produktspezifische KI-Features.
+
+Wenn ein Agent AI Foundation Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
+
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, SaaS-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
+1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
