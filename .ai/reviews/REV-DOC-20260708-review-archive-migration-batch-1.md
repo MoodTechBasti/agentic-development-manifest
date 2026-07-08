@@ -10,12 +10,12 @@ runtime_target: .ai/reviews/
 review_id: REV-DOC-20260708-review-archive-migration-batch-1
 review_set_id: RSV-20260708-review-archive-migration-batch-1
 target_ref: adm-v027-review-archive-migration
-target_commit: 3f61ca4798535022971f712ed3e44648bc02839f
+target_commit: 0ffbb9f64edf1acfafe8307a5a3fed0c73bcf25d
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Documentation Reviewer
 target: v0.27 Review Archive Migration Batch 1
-target_files: [.ai/reviews/, .ai/reviews/archive/, .ai/README.md, README.md, ROADMAP.md, CHANGELOG.md, docs/decisions/ADR-20260708-review-archive-migration-batch-1.md]
+target_files: [.ai/reviews/, .ai/reviews/archive/, .ai/README.md, README.md, ROADMAP.md, CHANGELOG.md, spec/ADM_v1_DRAFT.md, docs/OPERATING_SYSTEM.md, docs/decisions/ADR-20260708-review-archive-migration-batch-1.md]
 ci_ready: true
 confidence_score: 9
 ---
@@ -28,7 +28,7 @@ Reviewed documentation consistency for the v0.27 Review Archive Migration Batch 
 
 ## Findings
 
-- Strengths: ADR, README, ROADMAP, CHANGELOG, and `.ai/README.md` describe the migration boundary.
+- Strengths: ADR, README, ROADMAP, CHANGELOG, `.ai/README.md`, ADM specification, and Operating System describe the migration boundary.
 - Strengths: The migrated review set list is explicit.
 - Strengths: The docs consistently state that v0.27 does not implement Roadmap Phase 7.
 - Strengths: Original historical review metadata is preserved by move-only migration.
