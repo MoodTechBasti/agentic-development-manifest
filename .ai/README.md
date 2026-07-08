@@ -45,6 +45,8 @@ The standard review validator path validates direct `.ai/reviews/*.md` files onl
 
 v0.26 defines this policy. v0.27 migrates completed historical review sets up to v0.25 into the archive path. v0.30 migrates completed v0.26, v0.27, and v0.28 review sets into the archive path while keeping current v0.29 release evidence active under `.ai/reviews/`.
 
+For a v1 release candidate, the direct active review area must not be ambiguous. Historical or completed non-RC review sets should either be archived before the v1-RC release process or explicitly documented as intentionally active and out of scope. The v1-RC `complete-set` gate must always use explicit `review_set_id`, `target_ref`, and `target_commit`.
+
 ## Agent Registry
 
 The Agent Registry under `.ai/agents/` describes durable agent roles, responsibility boundaries, required reading context, expected write areas, and handover routing.

@@ -45,6 +45,14 @@ The baseline preserves the existing mode boundaries:
 
 The baseline explicitly does not add workflow enforcement, release automation, schema language, provider integration, MCP integration, local tool profiles, or mandatory complete review sets for ordinary PRs.
 
+## v1 Release Candidate usage
+
+A v1 release candidate uses the existing `complete-set` mode. It does not require a new validator mode.
+
+For v1-RC validation, the maintainer or workflow must provide the exact v1-RC `review_set_id`, `target_ref`, and `target_commit`. The validator must treat stale or differently scoped review sets as out of scope.
+
+The v1-RC gate does not add recursive archive validation, review index generation, release automation, workflow hardening, or schema changes. Archived review sets remain historical evidence and direct `.ai/reviews/*.md` files remain the active validation area.
+
 ## v0.26 review archive policy
 
 v0.26 accepts the Review Archive Policy baseline.

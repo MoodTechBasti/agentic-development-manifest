@@ -49,7 +49,25 @@ Local terminal evidence may be used as an additional or fallback signal, but it 
 
 If a required evidence path is not run, the release record must say `NOT RUN` and explain why.
 
-## 6. Standard Release Flow
+## 6. v1 Release Candidate Release Gate
+
+A v1 release candidate uses the normal ADM release mechanics, but the evidence threshold is stricter.
+
+Before a v1-RC tag may be created:
+
+1. The v1-RC target state must be explicitly identified.
+2. README, ROADMAP, CHANGELOG, specification, ADRs, and governance runbooks must be synchronized.
+3. A dedicated complete six-role review set must exist for the v1-RC target state.
+4. The v1-RC review set must use a fresh `review_set_id`; older release review sets must not be reused as v1-RC evidence.
+5. The review artifacts must keep `target_commit` set to the stable content commit that was reviewed.
+6. Release-grade `complete-set` validation must pass with the exact v1-RC `review_set_id`, `target_ref`, and reviewed commit.
+7. GitHub manual workflow evidence is preferred for the v1-RC release record.
+8. Manual GitHub ruleset audit evidence must be recorded for the v1-RC release gate.
+9. The direct `.ai/reviews/` active review area must not create ambiguity about which reviews prove the v1-RC gate.
+
+Do not create a v1-RC tag if the evidence path is unclear, the ruleset audit is missing, the review scope is reused from an older release, or the active review area is ambiguous.
+
+## 7. Standard Release Flow
 
 1. Merge the release PR into `main`.
 2. Pull or fetch the final `main` state locally.
@@ -62,7 +80,7 @@ If a required evidence path is not run, the release record must say `NOT RUN` an
 9. Wait for the release-grade validation to pass.
 10. Create and push the annotated release tag on the final `main` commit.
 
-## 7. Manual GitHub Release Validation Inputs
+## 8. Manual GitHub Release Validation Inputs
 
 Trigger the `ADM Quality Gate` workflow manually on the `main` branch.
 
@@ -73,7 +91,7 @@ Trigger the `ADM Quality Gate` workflow manually on the `main` branch.
 | `target_ref` | e.g., `adm-v031-foundation-hygiene-cleanup` | The branch or reference used inside the review artifacts. |
 | `reviewed_commit` | e.g., `<stable-non-review-sha>` | The stable code or documentation commit that was reviewed. |
 
-## 8. Local Release Validation Commands
+## 9. Local Release Validation Commands
 
 Use current release values, not stale values copied from older examples.
 
@@ -89,7 +107,7 @@ python3 scripts/validate_reviews.py \
   --target-commit <stable-non-review-sha>
 ```
 
-## 9. Evidence Record Template
+## 10. Evidence Record Template
 
 Record release evidence explicitly:
 
@@ -104,7 +122,7 @@ Stable reviewed commit: <stable-non-review-sha>
 Final tag commit: <final-main-sha>
 ```
 
-## 10. Tagging
+## 11. Tagging
 
 Only if release-grade validation is green, tag the final `main` commit:
 

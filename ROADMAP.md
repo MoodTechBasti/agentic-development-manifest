@@ -119,9 +119,15 @@ This is a pre-Phase-9 foundation hygiene cleanup after v0.30. It is not Roadmap 
 
 ## Roadmap Phase 9: v1 Release Candidate Criteria
 
-- [ ] Define the exact evidence required for a v1 release candidate.
-- [ ] Require synchronized specification, roadmap, changelog, ADRs, and review artifacts for v1 readiness.
-- [ ] Require release-grade complete-set validation before tagging a v1 release candidate.
+v0.32 accepts Roadmap Phase 9 as the criteria definition for a future v1 release candidate.
+
+Phase 9 completion means the v1 release-candidate criteria are accepted. It does not declare ADM v1-ready, create a v1 release candidate, or authorize a v1 or v1-RC tag.
+
+- [x] Define the exact evidence required for a v1 release candidate.
+- [x] Require synchronized specification, roadmap, changelog, ADRs, and review artifacts for v1 readiness.
+- [x] Require release-grade complete-set validation before tagging a v1 release candidate.
+- [x] Define the v1-RC non-scope so deferred runtime, adapter, workflow, automation, MCP, and validator work is not treated as required or implemented.
+- [x] Define the active review evidence boundary for a future v1 release-candidate gate.
 
 ## v1 Readiness Criteria
 
@@ -129,11 +135,12 @@ ADM may be considered v1-ready only when the accepted standards, governance evid
 
 Minimum criteria:
 
-- Roadmap Phase 0 through Roadmap Phase 7 are accepted and reflected in the specification.
-- Roadmap Phase 8 through Roadmap Phase 9 are documented with explicit scope and non-scope.
+- Roadmap Phase 0 through Roadmap Phase 9 are accepted, documented with explicit scope and non-scope, and reflected in the specification.
 - Roadmap phases remain distinct from ADM lifecycle phases.
-- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy, Review Archive Migration Batch 1, and Session Continuity Baseline have accepted ADR coverage.
+- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy, Review Archive Migration Batch 1, Session Continuity Baseline, Tool Verification Discovery Baseline, Review Archive Migration Batch 2, Foundation Hygiene Cleanup, and v1 Release Candidate Criteria have accepted ADR coverage.
 - Deferred adapters are not treated as implemented or accepted without current tool-behavior verification.
-- v1 release candidates have a complete six-role review set and manual release-grade `complete-set` validation.
+- A v1 release candidate has a complete six-role review set created for the v1-RC target state; older review sets must not be reused as v1-RC proof.
+- A v1 release candidate has release-grade `complete-set` validation with explicit `review_set_id`, `target_ref`, and `target_commit`.
 - Governance-relevant v1 release candidates include manual GitHub ruleset audit evidence.
+- The direct `.ai/reviews/` active review area must not be ambiguous for a v1-RC release gate. Completed historical review sets should be archived before the v1-RC process or explicitly documented as out of scope for the v1-RC gate.
 - v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, additional validator hardening, release automation, additional review archive migration, Handover linting, or adapter expansion unless those are accepted by later explicit roadmap phases and ADRs.

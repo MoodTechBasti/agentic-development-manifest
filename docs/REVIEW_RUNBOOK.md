@@ -12,6 +12,11 @@ Use a six-role complete review set for:
 - architecture-critical changes,
 - security-, cost-, or performance-sensitive changes.
 
+A v1 release candidate is release-readiness, phase-transition, and governance relevant. It therefore requires a fresh complete six-role review set for the v1-RC target state.
+
+Do not reuse an older release review set as v1-RC proof. The v1-RC review artifacts must bind to the stable reviewed content commit with explicit `review_set_id`, `target_ref`, and `target_commit`.
+
+
 Do not require a complete review set for every small feature branch. Use `advisory` or `existing-strict` there.
 
 ## 2. Current hardening baselines

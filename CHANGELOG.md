@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.32] — 2026-07-08
+
+### v1 Release Candidate Criteria
+
+- Added `docs/decisions/ADR-20260708-v1-release-candidate-criteria.md` to accept Roadmap Phase 9 as the v1 Release Candidate Criteria baseline.
+- Defined the evidence required before a future v1 release candidate can be tagged.
+- Clarified that v1-RC readiness requires synchronized README, ROADMAP, CHANGELOG, specification, ADRs, governance documents, complete six-role review evidence, release-grade `complete-set` validation, and manual GitHub ruleset audit evidence where release-relevant.
+- Clarified that a v1-RC review set must be fresh, explicitly scoped, and bound to the stable reviewed content commit.
+- Clarified the active `.ai/reviews/` evidence boundary for a future v1-RC gate without moving or archiving review files in v0.32.
+- Kept v0.32 intentionally narrow: no v1-RC claim, v1 tag, v1-RC tag, workflow change, release automation, new validator mode, recursive archive validation, review index generation, runtime code, provider SDK integration, MCP integration, adapter expansion, Handover linting, branch-protection change, or review archive migration.
+
 ## [v0.31] — 2026-07-08
 
 ### Foundation Hygiene Cleanup
