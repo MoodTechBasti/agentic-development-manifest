@@ -8,7 +8,6 @@ import argparse
 import os
 import re
 import subprocess
-import sys
 from pathlib import Path
 
 REQUIRED_KEYS = {
@@ -97,11 +96,11 @@ def validate_confidence(metadata: dict[str, str], errors: list[str]) -> None:
         errors.append('confidence_score must be between 1 and 10')
 
 
-def validate_review(path: Path) -> list[str]:
+def validate_review(path: Path) -> tuple[dict[str, str] | None, list[str]]:
     errors: list[str] = []
     metadata = parse_frontmatter(path)
     if metadata is None:
-        return ['missing YAML frontmatter at file start']
+        return None, ['missing YAML frontmatter at file start']
 
     missing = sorted(REQUIRED_KEYS - set(metadata))
     if missing:
@@ -139,7 +138,7 @@ def validate_review(path: Path) -> list[str]:
             errors.append(f'review_id must match {prefix}-YYYYMMDD-feature-slug')
 
     validate_confidence(metadata, errors)
-    return errors
+    return metadata, errors
 
 
 def review_files(directory: Path) -> list[Path]:
@@ -152,12 +151,62 @@ def review_files(directory: Path) -> list[Path]:
     )
 
 
+def validate_complete_set(
+    reviewed: list[tuple[Path, dict[str, str] | None, list[str]]],
+    root: Path,
+) -> bool:
+    failed = False
+    passing_types: set[str] = set()
+
+    for path, metadata, errors in reviewed:
+        if errors or metadata is None:
+            continue
+
+        review_type = metadata.get('review_type', '')
+        status = metadata.get('review_status', '')
+        ci_ready = bool_value(metadata.get('ci_ready', ''))
+
+        if status == 'PASSED' and ci_ready is True:
+            passing_types.add(review_type)
+        else:
+            failed = True
+            rel_path = os.path.relpath(path, root)
+            print(f'FAILED: {rel_path}')
+            print('  - complete-set mode requires review_status PASSED and ci_ready true')
+
+    missing_types = sorted(set(VALID_TYPES) - passing_types)
+    if missing_types:
+        failed = True
+        print('FAILED: complete review set')
+        print('  - missing PASSED ci-ready review types: ' + ', '.join(missing_types))
+
+    return failed
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description='Validate ADM review artifacts')
     parser.add_argument('--path', default='.', help='Repository path')
     parser.add_argument('--reviews-dir', default='.ai/reviews', help='Review artifact directory')
-    parser.add_argument('--advisory', action='store_true', help='Report errors but exit 0')
+    parser.add_argument(
+        '--mode',
+        choices=('advisory', 'existing-strict', 'complete-set'),
+        help=(
+            'Validation mode. advisory reports errors with exit 0; '
+            'existing-strict fails on malformed existing reviews; '
+            'complete-set additionally requires all six ADM reviews to be PASSED and ci_ready.'
+        ),
+    )
+    parser.add_argument(
+        '--advisory',
+        action='store_true',
+        help='Deprecated alias for --mode advisory',
+    )
     args = parser.parse_args()
+
+    if args.advisory and args.mode:
+        parser.error('--advisory cannot be combined with --mode')
+
+    mode = 'advisory' if args.advisory else (args.mode or 'existing-strict')
 
     root = repo_root(Path(args.path))
     reviews_path = root / args.reviews_dir
@@ -166,16 +215,23 @@ def main() -> int:
     print('ADM review validator')
     print('Root:', root)
     print('Reviews:', reviews_path)
-    print('Mode:', 'advisory' if args.advisory else 'strict')
+    print('Mode:', mode)
 
     if not files:
+        if mode == 'complete-set':
+            print('FAILED: complete review set')
+            print('  - no completed review artifacts found')
+            return 1
         print('No completed review artifacts found. PASSED')
         return 0
 
     failed = False
+    reviewed: list[tuple[Path, dict[str, str] | None, list[str]]] = []
+
     for path in files:
         rel_path = os.path.relpath(path, root)
-        errors = validate_review(path)
+        metadata, errors = validate_review(path)
+        reviewed.append((path, metadata, errors))
         if not errors:
             print(f'PASSED: {rel_path}')
             continue
@@ -184,11 +240,17 @@ def main() -> int:
         for error in errors:
             print(f'  - {error}')
 
+    if mode == 'complete-set':
+        failed = validate_complete_set(reviewed, root) or failed
+
     if failed:
         print('Review validation completed with errors.')
-        return 0 if args.advisory else 1
+        return 0 if mode == 'advisory' else 1
 
-    print('All completed review artifacts are valid.')
+    if mode == 'complete-set':
+        print('All required completed review artifacts are valid, PASSED, and CI-ready.')
+    else:
+        print('All completed review artifacts are valid.')
     return 0
 
 
