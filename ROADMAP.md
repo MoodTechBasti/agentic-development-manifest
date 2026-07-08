@@ -97,6 +97,16 @@ This is an operational review-storage hygiene baseline after v0.26. It is not Ro
 - [x] Avoid new adapters, runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, validator changes, release automation, Handover linting, branch-protection changes, Review Archive Migration, Phase 9 work, and v1 release-candidate claims in v0.29.
 - [ ] Accept a future verified adapter only after current tool behavior is documented, reviewed, and explicitly approved.
 
+## Review Archive Migration Batch 2 (v0.30)
+
+This is an operational review-storage hygiene baseline after v0.29. It is not Roadmap Phase 9.
+
+- [x] Accept v0.30 as Review Archive Migration Batch 2.
+- [x] Move completed v0.26, v0.27, and v0.28 review sets under `.ai/reviews/archive/<review_set_id>/`.
+- [x] Keep the v0.29 review set directly under `.ai/reviews/` as current active release evidence.
+- [x] Preserve original review file contents and metadata.
+- [x] Avoid production validator logic changes, workflow changes, release automation, review index generation, Roadmap Phase 9 implementation, v1 release-candidate claims, runtime code, provider SDKs, MCP integration, adapter expansion, Handover linting, and branch-protection changes.
+
 ## Roadmap Phase 9: v1 Release Candidate Criteria
 
 - [ ] Define the exact evidence required for a v1 release candidate.
