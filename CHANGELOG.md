@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.13] — 2026-07-08
+
+### Repository Governance and Release Gate Policy
+
+- Added `docs/REPOSITORY_GOVERNANCE.md` to document the required `main-protection` ruleset, default-branch target, empty bypass list, pull-request-only merge path, required `ADM Quality Gate` status check, force-push block, and deletion restriction.
+- Documented the release gate distinction between the normal PR gate and release-grade complete-set validation.
+- Linked repository governance from `README.md`.
+- Updated `docs/REVIEW_RUNBOOK.md` with the repository settings precondition for merge readiness.
+
 ## [v0.12.1] — 2026-07-08
 
 ### Repository Hygiene and PR Template
