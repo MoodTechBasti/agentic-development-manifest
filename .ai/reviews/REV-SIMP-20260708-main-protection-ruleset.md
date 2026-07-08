@@ -10,12 +10,12 @@ runtime_target: .ai/reviews/
 review_id: REV-SIMP-20260708-main-protection-ruleset
 review_set_id: RSV-20260708-main-protection-ruleset
 target_ref: adm-v013-repository-governance
-target_commit: d48c34b6140101012a89ac221c52368556967c38
+target_commit: cf2866eaf6cf772f6d9937f21b84e07fb6d9e648
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Simplifier
 target: v0.13 repository governance and release gate policy
-target_files: [docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
+target_files: [.github/workflows/adm-quality-gate.yml, docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/decisions/ADR-20260708-main-protection-ruleset.md, README.md, CHANGELOG.md]
 ci_ready: true
 confidence_score: 9
 ---
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed whether the v0.13 governance documentation stays minimal and understandable.
+Reviewed whether the v0.13 governance documentation and required-check alignment stay minimal and understandable.
 
 ## Findings
 
@@ -37,7 +37,7 @@ Reviewed whether the v0.13 governance documentation stays minimal and understand
 
 - [x] One canonical repository governance document was added.
 - [x] The runbook only references the required precondition and does not duplicate the full policy.
-- [x] No new process layer was introduced beyond documenting the already active ruleset.
+- [x] The CI change is limited to the job display name required by the ruleset.
 - [x] The release gate distinction is explicit.
 
 ## Required Actions Before Merge
