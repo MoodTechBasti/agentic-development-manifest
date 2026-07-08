@@ -50,6 +50,21 @@ Recommended runtime filenames use the review ID instead of static role names, fo
 
 Do not write completed runtime reviews to static names such as `.ai/reviews/architect.md`, because that destroys review history.
 
+## Stable reviewed-code SHA
+
+`target_commit` means the code-under-review commit, not necessarily the workflow commit that contains review artifacts.
+
+Review files often live in `.ai/reviews/`. Adding or updating those files creates a new commit. If the workflow required that new commit SHA, the review set could never stably name the code it reviewed.
+
+For `complete-set`, CI therefore resolves a stable reviewed-code SHA by default from the latest commit that changed repository content outside `.ai/reviews/`. Manual workflow runs may override it with the `reviewed_commit` input.
+
+Recommended sequence:
+
+1. commit the code or documentation that needs review
+2. note that commit SHA as `target_commit`
+3. add the six `.ai/reviews/REV-*` artifacts in a later commit
+4. run `complete-set` against the stable reviewed-code SHA
+
 ## Validated fields
 
 The validator checks YAML frontmatter at the beginning of each completed review file and validates:
@@ -106,6 +121,6 @@ The GitHub workflow selects the review mode by branch context:
 - `release/**` branches and pull requests targeting `release/**`: `complete-set`
 - manual `workflow_dispatch`: selected by input, defaulting to `existing-strict`
 
-For `complete-set`, the workflow passes `target_ref` and `target_commit` into the validator. Pull requests use `PR-<number>` and the PR head SHA. Pushes use the branch name and workflow SHA.
+For `complete-set`, the workflow passes `target_ref` and the stable reviewed-code `target_commit` into the validator. Pull requests use `PR-<number>` as `target_ref`; pushes use the branch name.
 
 This prevents normal feature work from deadlocking while still letting release branches enforce complete review-set readiness for the exact code target being released.

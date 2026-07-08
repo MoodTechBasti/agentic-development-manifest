@@ -20,6 +20,10 @@ on:
         description: Optional review_set_id for complete-set runs
         required: false
         type: string
+      reviewed_commit:
+        description: Optional stable code-under-review commit SHA for complete-set runs
+        required: false
+        type: string
 
 jobs:
   line-limit-check:
@@ -29,6 +33,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -54,9 +60,9 @@ jobs:
           REF: ${{ github.ref }}
           SHA: ${{ github.sha }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           DISPATCH_MODE: ${{ inputs.review_gate_mode }}
           DISPATCH_REVIEW_SET_ID: ${{ inputs.review_set_id }}
+          DISPATCH_REVIEWED_COMMIT: ${{ inputs.reviewed_commit }}
         run: |
           set -eu
 
@@ -71,7 +77,14 @@ jobs:
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             target_ref="PR-$PR_NUMBER"
-            target_commit="${PR_HEAD_SHA:-$SHA}"
+          fi
+
+          reviewed_commit="${DISPATCH_REVIEWED_COMMIT:-}"
+          if [ -z "$reviewed_commit" ]; then
+            reviewed_commit="$(git log -n 1 --format=%H -- . ':(exclude).ai/reviews/**')"
+          fi
+          if [ -n "$reviewed_commit" ]; then
+            target_commit="$reviewed_commit"
           fi
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -86,7 +99,7 @@ jobs:
 
           echo "ADM review validation mode: $mode"
           echo "ADM review target_ref: $target_ref"
-          echo "ADM review target_commit: $target_commit"
+          echo "ADM reviewed code commit: $target_commit"
 
           cmd=(python scripts/validate_reviews.py --path . --mode "$mode")
           if [ "$mode" = "complete-set" ]; then
