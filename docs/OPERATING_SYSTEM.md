@@ -1,6 +1,6 @@
 # ADM — Operating System
 
-> Status: v0.26 synchronized draft
+> Status: v0.27 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
@@ -146,6 +146,8 @@ Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Re
 
 Der Standardpfad validiert direkte `.ai/reviews/*.md` Dateien und ignoriert `.ai/reviews/archive/**` nicht-rekursiv.
 
+v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in `.ai/reviews/archive/<review_set_id>/`. Diese Migration ändert keine Review-Metadaten und ändert keine Produktionsvalidatorlogik.
+
 ## 8. Release Hygiene
 
 Release-Hygiene ist Teil des Operating Systems, aber keine Release-Automation.
@@ -176,7 +178,7 @@ Spätere Tools dürfen Handovers aus Git-Status, Branch-Informationen, Review-Da
 
 Handover Automation darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Rollen, Freigaben oder abgeschlossene Arbeit erfinden. Sie darf keine PRs mergen, Tags setzen, Branch Protection ändern oder Chatverlauf, hidden model memory, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-Roadmap Phase 7 bleibt nach v0.26 offen. v0.26 implementiert keinen Handover-Linter und keine Handover-Automation.
+Roadmap Phase 7 bleibt nach v0.27 offen. v0.27 implementiert keinen Handover-Linter und keine Handover-Automation.
 
 ## 10. Foundation Standards
 
