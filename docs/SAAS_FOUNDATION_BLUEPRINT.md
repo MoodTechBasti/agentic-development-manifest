@@ -2,6 +2,8 @@
 
 Der SaaS Foundation Standard definiert die Mindestarchitektur für neue SaaS-Produkte, bevor produktbezogene Features gebaut werden.
 
+Er ist der kanonische **Roadmap-Phase-2-Standard**. Diese Roadmap-Phase ist nicht identisch mit **Lifecycle Phase 2 — Architecture Competition** aus `spec/ADM_v1_DRAFT.md`.
+
 Ziel ist kein großes Enterprise-System am ersten Tag. Ziel ist eine kleine, klare Foundation, die später nicht gegen Auth, Mandanten, Rechte, Abrechnung, Kostenkontrolle, Jobs oder Observability umgebaut werden muss.
 
 ## Architektur-Philosophie
@@ -206,7 +208,7 @@ Mindestprüfung:
 - unklare Lösch- und Exportrechte.
 - sensible Daten in Logs oder Jobs.
 
-KI-spezifische Risiken werden in Phase 3 vertieft. Phase 2 muss nur sicherstellen, dass Kosten-, Tenant- und Daten-Grenzen auch für spätere KI-Funktionen anschlussfähig sind.
+KI-spezifische Risiken werden in Roadmap Phase 3 vertieft. Roadmap Phase 2 muss nur sicherstellen, dass Kosten-, Tenant- und Daten-Grenzen auch für spätere KI-Funktionen anschlussfähig sind.
 
 ## 11. Data Lifecycle
 
@@ -266,11 +268,11 @@ Default-Grenzwerte verhindern unkontrolliertes Latenzwachstum. Abweichungen sind
 - KI- oder Drittanbieter-Requests: eigenes Budget, typischerweise 1500 ms bis 5000 ms.
 - Interaktive Langläufer brauchen Streaming, Polling oder Fortschrittsanzeige.
 
-## 15. Phase-2-Grenze
+## 15. Roadmap-Phase-2-Grenze
 
-Phase 2 definiert die SaaS-Foundation. Sie implementiert keine konkrete Produktlogik und erzwingt keinen Anbieter.
+Roadmap Phase 2 definiert die SaaS-Foundation. Sie implementiert keine konkrete Produktlogik und erzwingt keinen Anbieter.
 
-Nicht Teil von Phase 2:
+Nicht Teil von Roadmap Phase 2:
 
 - tiefe AI Provider Architecture,
 - Prompt Registry,
@@ -280,7 +282,7 @@ Nicht Teil von Phase 2:
 - produktindividuelle Feature-Implementierung,
 - Microservice-Zerlegung ohne belegten Bedarf.
 
-Diese Themen folgen in späteren Phasen oder produktspezifischen ADRs.
+Diese Themen folgen in späteren Roadmap-Phasen oder produktspezifischen ADRs.
 
 ## 16. Final Audit
 
