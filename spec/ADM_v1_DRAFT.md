@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.22 Draft)
+# ADM — Spezifikation (v0.23 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.22 Draft
-- **Zustand**: Adapter Prompt Standard Accepted
+- **Version**: v0.23 Draft
+- **Zustand**: Roadmap Continuation and v1 Readiness Plan Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards und Adapter Prompt Standards müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation und v1-Readiness-Kriterien müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -250,7 +250,19 @@ Roadmap Phase 5 implementiert keine Runtime, keine Provider-SDKs, keine echte To
 
 Initial akzeptierte Adapter sind Claude Code CLI, Codex CLI und Generic CLI Agent. Gemini CLI und Antigravity CLI bleiben deferred candidates bis zu späterer expliziter Freigabe.
 
-## 16. PR Hygiene Policy
+## 16. Roadmap Continuation and v1 Readiness
+
+Roadmap Continuation ist der kanonische v0.23-Planungsblock nach Roadmap Phase 5. Er definiert Roadmap Phase 6 bis Roadmap Phase 9 und v1-Readiness-Kriterien, ohne die späteren Mechanismen zu implementieren.
+
+Das ist bewusst von Lifecycle Phase 5 — Roadmap & Plan und Lifecycle Phase 6 — Foundation Build aus Abschnitt 3 getrennt.
+
+v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz und release-grade `complete-set`-Validierung für den Zielzustand.
+
+Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
+
+v0.23 implementiert keine Validatoren, Workflows, Runtime, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Release-Automation, Gemini CLI Adapter oder Antigravity CLI Adapter.
+
+## 17. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -258,7 +270,7 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 17. Agent Onboarding Contract
+## 18. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
 
@@ -270,7 +282,7 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - Die Pflicht, `docs/SAAS_FOUNDATION_BLUEPRINT.md` zu lesen, wenn eine Aufgabe SaaS-Architektur, Mandanten, Billing, Jobs, Observability, Admin, Data Lifecycle oder Foundation-Standards betrifft.
 - Die Pflicht, `docs/AI_FOUNDATION_STANDARD.md` zu lesen, wenn eine Aufgabe KI-Provider, Prompts, Tools, Evaluation, Routing, Fallback, Caching, Safety, AI Cost Tracking, KI-Artefakte oder AI Foundation Standards betrifft.
 
-## 18. Quality Gates / Definition of Done
+## 19. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
@@ -279,4 +291,5 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - **AI Foundation**: KI-Features dürfen Provider, Prompts, Tools, Evaluation, Kosten, Routing, Fallback, Caching, Safety, Observability und KI-Artefakt-Lifecycle nicht implizit oder undokumentiert umgehen.
 - **Master Prompt**: Agenten dürfen Autoritätsmodell, Scope-Deklaration, Quality-Gate-Evidenz, Review-Scope, Handover-Pflichten oder Adapter-Grenzen nicht implizit umgehen.
 - **Adapter Prompt**: Adapter dürfen den kanonischen Master Prompt nicht ersetzen, Tool-State nicht als Wahrheit nutzen und keine ADM-Governance umgehen.
-- **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.
+- **Roadmap Continuation**: Roadmap-Phasen müssen von Lifecycle-Phasen getrennt bleiben; v1-Readiness-Kriterien dürfen keine deferred oder nicht akzeptierten Mechanismen als umgesetzt behandeln.
+- **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderten Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.

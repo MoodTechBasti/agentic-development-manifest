@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.23] — 2026-07-08
+
+### Roadmap Continuation and v1 Readiness Plan
+
+- Added Roadmap Phase 6 through Roadmap Phase 9 to `ROADMAP.md` as planned future blocks after Roadmap Phase 5.
+- Added v1 Readiness Criteria to define the evidence required before ADM can be considered v1-ready.
+- Added `docs/decisions/ADR-20260708-roadmap-continuation-v1-readiness.md` to record the accepted roadmap continuation and v1 readiness architecture decision.
+- Clarified that Roadmap Phase 6 and later remain distinct from ADM lifecycle phases in `spec/ADM_v1_DRAFT.md`.
+- Synchronized `spec/ADM_v1_DRAFT.md`, `README.md`, `ROADMAP.md`, and `CHANGELOG.md`.
+- Kept v0.23 documentation-only: no validator change, workflow change, runtime code, provider SDK integration, MCP integration, local tool profile, release automation, Gemini CLI adapter, Antigravity CLI adapter, or provider secrets.
+
 ## [v0.22] — 2026-07-08
 
 ### Adapter Prompt Standard
@@ -52,7 +63,7 @@
 
 - Added `docs/decisions/ADR-20260708-handover-automation.md` to define structured, repository-owned handover automation semantics.
 - Defined which handover concepts may become machine-checkable, including session identity, agent role, changed files, checks, review status, risks, and next steps.
-- Documented safety boundaries: automation may prefill, lint, and cross-check handovers, but must not invent checks, commits, CI results, review votes, roles, or approvals.
+- Documented safety boundaries: automation may prefill, lint, and cross-check handovers, but must not invent checks, commits, CI results, review votes, or approvals.
 - Connected Handover Automation to Project-owned Memory and Agent Registry without adding validators, workflow changes, schemas, or real automation.
 - Updated `templates/HANDOVER_TEMPLATE.md`, `docs/OPERATING_SYSTEM.md`, `spec/ADM_v1_DRAFT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
 
