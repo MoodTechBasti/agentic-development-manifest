@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.17 Draft)
+# ADM — Spezifikation (v0.18 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.17 Draft
-- **Zustand**: Agent Registry Architecture Accepted
+- **Version**: v0.18 Draft
+- **Zustand**: Handover Automation Architecture Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen und Reviews müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews und Handovers müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -129,7 +129,34 @@ Die kanonische Laufzeitposition ist `.ai/agents/`.
 
 Die Agent Registry ist keine technische Rechteverwaltung. GitHub Rulesets, CI, Code Review und lokale Sandbox-Regeln bleiben die Durchsetzungsmechanismen.
 
-## 11. PR Hygiene Policy
+## 11. Handover Automation
+
+Handover Automation definiert strukturierte, repository-owned Übergaben, die später sicher vorbefüllt, gelintet oder validiert werden können.
+
+Die kanonischen Positionen sind:
+
+- `.ai/handover/` für konkrete Session-Handovers.
+- `templates/HANDOVER_TEMPLATE.md` für die wiederverwendbare Vorlage.
+
+### Maschinenprüfbare Konzepte
+
+Spätere Automatisierung darf nur klar begrenzte Felder maschinenprüfen:
+
+| Feldgruppe | Beispiele |
+| --- | --- |
+| Identität | `session_id`, `timestamp`, `outgoing_agent`, `active_role` |
+| Scope | `changed_files`, `target_ref`, `target_commit`, `review_set_id` |
+| Qualität | Checks, Review-Status, CI-readiness, blockierende Votes |
+| Routing | empfohlener nächster Registry-Agent und Routing-Grund |
+| Zustand | erledigte, offene und blockierte Tasks |
+
+### Grenzen
+
+Handover Automation darf keine Checks, Commits, Review-Votes, Rollen, CI-Ergebnisse oder Freigaben erfinden.
+
+Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memory, Chatverlauf, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
+
+## 12. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -137,7 +164,7 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 12. Agent Onboarding Contract
+## 13. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
 
@@ -145,9 +172,9 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
 - Die Regeln für Handover und Decision Records.
 
-## 13. Quality Gates / Definition of Done
+## 14. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
 - **Testing**: Neue Logik muss durch Tests abgedeckt sein.
-- **Handover**: Jede Sitzung endet mit einem strukturierten Handover.
+- **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.

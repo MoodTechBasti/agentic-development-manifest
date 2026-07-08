@@ -28,6 +28,14 @@ A registry entry should define:
 | `handover_to` | Recommended next role or role family |
 | `review_scope` | Review responsibility, if any |
 
+## Handover routing
+
+Handover Automation may consume `agent_id`, `role`, and `handover_to` to check whether a handover references an existing next role.
+
+It must not invent missing roles or treat registry write areas as technical permissions.
+
+If a handover needs a role that does not exist yet, the handover should record that as an open registry question.
+
 ## Commit policy
 
 Agent Registry artifacts may be committed when they are intentional, reviewable, non-sensitive, and useful for future agent coordination.

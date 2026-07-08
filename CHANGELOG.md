@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.18] — 2026-07-08
+
+### Handover Automation Architecture
+
+- Added `docs/decisions/ADR-20260708-handover-automation.md` to define structured, repository-owned handover automation semantics.
+- Defined which handover concepts may become machine-checkable, including session identity, agent role, changed files, checks, review status, risks, and next steps.
+- Documented safety boundaries: automation may prefill, lint, and cross-check handovers, but must not invent checks, commits, CI results, review votes, roles, or approvals.
+- Connected Handover Automation to Project-owned Memory and Agent Registry without adding validators, workflow changes, schemas, or real automation.
+- Updated `templates/HANDOVER_TEMPLATE.md`, `docs/OPERATING_SYSTEM.md`, `spec/ADM_v1_DRAFT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
+
 ## [v0.17] — 2026-07-08
 
 ### Agent Registry Architecture
