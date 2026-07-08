@@ -14,7 +14,19 @@ Use a six-role complete review set for:
 
 Do not require a complete review set for every small feature branch. Use `advisory` or `existing-strict` there.
 
-## 2. Standard review roles
+## 2. v0.24 hardening baseline guardrails
+
+Roadmap Phase 6 starts from the existing review validation model instead of replacing it.
+
+The accepted v0.24 baseline keeps these guardrails:
+
+- Normal PRs to `main` use `existing-strict` and must not require all six reviews.
+- Release-grade or phase-transition checks use `complete-set` with explicit scope.
+- Stale review artifacts must not satisfy a newer scoped release gate.
+- Manual release-grade validation must bind to the reviewed code commit, not merely the commit containing review artifacts.
+- Workflow hardening, release automation, new schemas, or branch protection changes require a separate explicit ADR.
+
+## 3. Standard review roles
 
 A complete ADM review set requires exactly one passing, CI-ready review for each role:
 
@@ -27,7 +39,7 @@ A complete ADM review set requires exactly one passing, CI-ready review for each
 | `simplifier` | `REV-SIMP` |
 | `documentation` | `REV-DOC` |
 
-## 3. Repository merge precondition
+## 4. Repository merge precondition
 
 Before a governance, release, or phase-transition PR is considered merge-ready, the repository settings must match `docs/REPOSITORY_GOVERNANCE.md`.
 
@@ -45,7 +57,7 @@ Minimum required state:
 
 These settings live in GitHub, not in source control, so they must be manually audited when repository governance is changed.
 
-## 4. Happy path
+## 5. Happy path
 
 ### Step 1: Commit the code under review
 
@@ -148,7 +160,7 @@ After merge, run the GitHub workflow manually:
 
 The workflow should print the selected mode, target ref, and reviewed code commit before running the validator.
 
-## 5. Common failures
+## 6. Common failures
 
 ### Missing role
 
@@ -174,6 +186,12 @@ Cause: one review points to a different reviewed code commit.
 
 Fix: verify the actual code-under-review SHA and align all six files.
 
+### Stale review set
+
+Cause: old reviews exist but do not match the requested `review_set_id`, `target_ref`, or `target_commit`.
+
+Fix: create or select the correct scoped review set for the current target. Do not weaken the scope filter to make stale reviews pass.
+
 ### PASSED with ci_ready false
 
 Cause: the review says it passed but is not CI-ready.
@@ -186,7 +204,7 @@ Cause: the review ID does not match the required prefix and date pattern.
 
 Fix: use the correct prefix, date, and slug, for example `REV-SEC-20260708-auth-hardening`.
 
-## 6. Validator fixture tests
+## 7. Validator fixture tests
 
 Run the validator fixture test suite with:
 
@@ -194,4 +212,4 @@ Run the validator fixture test suite with:
 python scripts/test_validate_reviews.py
 ```
 
-The test suite covers both the happy path and expected failure modes for malformed or incomplete review sets.
+The test suite covers both the happy path and expected failure modes for malformed, incomplete, duplicate, mismatched, or stale scoped review sets.

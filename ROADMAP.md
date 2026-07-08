@@ -40,9 +40,10 @@ Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM
 
 ## Roadmap Phase 6: Review and Validation Hardening
 
-- [ ] Harden review and validation semantics only after the current review vocabulary remains stable.
-- [ ] Evaluate whether schemas, stricter validators, or workflow changes are needed before implementing them.
-- [ ] Preserve the advisory, existing-strict, and complete-set distinction unless an accepted ADR changes it.
+- [x] Accept the current review validation modes as the Roadmap Phase 6 baseline.
+- [x] Normalize review validation mode and review-set scoping ADR status to match implemented repository behavior.
+- [x] Add targeted fixture coverage for review-set filtering, target-ref filtering, and stale-review protection.
+- [x] Preserve the advisory, existing-strict, and complete-set distinction without adding workflow hardening or release automation.
 
 ## Roadmap Phase 7: Handover and Session Continuity
 
@@ -71,7 +72,7 @@ Minimum criteria:
 - Roadmap Phase 0 through Roadmap Phase 5 are accepted and reflected in the specification.
 - Roadmap Phase 6 through Roadmap Phase 9 are documented with explicit scope and non-scope.
 - Roadmap phases remain distinct from ADM lifecycle phases.
-- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, and Adapter Prompt Standard have accepted ADR coverage.
+- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, and Review and Validation Hardening have accepted ADR coverage.
 - Deferred adapters are not treated as implemented or accepted without current tool-behavior verification.
 - v1 release candidates have a complete six-role review set and manual release-grade `complete-set` validation.
-- v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, validator hardening, or release automation unless those are accepted by later explicit roadmap phases and ADRs.
+- v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, additional validator hardening, or release automation unless those are accepted by later explicit roadmap phases and ADRs.

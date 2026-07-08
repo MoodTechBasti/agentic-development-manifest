@@ -46,14 +46,15 @@ def review_text(review_type, **overrides):
     return '\n'.join(lines) + '\n'
 
 
-def write_set(root, types=None, directory='.ai/reviews', **overrides):
+def write_set(root, types=None, directory='.ai/reviews', slug='fixture', **overrides):
     review_dir = root / directory
     review_dir.mkdir(parents=True, exist_ok=True)
     selected = types or list(REVIEW_TYPES)
     for review_type in selected:
         _, prefix, _ = REVIEW_TYPES[review_type]
-        path = review_dir / f'{prefix}-20260708-fixture.md'
-        path.write_text(review_text(review_type, **overrides), encoding='utf-8')
+        review_id = f'{prefix}-20260708-{slug}'
+        path = review_dir / f'{review_id}.md'
+        path.write_text(review_text(review_type, review_id=review_id, **overrides), encoding='utf-8')
     return review_dir
 
 
@@ -119,6 +120,31 @@ def test_mismatched_scope_fails():
         assert_result('mismatched target_commit fails', result, 1, 'missing PASSED ci-ready review types')
 
 
+def test_wrong_review_set_filter_fails():
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        write_set(root, review_set_id='RSV-20260708-other-fixture')
+        result = run_validator(root, *complete_set_args())
+        assert_result('wrong review_set_id filter fails', result, 1, 'no review artifacts match the requested scope')
+
+
+def test_wrong_target_ref_filter_fails():
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        write_set(root, target_ref='release/v1')
+        result = run_validator(root, *complete_set_args())
+        assert_result('wrong target_ref filter fails', result, 1, 'no review artifacts match the requested scope')
+
+
+def test_stale_complete_set_does_not_satisfy_new_scope():
+    with tempfile.TemporaryDirectory() as temp:
+        root = Path(temp)
+        write_set(root, slug='old-fixture', review_set_id='RSV-20260708-old-fixture')
+        write_set(root, slug='fixture', types=['architect'], review_set_id=SET_ID)
+        result = run_validator(root, *complete_set_args())
+        assert_result('stale complete set cannot satisfy new scope', result, 1, 'missing PASSED ci-ready review types')
+
+
 def test_duplicate_role_fails():
     with tempfile.TemporaryDirectory() as temp:
         root = Path(temp)
@@ -152,6 +178,9 @@ def main():
         test_valid_complete_set,
         test_missing_role_fails,
         test_mismatched_scope_fails,
+        test_wrong_review_set_filter_fails,
+        test_wrong_target_ref_filter_fails,
+        test_stale_complete_set_does_not_satisfy_new_scope,
         test_duplicate_role_fails,
         test_invalid_metadata_fails,
     ]

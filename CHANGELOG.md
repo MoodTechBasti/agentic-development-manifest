@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.24] — 2026-07-08
+
+### Review and Validation Hardening Baseline
+
+- Added `docs/decisions/ADR-20260708-review-validation-hardening-baseline.md` to accept Roadmap Phase 6 as a controlled review and validation hardening baseline.
+- Promoted the already implemented review validation mode and review-set scoping ADRs from stale `PROPOSED` status to accepted repository truth.
+- Updated `docs/REVIEW_VALIDATION.md` and `docs/REVIEW_RUNBOOK.md` to document the v0.24 baseline guardrails, stale-review protection, and normal PR versus release-grade validation boundaries.
+- Hardened `scripts/test_validate_reviews.py` with targeted scope-filtering regression coverage for review set IDs, target refs, and stale complete review sets.
+- Marked Roadmap Phase 6 baseline work complete in `ROADMAP.md` and synchronized `spec/ADM_v1_DRAFT.md` and `README.md`.
+- Kept v0.24 intentionally narrow: no workflow hardening, release automation, runtime code, provider SDK integration, MCP integration, local tool profile, Gemini CLI adapter, Antigravity CLI adapter, or provider secrets.
+
 ## [v0.23] — 2026-07-08
 
 ### Roadmap Continuation and v1 Readiness Plan

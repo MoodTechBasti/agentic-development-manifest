@@ -1,7 +1,7 @@
 # Architecture Decision Record: Review Set Scoping and Target Binding
 
 > ID: ADR-20260708-review-set-scoping
-> Status: PROPOSED
+> Status: ACCEPTED
 > Last updated: 2026-07-08
 > Owner: Principal Architect
 
@@ -12,9 +12,9 @@
 | Confidence level | 9 |
 | Affected modules | `scripts/validate_reviews.py`, `.github/workflows/adm-quality-gate.yml`, `templates/reviews/`, `docs/REVIEW_VALIDATION.md`, `spec/ADM_v1_DRAFT.md` |
 | New dependencies | No |
-| Security review | PENDING |
-| Cost review | PENDING |
-| Performance review | PENDING |
+| Security review | PASSED via `ADR-20260708-review-validation-hardening-baseline` |
+| Cost review | PASSED via `ADR-20260708-review-validation-hardening-baseline` |
+| Performance review | PASSED via `ADR-20260708-review-validation-hardening-baseline` |
 
 ## 1. Context and Reason
 
@@ -61,6 +61,7 @@ Deprecated compatibility aliases remain available where useful:
 - Review templates already live separately from completed artifacts.
 - The repository already uses branch-aware workflow modes; adding target binding to release checks is a direct continuation of that design.
 - Zero-dependency Python remains sufficient for this validation layer.
+- v0.24 confirms this ADR as accepted baseline because the behavior is already implemented, documented, tested, and release-used.
 
 ## 4. Alternatives
 
@@ -124,15 +125,10 @@ None.
 
 ## 9. Review Log
 
-- [ ] Principal Architect: APPROVED / REJECTED / COMMENT — pending
-- [ ] Devil's Advocate: APPROVED / REJECTED / COMMENT — pending
-- [ ] Security Lead: APPROVED / REJECTED / COMMENT — pending
-- [ ] Cost Engineer: APPROVED / REJECTED / COMMENT — pending
-- [ ] Performance Lead: APPROVED / REJECTED / COMMENT — pending
-- [ ] Simplifier: APPROVED / REJECTED / COMMENT — pending
+This ADR's historical review log is normalized by the v0.24 Review and Validation Hardening Baseline. The full v0.24 six-role review set covers this acceptance correction instead of inventing retroactive v0.11 role votes.
+
+- [x] Accepted by `docs/decisions/ADR-20260708-review-validation-hardening-baseline.md`.
 
 ## 10. Final Outcome
 
-Proposed for adoption in v0.11.
-
-Next step: merge v0.11, then create the first real review set against the merged commit using the six updated templates.
+Accepted as the canonical ADM review-set scoping and target-binding decision. v0.24 corrected the stale `PROPOSED` status to match the implemented, documented, and release-used repository behavior.
