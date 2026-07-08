@@ -38,6 +38,22 @@ Agent Registry files are not:
 
 Use `.ai/agents/README.md` to document the registry policy. Future projects may add `registry.md`, `registry.yml`, or role-specific files when the role model needs more structure.
 
+## Handover Automation
+
+Structured handovers under `.ai/handover/` may be committed when they describe meaningful session state for future agents.
+
+Handover Automation may later prefill, lint, or validate handover structure, but it must not invent:
+
+- checks or command results
+- CI status
+- review votes
+- commit SHAs
+- registry roles
+- approvals
+- completed work
+
+Concrete handovers should use `templates/HANDOVER_TEMPLATE.md`, keep repository-relative paths, and record missing checks as `NOT RUN` instead of pretending they passed.
+
 ## Project-owned memory
 
 Project-owned memory is durable project knowledge owned by the repository, not by a model, chat window, local workstation, or vendor-specific tool profile.
