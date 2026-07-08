@@ -1,4 +1,4 @@
-# ADM — Operating System (v0.10 Draft)
+# ADM — Operating System (v0.11 Draft)
 
 Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
@@ -37,6 +37,7 @@ ADM trennt wiederverwendbare Vorlagen von ausgefüllten Laufzeit-Artefakten.
 - Wiederverwendbare Review-Vorlagen liegen unter `templates/reviews/`.
 - Ausgefüllte, konkrete Review-Berichte liegen unter `.ai/reviews/`.
 - Leere Templates dürfen nicht in `.ai/reviews/` abgelegt werden.
+- Ausgefüllte Reviews nutzen ihren `review_id` als Dateiname, nicht statische Rollennamen.
 
 Diese Trennung verhindert, dass Projektgedächtnis, Review-Historie und wiederverwendbare Schablonen vermischt werden.
 
@@ -52,6 +53,18 @@ Die Standard-Reviews des Multi-Agenten-Parlaments sind:
 | `templates/reviews/cost.md` | Cost Engineer | `REV-COST` |
 | `templates/reviews/simplifier.md` | Simplifier | `REV-SIMP` |
 | `templates/reviews/documentation.md` | Documentation Reviewer | `REV-DOC` |
+
+## Review-Set-Scoping
+
+Ein Review-Set ist eine zusammengehörige Freigabe-Einheit aus sechs Rollen-Reviews.
+
+Jedes ausgefüllte Review-Artefakt muss die folgenden Scope-Felder enthalten:
+
+- `review_set_id`: gemeinsame Set-ID, zum Beispiel `RSV-20260708-review-set-scoping`
+- `target_ref`: Zielreferenz, zum Beispiel `PR-2` oder `release/v1`
+- `target_commit`: Git-Commit-SHA des geprüften Codes
+
+Ein Release-Gate darf nur grün werden, wenn alle sechs Rollen dieselbe `review_set_id`, dieselbe `target_ref` und denselben `target_commit` verwenden.
 
 ## Review-Validierung
 
@@ -72,12 +85,12 @@ python scripts/validate_reviews.py --path . --mode existing-strict
 Vollständiger Review-Set-Modus für Release-Gates:
 
 ```bash
-python scripts/validate_reviews.py --path . --mode complete-set
+python scripts/validate_reviews.py --path . --mode complete-set --review-set-id RSV-20260708-review-set-scoping --target-ref PR-2 --target-commit <git-sha>
 ```
 
-Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Review-Status, `runtime_target: .ai/reviews/`, `ci_ready` und optional den Confidence Score.
+Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Review-Set-Scope, Review-Status, `runtime_target: .ai/reviews/`, `ci_ready` und optional den Confidence Score.
 
-`complete-set` geht weiter: alle sechs Standard-Review-Typen müssen vorhanden, `PASSED` und `ci_ready: true` sein.
+`complete-set` geht weiter: alle sechs Standard-Review-Typen müssen vorhanden, `PASSED`, `ci_ready: true` und auf denselben Scope gebunden sein.
 
 Im GitHub-Workflow wird die Review-Validierung kontextabhängig ausgeführt:
 
@@ -86,10 +99,10 @@ Im GitHub-Workflow wird die Review-Validierung kontextabhängig ausgeführt:
 | Feature-Branch / `dev` | `advisory` |
 | PR nach `main` / `master` | `existing-strict` |
 | Push auf `main` / `master` | `existing-strict` |
-| `release/**` | `complete-set` |
+| `release/**` | `complete-set` mit `target_ref` und `target_commit` |
 | Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
 
-Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges Review-Gate erhalten.
+Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges und commit-gebundenes Review-Gate erhalten.
 
 ## Sitzungs-Lifecycle
 
@@ -131,7 +144,8 @@ Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 
 - ausgeführte Review-Vorlagen
 - Review-Dateien unter `.ai/reviews/`
-- Ergebnis von `scripts/validate_reviews.py`, inklusive Modus
+- Ergebnis von `scripts/validate_reviews.py`, inklusive Modus und Scope
+- `review_set_id`, `target_ref` und `target_commit`
 - blockierende Votes
 - CI-readiness status
 
