@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.12.1] — 2026-07-08
+
+### Repository Hygiene and PR Template
+
+- Added a targeted `.gitignore` for Python, Node, build output, local secrets, editor files, and transient ADM agent runtime data.
+- Kept versioned ADM governance artifacts under `.ai/reviews/`, `.ai/decisions/`, and `.ai/handover/` intentionally visible.
+- Added `.github/pull_request_template.md` with ADM compliance, quality gate, review-scope, and validation sections.
+- Added `.ai/README.md` to document which `.ai/` artifacts may be committed and which local agent outputs must remain ignored.
+
 ## [v0.12] — 2026-07-08
 
 ### Validator Fixture Tests and Review Runbook
