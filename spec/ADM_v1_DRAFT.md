@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.29 Draft)
+# ADM — Spezifikation (v0.30 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.29 Draft
-- **Zustand**: Roadmap Phase 8 Tool Verification Discovery Baseline Accepted
+- **Version**: v0.30 Draft
+- **Zustand**: Review Archive Migration Batch 2 Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -72,7 +72,7 @@ Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 | `existing-strict` | Prüft vorhandene Reviews strikt auf Struktur. | Pull Requests, normale Pushes. |
 | `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
-v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht. v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in dieses Archivmodell.
+v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht. v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in dieses Archivmodell. v0.30 migriert abgeschlossene v0.26-, v0.27- und v0.28-Review-Sets in dasselbe Archivmodell, ohne Review-Metadaten oder Produktionsvalidatorlogik zu ändern.
 
 ## 7. Release Gate Policy
 
@@ -234,6 +234,8 @@ Review Archive Migration Batch 1 ist der kanonische v0.27-Archivierungsmigration
 Session Continuity Baseline ist der kanonische v0.28-Roadmap-Phase-7-Block. Er definiert repository-owned Sitzungsfortsetzung, Handover-Discovery, Continuity-Status, Ambiguitätsbehandlung und Evidenzgrenzen ohne Linter, Workflow, Runtime oder neue Validator-Semantik.
 
 Tool Verification Discovery Baseline ist der kanonische v0.29-Roadmap-Phase-8-Block. Er definiert Tool-Verifikationskriterien vor deferred oder future Adapter-PRs, ohne Gemini CLI, Antigravity CLI oder andere neue Adapter zu akzeptieren.
+
+Review Archive Migration Batch 2 ist der kanonische v0.30-Archivierungsmigrationsblock. Er verschiebt abgeschlossene Review-Sets von v0.26 bis v0.28 nach `.ai/reviews/archive/<review_set_id>/`, ohne Review-Metadaten umzuschreiben und ohne v0.29 als aktive Release-Evidenz zu archivieren.
 
 v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand. Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
 
