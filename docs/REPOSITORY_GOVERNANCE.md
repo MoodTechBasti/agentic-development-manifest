@@ -75,7 +75,7 @@ A release-grade ADM change must satisfy all of the following before it is consid
 - The PR had no unresolved conversations at merge time.
 - `CHANGELOG.md` documents the change when governance, validation behavior, or release process changed.
 - A complete six-role ADM review set exists for release readiness, phase transitions, governance changes, architecture-critical changes, or security-, cost-, or performance-sensitive changes.
-- Release-grade complete-set validation is run manually when a release or phase transition depends on a specific reviewed code commit.
+- Release-grade complete-set validation is run manually when a release or phase transition depends on a specific reviewed code commit. See [docs/RELEASE_RUNBOOK.md](file:///home/basti/projects/agentic-development-manifest/docs/RELEASE_RUNBOOK.md) for execution details.
 
 The release gate is intentionally stricter than the normal PR gate. The normal PR gate prevents structurally invalid changes from entering `main`; the release gate proves that a specific ADM state has been reviewed as a complete unit.
 

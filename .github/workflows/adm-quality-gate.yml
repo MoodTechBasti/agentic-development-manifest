@@ -24,6 +24,10 @@ on:
         description: Optional stable code-under-review commit SHA for complete-set runs
         required: false
         type: string
+      target_ref:
+        description: Optional explicit target_ref for complete-set release validation
+        required: false
+        type: string
 
 jobs:
   line-limit-check:
@@ -71,6 +75,7 @@ jobs:
           DISPATCH_MODE: ${{ inputs.review_gate_mode }}
           DISPATCH_REVIEW_SET_ID: ${{ inputs.review_set_id }}
           DISPATCH_REVIEWED_COMMIT: ${{ inputs.reviewed_commit }}
+          DISPATCH_TARGET_REF: ${{ inputs.target_ref }}
         run: |
           set -eu
 
@@ -85,6 +90,11 @@ jobs:
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             target_ref="PR-$PR_NUMBER"
+          fi
+
+          # Manual target_ref override for workflow_dispatch
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "${DISPATCH_TARGET_REF:-}" ]; then
+            target_ref="$DISPATCH_TARGET_REF"
           fi
 
           reviewed_commit="${DISPATCH_REVIEWED_COMMIT:-}"
