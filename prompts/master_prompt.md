@@ -17,7 +17,7 @@ Before changing production code, perform these steps in order:
 5. Read `docs/RELEASE_RUNBOOK.md`.
 6. Read `spec/ADM_v1_DRAFT.md`.
 7. Read `docs/MULTI_AGENT_PARLIAMENT.md`.
-8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture.
+8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture, users, organizations, tenants, workspaces, permissions, billing, quotas, jobs, workers, observability, admin systems, data lifecycle, tests, or foundation standards.
 9. Check the Agent Registry under `.ai/agents/` if it exists and is relevant to the task.
 10. Check the latest handover in `.ai/handover/` if it exists.
 11. Check active tasks in `.ai/tasks/` if they exist.
@@ -33,6 +33,7 @@ Before changing production code, perform these steps in order:
 - Do not invent files, decisions, commits, roles, checks, CI results, review votes, or completed work.
 - Do not treat the Agent Registry as a permission sandbox; GitHub rulesets, CI, code review, and local sandboxing remain the enforcement layers.
 - Do not treat Handover Automation as an approval mechanism; it may structure or check handovers, not authorize work.
+- Do not treat the SaaS Foundation Standard as a mandate to overbuild; use the smallest explicit model that preserves tenant, permission, billing-readiness, cost, job, observability, admin, and data-lifecycle boundaries.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
 - Do not create vendor lock-in unless explicitly justified.
@@ -86,12 +87,25 @@ Create a Decision Record when you:
 - alter security, billing, tenant isolation, AI provider behavior, or data lifecycle
 - define or materially change Agent Registry semantics
 - define or materially change Handover Automation semantics
+- define or materially change SaaS Foundation semantics
 - intentionally skip a required quality gate
 
 Decision Records with line-limit exemptions must use this machine-readable line:
 `ADM-Exemption: path/to/file.py (Max: 500)`
 
 The Decision Record must have status ACCEPTED or APPROVED before the exemption is merge-ready.
+
+## SaaS Foundation rules
+
+For SaaS architecture work, preserve explicit decisions for:
+
+- users, organizations, tenants, workspaces, memberships, roles, and permissions
+- billing readiness, entitlements, quotas, usage tracking, and cost attribution
+- jobs, queues, workers, retries, timeouts, idempotency, and dead-letter handling
+- observability, audit logs, request IDs, admin diagnostics, and support boundaries
+- data lifecycle for uploads, exports, logs, caches, temporary files, backups, and restores
+
+Never smuggle these concerns into product-specific code without documenting the boundary.
 
 ## Handover rules
 

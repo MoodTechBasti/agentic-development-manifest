@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.19] — 2026-07-08
+
+### SaaS Foundation Standard
+
+- Promoted `docs/SAAS_FOUNDATION_BLUEPRINT.md` from early blueprint to Roadmap Phase 2 SaaS Foundation Standard.
+- Added canonical SaaS vocabulary for users, organizations, tenants, workspaces, memberships, roles, permissions, entitlements, quotas, jobs, workers, observability, admin diagnostics, and data lifecycle.
+- Added `docs/decisions/ADR-20260708-saas-foundation-standard.md` to record the accepted Roadmap Phase 2 architecture decision.
+- Clarified that Roadmap Phase 2 is distinct from Lifecycle Phase 2 — Architecture Competition in `spec/ADM_v1_DRAFT.md`.
+- Synchronized `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
+- Kept v0.19 documentation-only: no validator changes, workflow changes, schemas, runtime code, provider integrations, or real SaaS implementation.
+
 ## [v0.18] — 2026-07-08
 
 ### Handover Automation Architecture
