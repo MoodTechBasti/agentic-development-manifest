@@ -1,6 +1,8 @@
 # Roadmap
 
-## Phase 0: Repository Foundation
+Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM lifecycle phases in `spec/ADM_v1_DRAFT.md`.
+
+## Roadmap Phase 0: Repository Foundation
 
 - Define vision.
 - Define constitution.
@@ -8,7 +10,7 @@
 - Create first draft specification.
 - Create first master prompt draft.
 
-## Phase 1: Agentic Operating System
+## Roadmap Phase 1: Agentic Operating System
 
 - [x] Define decision records.
 - [x] Define research and review protocols.
@@ -17,18 +19,18 @@
 - [x] Define agent registry.
 - [x] Define handover automation.
 
-## Phase 2: SaaS Foundation Standard
+## Roadmap Phase 2: SaaS Foundation Standard
 
 - [x] Define users, organizations, tenants, workspaces, memberships, roles, permissions, billing readiness, entitlements, quotas, usage and cost tracking, jobs, workers, observability, audit logs, admin diagnostics, data lifecycle, developer experience, testing, and performance budgets.
 
-## Phase 3: AI Foundation Standard
+## Roadmap Phase 3: AI Foundation Standard
 
 - Define provider abstraction, prompt registry, tool registry, evaluation, cost tracking, routing, fallback, caching, and safety rules.
 
-## Phase 4: Master Prompt
+## Roadmap Phase 4: Master Prompt
 
 - Convert the specification into a model-neutral CLI-agent master prompt.
 
-## Phase 5: Adapters
+## Roadmap Phase 5: Adapters
 
 - Add adapter prompts for specific CLI tools only after the canonical standard is stable.
