@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.17] — 2026-07-08
+
+### Agent Registry Architecture
+
+- Added `docs/decisions/ADR-20260708-agent-registry.md` to define repository-owned agent roles, responsibility boundaries, initialization expectations, and handover routing.
+- Added `.ai/agents/README.md` as the runtime policy for Agent Registry artifacts.
+- Updated `spec/ADM_v1_DRAFT.md` with Agent Registry authority, role fields, and boundary rules.
+- Updated `docs/OPERATING_SYSTEM.md` with Agent Registry purpose, required fields, and governance boundaries.
+- Extended `.ai/README.md` to include `.ai/agents/` as versioned coordination metadata.
+- Updated `prompts/master_prompt.md` so agents check the Agent Registry during initialization.
+- Updated `README.md` and `ROADMAP.md` to reflect the v0.17 draft focus.
+
 ## [v0.16] — 2026-07-08
 
 ### Project-owned Memory Architecture
