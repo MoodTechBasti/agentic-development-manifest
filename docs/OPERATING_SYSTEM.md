@@ -1,6 +1,6 @@
-# ADM — Operating System (v0.18 Draft)
+# ADM — Operating System (v0.19 Draft)
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 ## Zweck
 
@@ -59,13 +59,7 @@ Die Registry macht explizit:
 
 ### Grenzen
 
-Die Agent Registry ist Governance-Metadokumentation. Sie ersetzt nicht:
-
-- GitHub Rulesets,
-- Branch Protection,
-- CI-Checks,
-- Code Review,
-- lokale Sandbox- oder Tool-Permissions.
+Die Agent Registry ist Governance-Metadokumentation. Sie ersetzt nicht GitHub Rulesets, Branch Protection, CI-Checks, Code Review oder lokale Sandbox- und Tool-Permissions.
 
 Ein Agent muss seine aktive Rolle und seinen Scope vor der Umsetzung nennen, wenn die Registry für den Task relevant ist.
 
@@ -97,13 +91,7 @@ Nicht versioniert werden dürfen:
 
 ### Memory-Dateien
 
-Kuratierte Memory-Dateien unter `.ai/memory/` müssen:
-
-- einen klaren Zweck haben,
-- eine kurze Gültigkeits- oder Kontextbeschreibung enthalten,
-- bekannte Unsicherheiten nennen,
-- repository-relative Pfade verwenden,
-- nicht-sensitiv und reviewbar sein.
+Kuratierte Memory-Dateien unter `.ai/memory/` müssen einen klaren Zweck haben, Unsicherheiten nennen, repository-relative Pfade verwenden, nicht-sensitiv und reviewbar sein.
 
 ## Template- und Laufzeit-Trennung
 
@@ -141,7 +129,7 @@ Jedes ausgefüllte Review-Artefakt muss die folgenden Scope-Felder enthalten:
 - `target_ref`: Zielreferenz, zum Beispiel `PR-2` oder `release/v1`
 - `target_commit`: Git-Commit-SHA des geprüften Codes
 
-`target_commit` bezeichnet den geprüften Code-Stand. Es ist nicht zwingend der Workflow-Commit, der die Review-Artefakte enthält. Review-Artefakte sollen deshalb nach dem Code-Commit geschrieben werden und weiterhin auf den stabilen geprüften Code-Commit zeigen.
+`target_commit` bezeichnet den geprüften Code-Stand. Es ist nicht zwingend der Workflow-Commit, der die Review-Artefakte enthält.
 
 Ein Release-Gate darf nur grün werden, wenn alle sechs Rollen dieselbe `review_set_id`, dieselbe `target_ref` und denselben stabilen `target_commit` verwenden.
 
@@ -171,20 +159,6 @@ Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Re
 
 `complete-set` geht weiter: alle sechs Standard-Review-Typen müssen vorhanden, `PASSED`, `ci_ready: true` und auf denselben Scope gebunden sein.
 
-Im GitHub-Workflow wird die Review-Validierung kontextabhängig ausgeführt:
-
-| Kontext | Modus |
-| --- | --- |
-| Feature-Branch / `dev` | `advisory` |
-| PR nach `main` / `master` | `existing-strict` |
-| Push auf `main` / `master` | `existing-strict` |
-| `release/**` | `complete-set` mit `target_ref` und stabilem geprüftem `target_commit` |
-| Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
-
-Die Workflow-Automation ermittelt den stabilen geprüften Commit standardmäßig als letzten Commit außerhalb `.ai/reviews/`. Manuelle Runs können diesen Wert mit `reviewed_commit` explizit setzen.
-
-Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges und commit-gebundenes Review-Gate erhalten.
-
 ## Handover Automation
 
 Handover Automation beschreibt, welche Übergabeinformationen später sicher vorbefüllt, gelintet oder validiert werden dürfen.
@@ -207,18 +181,35 @@ Sie dürfen fehlende Pflichtfelder, nicht repository-relative Pfade, inkonsisten
 
 ### Verbotene Automatisierung
 
-Handover Automation darf nicht:
+Handover Automation darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Rollen, Freigaben oder abgeschlossene Arbeit erfinden. Sie darf keine PRs mergen, Tags setzen, Branch Protection ändern oder Chatverlauf, hidden model memory, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-- Checks, Commits, CI-Ergebnisse oder Review-Votes erfinden,
-- Arbeit als abgeschlossen markieren, wenn Validierung fehlt,
-- Risiken entfernen, um einen grünen Status zu erzeugen,
-- PRs mergen, Tags setzen oder Branch Protection ändern,
-- Chatverlauf, hidden model memory, Scratch-Dateien oder Rohlogs als autoritative Quelle nutzen,
-- Secrets, private URLs, private lokale Pfade oder sensitive Daten versionieren.
+## SaaS Foundation Standard
+
+Der SaaS Foundation Standard ist der Phase-2-Architekturblock für neue SaaS-Systeme. Die kanonische Beschreibung liegt in `docs/SAAS_FOUNDATION_BLUEPRINT.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-saas-foundation-standard.md`.
+
+### Zweck
+
+Die Foundation verhindert, dass Produktfeatures vor den tragenden SaaS-Grenzen entstehen.
+
+Ein SaaS-bezogener Agent muss prüfen, ob sein Task eine der folgenden Grenzen betrifft:
+
+- User, Organization, Tenant, Workspace oder Membership.
+- Rollen, Permissions, Support-Zugriff oder Audit.
+- Billing Readiness, Entitlements, Quotas, Usage oder Kosten.
+- Jobs, Queues, Worker, Retries, Timeouts oder Dead-Letter.
+- Observability, Admin-Diagnose, Logs, Metrics oder Request IDs.
+- Data Lifecycle für Uploads, Exporte, Logs, Caches, temporäre Dateien oder Backups.
+- Lokale DX, Tests oder Performance Budgets.
+
+### Grenzen
+
+Phase 2 ist kein Implementierungsauftrag für Microservices, Payment-Provider, AI Provider Architecture, Prompt Registry oder Produktfeatures.
+
+Wenn ein Agent SaaS Foundation Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
 
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen und letzten Handover lesen.
+1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, SaaS-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
