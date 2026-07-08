@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-ARCH-20260708-adapter-prompt-standard
 review_set_id: RSV-20260708-adapter-prompt-standard
 target_ref: adm-v022-adapter-prompt-standard
-target_commit: 9a04eb2bbd6770848fddac5afc2813cdec498977
+target_commit: d798d859af514e3ea445515c649e0f5440a9f1ee
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Principal Architect
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed the Roadmap Phase 5 Adapter Prompt Standard architecture, its ADR, the initial adapter prompts, and synchronized canonical documentation.
+Reviewed the Roadmap Phase 5 Adapter Prompt Standard architecture, its ADR, the initial adapter prompts, synchronized canonical documentation, and the authority-order fix in `prompts/master_prompt.md`.
 
 ## Findings
 
@@ -32,12 +32,14 @@ Reviewed the Roadmap Phase 5 Adapter Prompt Standard architecture, its ADR, the 
 - Strengths: The initial adapter set is deliberately small: Claude Code CLI, Codex CLI, and Generic CLI Agent.
 - Strengths: Gemini CLI and Antigravity CLI are explicitly deferred instead of accepted on assumptions.
 - Strengths: The architecture preserves Roadmap Phase 4 Master Prompt neutrality and does not introduce runtime, validator, workflow, schema, MCP, or local tool-profile scope.
+- Strengths: `prompts/master_prompt.md` keeps versioned `.ai/` runtime evidence above tool-specific adapter prompts in the authority order.
 - Risk: Future adapter PRs may duplicate the canonical master prompt instead of referencing it.
 
 ## Architecture Gates
 
 - [x] Defines a canonical Roadmap Phase 5 standard.
 - [x] Keeps the canonical master prompt authoritative.
+- [x] Keeps runtime evidence above adapter prompts.
 - [x] Avoids runtime, provider, workflow, validator, schema, and local tool-profile scope creep.
 - [x] Preserves Roadmap/Lifecycle phase distinction.
 
