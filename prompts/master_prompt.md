@@ -18,12 +18,13 @@ Before changing production code, perform these steps in order:
 6. Read `spec/ADM_v1_DRAFT.md`.
 7. Read `docs/MULTI_AGENT_PARLIAMENT.md`.
 8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture, users, organizations, tenants, workspaces, permissions, billing, quotas, jobs, workers, observability, admin systems, data lifecycle, tests, or foundation standards.
-9. Check the Agent Registry under `.ai/agents/` if it exists and is relevant to the task.
-10. Check the latest handover in `.ai/handover/` if it exists.
-11. Check active tasks in `.ai/tasks/` if they exist.
-12. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
-13. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
-14. State your role, scope, assumptions, and planned next action before implementation.
+9. Read `docs/AI_FOUNDATION_STANDARD.md` if the task affects AI providers, model capabilities, prompts, tools, evaluation, routing, fallback, caching, safety, AI cost tracking, AI observability, AI audit, AI artifacts, or AI Foundation standards.
+10. Check the Agent Registry under `.ai/agents/` if it exists and is relevant to the task.
+11. Check the latest handover in `.ai/handover/` if it exists.
+12. Check active tasks in `.ai/tasks/` if they exist.
+13. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
+14. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
+15. State your role, scope, assumptions, and planned next action before implementation.
 
 ## Operating rules
 
@@ -34,6 +35,7 @@ Before changing production code, perform these steps in order:
 - Do not treat the Agent Registry as a permission sandbox; GitHub rulesets, CI, code review, and local sandboxing remain the enforcement layers.
 - Do not treat Handover Automation as an approval mechanism; it may structure or check handovers, not authorize work.
 - Do not treat the SaaS Foundation Standard as a mandate to overbuild; use the smallest explicit model that preserves tenant, permission, billing-readiness, cost, job, observability, admin, and data-lifecycle boundaries.
+- Do not treat the AI Foundation Standard as a mandate to build an AI platform; use the smallest explicit model that preserves provider abstraction, prompt governance, tool boundaries, evaluation, cost tracking, routing, fallback, caching, safety, observability, audit, and AI artifact lifecycle.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
 - Do not create vendor lock-in unless explicitly justified.
@@ -88,6 +90,7 @@ Create a Decision Record when you:
 - define or materially change Agent Registry semantics
 - define or materially change Handover Automation semantics
 - define or materially change SaaS Foundation semantics
+- define or materially change AI Foundation semantics
 - intentionally skip a required quality gate
 
 Decision Records with line-limit exemptions must use this machine-readable line:
@@ -106,6 +109,22 @@ For SaaS architecture work, preserve explicit decisions for:
 - data lifecycle for uploads, exports, logs, caches, temporary files, backups, and restores
 
 Never smuggle these concerns into product-specific code without documenting the boundary.
+
+## AI Foundation rules
+
+For AI architecture work, preserve explicit decisions for:
+
+- provider abstraction, model capabilities, normalized inputs and outputs, errors, timeouts, rate limits, cost, and latency metadata
+- prompt registry, prompt IDs, prompt versions, prompt owners, inputs, outputs, safety assumptions, evaluation status, and change rules
+- tool registry, tool IDs, permissions, side effects, rate limits, timeouts, retries, audit, and human-approval points
+- evaluation, golden cases, negative cases, quality criteria, safety criteria, cost, latency, and regression detection
+- AI cost tracking by user, tenant, feature, prompt, tool, provider, request, job, and cache behavior
+- routing, fallback, degradation, local execution, timeout behavior, user-visible failure behavior, and human-review escalation
+- caching, tenant context, prompt version context, TTL, invalidation, deletion, export, audit, and data lifecycle
+- safety rules for data classes, prompt injection, PII, secrets, private URLs, logs, cache, evaluation, outputs, and tool parameters
+- observability, audit, request IDs, correlation IDs, provider metadata, model metadata, prompt metadata, tool metadata, token metrics, cost metrics, latency metrics, and fallback reasons
+
+Never smuggle these concerns into product-specific code or provider-specific adapters without documenting the boundary.
 
 ## Handover rules
 
