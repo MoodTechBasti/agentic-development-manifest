@@ -27,7 +27,25 @@ A complete ADM review set requires exactly one passing, CI-ready review for each
 | `simplifier` | `REV-SIMP` |
 | `documentation` | `REV-DOC` |
 
-## 3. Happy path
+## 3. Repository merge precondition
+
+Before a governance, release, or phase-transition PR is considered merge-ready, the repository settings must match `docs/REPOSITORY_GOVERNANCE.md`.
+
+Minimum required state:
+
+- `main-protection` exists and is active.
+- The target is the default branch.
+- The bypass list is empty.
+- Pull requests are required before merging.
+- Conversation resolution is required before merging.
+- `ADM Quality Gate` is required from GitHub Actions.
+- Branches must be up to date before merging.
+- Force pushes are blocked.
+- Deletions are restricted.
+
+These settings live in GitHub, not in source control, so they must be manually audited when repository governance is changed.
+
+## 4. Happy path
 
 ### Step 1: Commit the code under review
 
@@ -112,6 +130,8 @@ python scripts/validate_reviews.py \
 
 The normal PR workflow runs `existing-strict`. It proves that existing runtime review artifacts are structurally valid.
 
+For governance PRs, the PR description must also state whether `docs/REPOSITORY_GOVERNANCE.md` still matches the active GitHub ruleset.
+
 ### Step 7: Run release-grade validation manually
 
 After merge, run the GitHub workflow manually:
@@ -127,7 +147,7 @@ After merge, run the GitHub workflow manually:
 
 The workflow should print the selected mode, target ref, and reviewed code commit before running the validator.
 
-## 4. Common failures
+## 5. Common failures
 
 ### Missing role
 
@@ -165,7 +185,7 @@ Cause: the review ID does not match the required prefix and date pattern.
 
 Fix: use the correct prefix, date, and slug, for example `REV-SEC-20260708-auth-hardening`.
 
-## 5. Validator fixture tests
+## 6. Validator fixture tests
 
 Run the validator fixture test suite with:
 
