@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.26] — 2026-07-08
+
+### Review Archive Policy
+
+- Added `docs/decisions/ADR-20260708-review-archive-policy.md` to accept v0.26 as the Review Archive Policy baseline.
+- Documented `.ai/reviews/archive/<review_set_id>/` as the future historical review-set archive path.
+- Clarified that direct `.ai/reviews/*.md` files remain the active review validation area.
+- Updated `.ai/README.md`, `docs/REVIEW_VALIDATION.md`, `docs/REVIEW_RUNBOOK.md`, `README.md`, and `ROADMAP.md` for archive-policy semantics.
+- Added targeted fixture coverage in `scripts/test_validate_reviews.py` proving archive subdirectories are ignored by the standard validator path.
+- Kept v0.26 intentionally narrow: no historical review migration, production validator logic change, workflow hardening, release automation, review index generation, Roadmap Phase 7 implementation, runtime code, provider SDK integration, MCP integration, Gemini CLI adapter, Antigravity CLI adapter, branch-protection change, or v1 release-candidate claim.
+
 ## [v0.25] — 2026-07-08
 
 ### Foundation Consistency and Release Hygiene Baseline
@@ -62,7 +73,7 @@
 ### AI Foundation Standard
 
 - Added `docs/AI_FOUNDATION_STANDARD.md` as the Roadmap Phase 3 AI Foundation Standard.
-- Added canonical AI vocabulary for provider abstraction, model capabilities, prompt registry, prompt versions, tool registry, evaluation, routing, fallback, caching, safety rules, AI cost tracking, observability, audit, and AI artifact lifecycle.
+- Added canonical AI vocabulary for provider abstraction, model capabilities, prompt registry, tool registry, evaluation, AI cost tracking, routing, fallback, caching, safety rules, observability, audit, and AI artifact lifecycle.
 - Added `docs/decisions/ADR-20260708-ai-foundation-standard.md` to record the accepted Roadmap Phase 3 architecture decision.
 - Clarified that Roadmap Phase 3 builds on Roadmap Phase 2 SaaS Foundation Standard instead of replacing user, tenant, permission, billing, quota, job, observability, or data-lifecycle boundaries.
 - Synchronized `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/SAAS_FOUNDATION_BLUEPRINT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
@@ -84,7 +95,7 @@
 ### Handover Automation Architecture
 
 - Added `docs/decisions/ADR-20260708-handover-automation.md` to define structured, repository-owned handover automation semantics.
-- Defined which handover concepts may become machine-checkable, including session identity, agent role, changed files, checks, review status, risks, and next steps.
+- Defined which handover concepts may become machine-checkable, including session identity, agent role, changed files, checks, review status, and next steps.
 - Documented safety boundaries: automation may prefill, lint, and cross-check handovers, but must not invent checks, commits, CI results, review votes, or approvals.
 - Connected Handover Automation to Project-owned Memory and Agent Registry without adding validators, workflow changes, schemas, or real automation.
 - Updated `templates/HANDOVER_TEMPLATE.md`, `docs/OPERATING_SYSTEM.md`, `spec/ADM_v1_DRAFT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
@@ -182,100 +193,3 @@
 - Updated the ADM quality gate workflow to pass target reference and target commit into release-grade complete-set validation.
 - Updated all six review templates with v0.11 scope metadata fields.
 - Updated review validation, operating system, and ADM specification docs for commit-bound review sets.
-
-## [v0.10] — 2026-07-08
-
-### Review Gate Modes
-
-- Added `docs/decisions/ADR-20260708-review-validation-modes.md` to define explicit ADM review validation modes.
-- Extended `scripts/validate_reviews.py` with `--mode advisory`, `--mode existing-strict`, and `--mode complete-set`.
-- Kept `--advisory` as a backward-compatible alias for `--mode advisory`.
-- Updated `.github/workflows/adm-quality-gate.yml` to select the review validation mode by branch context and manual workflow input.
-- Updated review validation, operating system, and ADM specification docs to describe the three-stage gate model.
-
-## [v0.9] — 2026-07-08
-
-### Advisory Review Validation
-
-- Added `scripts/validate_reviews.py` for dependency-free frontmatter validation of completed review artifacts under `.ai/reviews/`.
-- Updated all review templates with runtime frontmatter fields required by the validator.
-- Added an advisory GitHub Actions step for review validation without making review completeness a hard merge gate.
-- Added `docs/REVIEW_VALIDATION.md` and updated `docs/OPERATING_SYSTEM.md` with the validation workflow.
-- Updated `spec/ADM_v1_DRAFT.md` to document advisory review validation.
-
-## [v0.8] — 2026-07-08
-
-### Review Template Governance
-
-- Added reusable review templates under `templates/reviews/` for Architect, Security, Performance, Cost, Simplifier, and Documentation reviews.
-- Added `templates/reviews/README.md` to document the separation between reusable templates and runtime review artifacts.
-- Updated `docs/OPERATING_SYSTEM.md` to specify that templates live in `templates/reviews/` and completed reviews live in `.ai/reviews/`.
-- Updated `spec/ADM_v1_DRAFT.md` to document review template governance and CI-readiness expectations.
-
-## [v0.7] — 2026-07-07
-
-### PR-Ready Agent Protocol
-
-- Updated `prompts/master_prompt.md` with a strict PR-ready quality-gate protocol.
-- Agents must run `scripts/check_limits.py` without proposed-exemption tolerance before marking work merge-ready.
-- Handover output must now state CI-readiness status.
-
-## [v0.6] — 2026-07-07
-
-### Branch-Aware Local DX
-
-- Added `scripts/bootstrap.sh` to initialize the local `.ai/` workspace structure and install a local pre-commit hook.
-- Improved `scripts/check_limits.py` with an explicit `--allow-proposed-exemptions` mode for local feature work.
-- Kept CI merge-readiness strict: accepted exemptions require ACCEPTED or APPROVED Decision Records.
-- Updated the ADM specification to document local proposed exemptions, bootstrap behavior, and the strict CI distinction.
-
-## [v0.5] — 2026-07-07
-
-### ADR Exemptions and Agent Onboarding
-
-- Upgraded `scripts/check_limits.py` with accepted Decision Record exemption parsing.
-- Added machine-readable ADM exemption section to `templates/ADR_TEMPLATE.md`.
-- Added `prompts/master_prompt.md` for model-neutral CLI-agent onboarding.
-
-## [v0.4] — 2026-07-07
-
-### CI Quality Gate MVP
-
-- Added GitHub Actions workflow `.github/workflows/adm-quality-gate.yml`.
-- The workflow runs on `push`, `pull_request`, and manual `workflow_dispatch`.
-- The workflow executes `scripts/check_limits.py --path . --max-lines 300`.
-- The ADM specification now documents the automated CI Quality Gate and clarifies that ADR-based technical exception validation is not implemented yet.
-
-## [v0.3] — 2026-07-07
-
-### Operational Templates and Checks
-
-- Added ADR template for structured architecture decisions.
-- Added session handover template for metric-based agent handoffs.
-- Added source file line-limit validator script.
-
-## [v0.2] — 2026-07-07
-
-### Quality Hardening
-
-- Added default performance budgets to the SaaS Foundation Blueprint.
-- Added Data Lifecycle requirements: Upload or Import, Processing, Archive, Delete, Backup, Restore.
-- Expanded Cost Engineering from usage counting to cost aggregation per user, workspace, tenant, feature, request, worker time, and model call.
-- Added KI-specific threat modeling topics: Prompt Injection, Token Leakage, Cost Explosion, API misuse, Tenant Escape, and sensitive-data leakage.
-- Added hard AI-Coding-Friendliness rules to the Constitution, including the 300-line source file limit and exception process.
-- Added stricter Definition of Done and Quality Gates to the ADM specification.
-- Expanded the Operating System handover protocol with metrics, budget violations, risks, and next-step requirements.
-
-## [v0.1] — 2026-07-07
-
-### Initial Draft
-
-- Repository foundation started.
-- README replaced with v0.1 draft overview.
-- Vision document expanded.
-- Constitution document expanded.
-- Operating system document added.
-- Multi-Agent Parliament document added.
-- SaaS Foundation Blueprint added.
-- ADM v1 draft specification added.
-- Legacy specification file converted to pointer.
