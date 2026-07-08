@@ -1,10 +1,10 @@
 # ADM — Operating System
 
-> Status: v0.25 synchronized draft
+> Status: v0.26 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Review-Archive, Memory, Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht aus Chat-Erinnerung, hidden model memory, Tool-Cache oder lokalen Scratch-Dateien rekonstruieren müssen.
 
@@ -40,7 +40,7 @@ Tool-specific adapter prompts are stored under `prompts/adapters/`, not inside `
 | --- | --- | --- |
 | 1 | `spec/`, `docs/`, `ROADMAP.md`, accepted ADRs | Kanonische Projektwahrheit |
 | 2 | `prompts/master_prompt.md`, `prompts/adapters/` | Kanonische und abgeleitete Agenten-Startanweisungen |
-| 3 | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
+| 3 | `.ai/reviews/`, `.ai/reviews/archive/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
 | 4 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/` | Kuratierter Kontext, Rollen und Arbeitszustand |
 | 5 | `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/` | Lokale transiente Daten |
 | 6 | Chatverlauf, hidden model memory, Tool-State | Nicht autoritativ |
@@ -94,6 +94,7 @@ ADM trennt wiederverwendbare Vorlagen von ausgefüllten Laufzeit-Artefakten.
 
 - Wiederverwendbare Review-Vorlagen liegen unter `templates/reviews/`.
 - Ausgefüllte, konkrete Review-Berichte liegen unter `.ai/reviews/`.
+- Archivierte historische Review-Sets dürfen später unter `.ai/reviews/archive/<review_set_id>/` liegen.
 - Wiederverwendbare Handover-Vorlagen liegen unter `templates/HANDOVER_TEMPLATE.md`.
 - Ausgefüllte, konkrete Handovers liegen unter `.ai/handover/`.
 - Wiederverwendbare Adapter-Prompts liegen unter `prompts/adapters/`.
@@ -119,13 +120,15 @@ Ein Review-Set ist eine zusammengehörige Freigabe-Einheit aus sechs Rollen-Revi
 
 Jedes ausgefüllte Review-Artefakt muss die folgenden Scope-Felder enthalten:
 
-- `review_set_id`: gemeinsame Set-ID, zum Beispiel `RSV-20260708-foundation-consistency-release-hygiene`,
-- `target_ref`: Zielreferenz, zum Beispiel `adm-v025-foundation-consistency-release-hygiene`,
+- `review_set_id`: gemeinsame Set-ID, zum Beispiel `RSV-20260708-review-archive-policy`,
+- `target_ref`: Zielreferenz, zum Beispiel `adm-v026-review-archive-policy`,
 - `target_commit`: Git-Commit-SHA des geprüften Codes oder der geprüften Dokumentation.
 
 `target_commit` bezeichnet den geprüften Stand. Es ist nicht zwingend der Workflow-Commit, der die Review-Artefakte enthält.
 
 Ein Release-Gate darf nur grün werden, wenn alle sechs Rollen dieselbe `review_set_id`, dieselbe `target_ref` und denselben stabilen `target_commit` verwenden.
+
+Archivierte Review-Sets bleiben historische Evidenz und dürfen nicht benutzt werden, um aktuelle Validatorfehler zu verstecken.
 
 ## 7. Review-Validierung
 
@@ -140,6 +143,8 @@ python3 scripts/validate_reviews.py --path . --mode complete-set --review-set-id
 Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Review-Set-Scope, Review-Status, `runtime_target: .ai/reviews/`, `ci_ready` und optional den Confidence Score.
 
 `complete-set` geht weiter: alle sechs Standard-Review-Typen müssen vorhanden, `PASSED`, `ci_ready: true` und auf denselben Scope gebunden sein.
+
+Der Standardpfad validiert direkte `.ai/reviews/*.md` Dateien und ignoriert `.ai/reviews/archive/**` nicht-rekursiv.
 
 ## 8. Release Hygiene
 
@@ -171,7 +176,7 @@ Spätere Tools dürfen Handovers aus Git-Status, Branch-Informationen, Review-Da
 
 Handover Automation darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Rollen, Freigaben oder abgeschlossene Arbeit erfinden. Sie darf keine PRs mergen, Tags setzen, Branch Protection ändern oder Chatverlauf, hidden model memory, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-Roadmap Phase 7 bleibt nach v0.25 offen. v0.25 implementiert keinen Handover-Linter und keine Handover-Automation.
+Roadmap Phase 7 bleibt nach v0.26 offen. v0.26 implementiert keinen Handover-Linter und keine Handover-Automation.
 
 ## 10. Foundation Standards
 
