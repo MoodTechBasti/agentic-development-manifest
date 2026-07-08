@@ -28,6 +28,8 @@ ADM definiert einen strukturierten Prozess für architekturrelevante Änderungen
 - **Phase 5 — Roadmap & Plan**: Zerlegung in überprüfbare Arbeitspakete.
 - **Phase 6 — Foundation Build**: Aufbau der SaaS-Foundation vor den Produktfeatures.
 
+Diese Lifecycle-Phasen beschreiben den Ablauf einer architekturrelevanten Änderung. Sie sind nicht identisch mit den Roadmap-Phasen in `ROADMAP.md`.
+
 ## 4. Repository Governance
 
 ADM-konforme Repositories unterliegen strengen Sicherheits- und Prozessregeln:
@@ -134,7 +136,7 @@ Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memor
 
 ## 12. SaaS Foundation Standard
 
-Der SaaS Foundation Standard ist der kanonische Phase-2-Block für neue SaaS-Systeme.
+Der SaaS Foundation Standard ist der kanonische **Roadmap-Phase-2-Block** für neue SaaS-Systeme. Das ist bewusst von **Lifecycle Phase 2 — Architecture Competition** aus Abschnitt 3 getrennt.
 
 Ziel ist eine kleine, explizite Foundation vor Produktfeatures. ADM erzwingt keinen bestimmten Anbieter und keine Microservice-Architektur. Der Default ist Modular Monolith First.
 
@@ -160,7 +162,7 @@ Ein SaaS-Foundation-Entwurf muss mindestens folgende Bereiche entscheiden oder b
 
 ### Grenzen
 
-Phase 2 implementiert keine konkrete Produktlogik, keine echte Payment-Integration, keine AI Provider Architecture, kein Modellrouting und keine Prompt Registry. Diese Themen folgen in späteren Phasen oder produktspezifischen ADRs.
+Roadmap Phase 2 implementiert keine konkrete Produktlogik, keine echte Payment-Integration, keine AI Provider Architecture, kein Modellrouting und keine Prompt Registry. Diese Themen folgen in späteren Roadmap-Phasen oder produktspezifischen ADRs.
 
 ## 13. PR Hygiene Policy
 
