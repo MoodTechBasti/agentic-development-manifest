@@ -14,7 +14,7 @@
 - [x] Define research and review protocols.
 - [x] Define repository governance and release hardening.
 - [x] Define project-owned memory.
-- [ ] Define agent registry.
+- [x] Define agent registry.
 - [ ] Define handover automation.
 
 ## Phase 2: SaaS Foundation Standard

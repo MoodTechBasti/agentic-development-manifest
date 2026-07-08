@@ -14,6 +14,7 @@ The following `.ai/` content may be committed when it is intentional, reviewable
 - `.ai/memory/*.md` for curated durable memory notes
 - `.ai/knowledge/*.md` for curated project knowledge or research summaries
 - `.ai/tasks/*.md` for active or planned work state that must survive handover
+- `.ai/agents/*.md` or `.ai/agents/*.yml` for repository-owned agent role definitions and registry metadata
 - `.ai/README.md` for this policy
 
 Runtime review artifacts must use their `review_id` as filename, for example:
@@ -23,6 +24,19 @@ Runtime review artifacts must use their `review_id` as filename, for example:
 ```
 
 Do not use static role filenames such as `.ai/reviews/security.md` for completed runtime reviews.
+
+## Agent Registry
+
+The Agent Registry under `.ai/agents/` describes durable agent roles, responsibility boundaries, required reading context, expected write areas, and handover routing.
+
+Agent Registry files are not:
+
+- local tool profiles
+- permission sandboxes
+- hidden model-memory exports
+- vendor-specific assistant settings
+
+Use `.ai/agents/README.md` to document the registry policy. Future projects may add `registry.md`, `registry.yml`, or role-specific files when the role model needs more structure.
 
 ## Project-owned memory
 
@@ -61,6 +75,6 @@ The following local agent output is transient and must not be committed:
 
 ## Rule of thumb
 
-Commit `.ai/` content only when a future agent or maintainer must be able to reconstruct a decision, review, handover, durable memory note, curated knowledge summary, or active task from git history.
+Commit `.ai/` content only when a future agent or maintainer must be able to reconstruct a decision, review, handover, durable memory note, curated knowledge summary, active task, or durable agent role from git history.
 
 Do not commit local exploration, tool noise, prompt experiments, raw logs, credentials, private paths, private URLs, sensitive local data, or temporary notes.

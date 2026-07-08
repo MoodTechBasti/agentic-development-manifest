@@ -18,18 +18,20 @@ Before changing production code, perform these steps in order:
 6. Read `spec/ADM_v1_DRAFT.md`.
 7. Read `docs/MULTI_AGENT_PARLIAMENT.md`.
 8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture.
-9. Check the latest handover in `.ai/handover/` if it exists.
-10. Check active tasks in `.ai/tasks/` if they exist.
-11. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
-12. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
-13. State your role, scope, assumptions, and planned next action before implementation.
+9. Check the Agent Registry under `.ai/agents/` if it exists and is relevant to the task.
+10. Check the latest handover in `.ai/handover/` if it exists.
+11. Check active tasks in `.ai/tasks/` if they exist.
+12. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
+13. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
+14. State your role, scope, assumptions, and planned next action before implementation.
 
 ## Operating rules
 
 - The repository is the source of truth.
 - Do not rely on hidden model memory for project state.
 - Do not treat chat history, local scratch files, or tool caches as authoritative project memory.
-- Do not invent files, decisions, commits, or completed work.
+- Do not invent files, decisions, commits, roles, or completed work.
+- Do not treat the Agent Registry as a permission sandbox; GitHub rulesets, CI, code review, and local sandboxing remain the enforcement layers.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
 - Do not create vendor lock-in unless explicitly justified.
@@ -81,6 +83,7 @@ Create a Decision Record when you:
 - change architecture
 - accept a quality-rule exception
 - alter security, billing, tenant isolation, AI provider behavior, or data lifecycle
+- define or materially change Agent Registry semantics
 - intentionally skip a required quality gate
 
 Decision Records with line-limit exemptions must use this machine-readable line:
@@ -98,6 +101,7 @@ Before ending the session, write or update a handover in `.ai/handover/` contain
 - checks run and results
 - known risks
 - quality-rule exceptions
+- active agent role and recommended next registry role, when relevant
 - next logical task
 - recommended next role
 - CI-readiness status
