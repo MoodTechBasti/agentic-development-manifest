@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.14] — 2026-07-08
+
+### Release Baseline Hardening
+
+- Added optional `target_ref` input to the `workflow_dispatch` trigger in `.github/workflows/adm-quality-gate.yml` for explicit release-grade validation.
+- Added `docs/RELEASE_RUNBOOK.md` to define the manual release validation process, parameter mapping, and tagging rules.
+- Added `docs/decisions/ADR-20260708-release-baseline-validation.md` documenting the explicit target reference support for releases.
+- Synchronized `docs/REPOSITORY_GOVERNANCE.md` and `docs/REVIEW_RUNBOOK.md` with the new release runbook and explicit `target_ref` logic.
+- Created a complete six-role ADM review set for the v0.14 baseline hardening.
+
 ## [v0.13] — 2026-07-08
 
 ### Repository Governance and Release Gate Policy

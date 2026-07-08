@@ -141,9 +141,10 @@ After merge, run the GitHub workflow manually:
 3. Click **Run workflow**.
 4. Select branch `main`.
 5. Set `review_gate_mode` to `complete-set`.
-6. Set `review_set_id` to the set ID.
-7. Set `reviewed_commit` to the stable code-under-review SHA.
-8. Run the workflow.
+6. Provide the `review_set_id` (e.g., `RSV-20260708-review-set-scoping`).
+7. Provide the `target_ref` if the manual run occurs on a branch (e.g., `main`) different from the one used in the artifacts.
+8. Provide the `reviewed_commit` (stable SHA).
+9. Run the workflow.
 
 The workflow should print the selected mode, target ref, and reviewed code commit before running the validator.
 
