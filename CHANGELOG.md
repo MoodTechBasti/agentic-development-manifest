@@ -4,6 +4,7 @@
 
 ### Stable Reviewed-Code SHA
 
+- Added `docs/decisions/ADR-20260708-stable-reviewed-code-sha.md` to document stable code-under-review commit handling.
 - Updated `.github/workflows/adm-quality-gate.yml` so `complete-set` gates use a stable code-under-review SHA instead of blindly using the workflow commit SHA.
 - Added full checkout history for review-gate runs so CI can resolve the latest commit outside `.ai/reviews/`.
 - Added optional manual `reviewed_commit` workflow input for explicit release-readiness checks.
