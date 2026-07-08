@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-DOC-20260708-adapter-prompt-standard
 review_set_id: RSV-20260708-adapter-prompt-standard
 target_ref: adm-v022-adapter-prompt-standard
-target_commit: 9a04eb2bbd6770848fddac5afc2813cdec498977
+target_commit: d798d859af514e3ea445515c649e0f5440a9f1ee
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Documentation Reviewer
@@ -24,13 +24,14 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed documentation consistency across the Adapter Prompt Standard, ADR, initial adapter prompts, specification, Operating System, Master Prompt Standard, master prompt, README, Roadmap, and Changelog.
+Reviewed documentation consistency across the Adapter Prompt Standard, ADR, initial adapter prompts, specification, Operating System, Master Prompt Standard, master prompt, README, Roadmap, Changelog, and the authority-order correction in `prompts/master_prompt.md`.
 
 ## Findings
 
 - Strengths: `docs/ADAPTER_PROMPT_STANDARD.md` defines Roadmap Phase 5 with explicit scope, vocabulary, authority order, allowed behavior, forbidden behavior, and initial adapter set.
 - Strengths: `prompts/adapters/` contains a README plus Claude Code CLI, Codex CLI, and Generic CLI Agent adapters.
 - Strengths: `README.md`, `ROADMAP.md`, `CHANGELOG.md`, `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/MASTER_PROMPT_STANDARD.md`, and `prompts/master_prompt.md` are synchronized with v0.22 status.
+- Strengths: `prompts/master_prompt.md` now keeps versioned runtime artifacts above tool-specific adapter prompts in its authority order.
 - Strengths: Gemini CLI and Antigravity CLI are documented as deferred candidates, not silently accepted.
 - Risk: Future docs may drift if adapter prompts duplicate canonical master prompt text instead of referencing it.
 
@@ -40,7 +41,8 @@ Reviewed documentation consistency across the Adapter Prompt Standard, ADR, init
 - [x] ADR exists and records accepted scope.
 - [x] Initial adapter prompt files exist.
 - [x] README, ROADMAP, specification, Operating System, Master Prompt Standard, master prompt, and CHANGELOG are updated.
-- [x] Six-role review set is complete and scoped to the stable documentation commit.
+- [x] Master prompt authority order is consistent with Adapter Prompt Standard and Operating System.
+- [x] Six-role review set is complete and scoped to the corrected stable documentation commit.
 
 ## Review Vote
 
