@@ -10,7 +10,7 @@
 | Metric | Value |
 | --- | --- |
 | Confidence level | 9 |
-| Affected modules | `README.md`, `ROADMAP.md`, `CHANGELOG.md`, `spec/ADM_v1_DRAFT.md`, `docs/RELEASE_RUNBOOK.md`, `docs/REPOSITORY_GOVERNANCE.md`, `docs/REVIEW_RUNBOOK.md`, `docs/OPERATING_SYSTEM.md`, `docs/SAAS_FOUNDATION_BLUEPRINT.md`, `docs/AI_FOUNDATION_STANDARD.md`, `docs/MASTER_PROMPT_STANDARD.md`, `docs/ADAPTER_PROMPT_STANDARD.md`, `prompts/adapters/README.md` |
+| Affected modules | `README.md`, `ROADMAP.md`, `CHANGELOG.md`, `spec/ADM_v1_DRAFT.md`, `docs/RELEASE_RUNBOOK.md`, `docs/REPOSITORY_GOVERNANCE.md`, `docs/REVIEW_RUNBOOK.md`, `docs/OPERATING_SYSTEM.md`, `docs/SAAS_FOUNDATION_BLUEPRINT.md`, `docs/AI_FOUNDATION_STANDARD.md`, `docs/MASTER_PROMPT_STANDARD.md`, `docs/ADAPTER_PROMPT_STANDARD.md`, `prompts/adapters/README.md`, `docs/decisions/ADR-20260708-stable-reviewed-code-sha.md` |
 | New dependencies | no |
 | Security review | PASSED |
 | Cost review | PASSED |
@@ -28,19 +28,22 @@ That is not automatically a semantic error: the SaaS, AI, Master Prompt, and Ada
 
 The release runbook also still used a specific v0.13 example as the central release example. That is too easy to copy mechanically and can hide the current release rule: merge the PR, determine the stable reviewed commit, run manual complete-set validation on `main`, and only then tag the final `main` commit that includes the review artifacts.
 
+A remaining ADR status drift also existed in `docs/decisions/ADR-20260708-stable-reviewed-code-sha.md`: the stable reviewed-code SHA mechanism had been implemented and documented since v0.11.1, but the ADR still said `PROPOSED`.
+
 ## 2. Decision
 
 ADM accepts v0.25 as a Foundation Consistency and Release Hygiene Baseline.
 
 v0.25 is a consolidation block. It does not start Roadmap Phase 7 and it does not implement a new mechanism.
 
-The baseline does five things:
+The baseline does six things:
 
 1. Synchronizes current version and status language across canonical ADM documents.
 2. Preserves original roadmap-phase meaning for already accepted standards instead of pretending they were newly created in v0.25.
 3. Modernizes release hygiene documentation with a generic release example.
 4. Clarifies that GitHub ruleset checks remain manual external audits before governance-relevant releases.
-5. Records v0.25 as repository-foundation cleanup before later Roadmap Phase 7 work.
+5. Normalizes the stable reviewed-code SHA ADR status to accepted repository truth.
+6. Records v0.25 as repository-foundation cleanup before later Roadmap Phase 7 work.
 
 ## 3. Scope Boundary
 
@@ -98,6 +101,11 @@ Therefore governance-relevant releases must include a manual ruleset audit step.
 - Description: Add release automation or workflow hardening.
 - Reason for rejection: That is explicitly outside the v0.25 consolidation scope and requires a separate ADR.
 
+### Alternative E: Leave implemented stable-SHA ADR as proposed
+
+- Description: Keep `ADR-20260708-stable-reviewed-code-sha.md` in proposed state because the mechanism already works.
+- Reason for rejection: That would leave exactly the kind of governance drift v0.25 exists to remove.
+
 ## 7. Trade-offs
 
 ### Pros
@@ -131,6 +139,7 @@ No ADM line-limit or quality-rule exemptions are introduced by this ADR.
 ## 10. Affected Files
 
 - [x] `docs/decisions/ADR-20260708-foundation-consistency-release-hygiene-baseline.md`
+- [x] `docs/decisions/ADR-20260708-stable-reviewed-code-sha.md`
 - [x] `docs/RELEASE_RUNBOOK.md`
 - [x] `docs/REPOSITORY_GOVERNANCE.md`
 - [x] `docs/REVIEW_RUNBOOK.md`
