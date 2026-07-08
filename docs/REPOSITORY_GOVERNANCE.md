@@ -73,15 +73,18 @@ A release-grade ADM change must satisfy all of the following before it is consid
 - The change is merged through a pull request.
 - `ADM Quality Gate` passed on the PR.
 - The PR had no unresolved conversations at merge time.
-- `CHANGELOG.md` documents the change when governance, validation behavior, or release process changed.
+- `CHANGELOG.md` documents the change when governance, validation behavior, release process, or roadmap status changed.
 - A complete six-role ADM review set exists for release readiness, phase transitions, governance changes, architecture-critical changes, or security-, cost-, or performance-sensitive changes.
-- Release-grade complete-set validation is run manually when a release or phase transition depends on a specific reviewed code commit. See [docs/RELEASE_RUNBOOK.md](file:///home/basti/projects/agentic-development-manifest/docs/RELEASE_RUNBOOK.md) for execution details.
+- Release-grade complete-set validation is run manually when a release or phase transition depends on a specific reviewed code commit. See `docs/RELEASE_RUNBOOK.md` for execution details.
+- Governance-relevant releases include a manual audit of the active GitHub ruleset before the release tag is created.
 
 The release gate is intentionally stricter than the normal PR gate. The normal PR gate prevents structurally invalid changes from entering `main`; the release gate proves that a specific ADM state has been reviewed as a complete unit.
 
 ## 7. Manual ruleset audit
 
 GitHub repository rulesets are repository settings, not ordinary versioned source files. Therefore this repository documents the expected settings, but the settings themselves must be audited in GitHub.
+
+This audit is mandatory before governance-relevant releases, release-process changes, review-validation changes, branch-protection changes, or any release that claims repository governance readiness.
 
 Audit checklist:
 
@@ -98,3 +101,5 @@ Audit checklist:
 - Deletions are restricted.
 
 If any item fails, the repository is not governance-complete, even if the source files look correct.
+
+Documentation can require this audit, but source files alone do not prove that GitHub settings were checked. A release note, PR body, or maintainer confirmation must state the result when the audit is release-relevant.

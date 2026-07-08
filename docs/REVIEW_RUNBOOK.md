@@ -6,15 +6,17 @@ This runbook describes the operational happy path for creating and validating a 
 
 Use a six-role complete review set for:
 
-- release readiness
-- phase transitions
-- governance changes
-- architecture-critical changes
-- security-, cost-, or performance-sensitive changes
+- release readiness,
+- phase transitions,
+- governance changes,
+- architecture-critical changes,
+- security-, cost-, or performance-sensitive changes.
 
 Do not require a complete review set for every small feature branch. Use `advisory` or `existing-strict` there.
 
-## 2. v0.24 hardening baseline guardrails
+## 2. Current hardening baselines
+
+### v0.24 Review and Validation Hardening
 
 Roadmap Phase 6 starts from the existing review validation model instead of replacing it.
 
@@ -25,6 +27,18 @@ The accepted v0.24 baseline keeps these guardrails:
 - Stale review artifacts must not satisfy a newer scoped release gate.
 - Manual release-grade validation must bind to the reviewed code commit, not merely the commit containing review artifacts.
 - Workflow hardening, release automation, new schemas, or branch protection changes require a separate explicit ADR.
+
+### v0.25 Foundation Consistency and Release Hygiene
+
+v0.25 is a consolidation baseline, not Roadmap Phase 7.
+
+The accepted v0.25 baseline keeps these guardrails:
+
+- Review artifacts must point to the stable non-review commit they reviewed.
+- The final release tag must point to the final `main` commit after review artifacts are merged and manual release validation has passed.
+- Release runbook examples must stay generic enough that stale version-specific values are not copied blindly.
+- Repository ruleset audit remains a manual external check before governance-relevant releases.
+- Phase 7 handover/session-continuity work remains open until a later explicit PR and ADR.
 
 ## 3. Standard review roles
 
@@ -55,15 +69,17 @@ Minimum required state:
 - Force pushes are blocked.
 - Deletions are restricted.
 
-These settings live in GitHub, not in source control, so they must be manually audited when repository governance is changed.
+These settings live in GitHub, not in source control. They must be manually audited when repository governance is changed or when a governance-relevant release claims release readiness.
+
+The audit result must be stated in the PR body, release note, or maintainer release checklist when it is release-relevant. Do not claim source files prove the active GitHub settings.
 
 ## 5. Happy path
 
-### Step 1: Commit the code under review
+### Step 1: Commit the content under review
 
 Finish the code, documentation, or governance change first.
 
-Record the stable code-under-review SHA:
+Record the stable content-under-review SHA:
 
 ```bash
 git rev-parse HEAD
@@ -78,12 +94,12 @@ Choose one set ID and one target reference.
 Example:
 
 ```text
-review_set_id: RSV-20260708-review-governance-v0111
-target_ref: main
-target_commit: 8afe6714a0ccfcee83a18e2c1fe746b1b160a630
+review_set_id: RSV-YYYYMMDD-release-slug
+target_ref: adm-v025-foundation-consistency-release-hygiene
+target_commit: <stable-non-review-sha>
 ```
 
-Use `target_ref: main` when reviewing a stable main commit. Use `target_ref: PR-<number>` only when the PR head itself is the code under review.
+Use the branch or ref where the reviewed content existed. Do not change `target_ref` merely to make an old review set pass.
 
 ### Step 3: Create runtime review files
 
@@ -92,12 +108,12 @@ Copy the six templates from `templates/reviews/` into `.ai/reviews/` and rename 
 Example filenames:
 
 ```text
-.ai/reviews/REV-ARCH-20260708-feature.md
-.ai/reviews/REV-SEC-20260708-feature.md
-.ai/reviews/REV-PERF-20260708-feature.md
-.ai/reviews/REV-COST-20260708-feature.md
-.ai/reviews/REV-SIMP-20260708-feature.md
-.ai/reviews/REV-DOC-20260708-feature.md
+.ai/reviews/REV-ARCH-YYYYMMDD-release-slug.md
+.ai/reviews/REV-SEC-YYYYMMDD-release-slug.md
+.ai/reviews/REV-PERF-YYYYMMDD-release-slug.md
+.ai/reviews/REV-COST-YYYYMMDD-release-slug.md
+.ai/reviews/REV-SIMP-YYYYMMDD-release-slug.md
+.ai/reviews/REV-DOC-YYYYMMDD-release-slug.md
 ```
 
 Do not use static runtime names such as `.ai/reviews/architect.md`.
@@ -106,9 +122,9 @@ Do not use static runtime names such as `.ai/reviews/architect.md`.
 
 All six files must share the same:
 
-- `review_set_id`
-- `target_ref`
-- `target_commit`
+- `review_set_id`,
+- `target_ref`,
+- `target_commit`.
 
 Each file must also have:
 
@@ -124,27 +140,27 @@ for release-grade complete-set validation.
 Validate existing review artifacts:
 
 ```bash
-python scripts/validate_reviews.py --path . --mode existing-strict
+python3 scripts/validate_reviews.py --path . --mode existing-strict
 ```
 
 Validate a complete set:
 
 ```bash
-python scripts/validate_reviews.py \
+python3 scripts/validate_reviews.py \
   --path . \
   --mode complete-set \
-  --review-set-id RSV-20260708-review-governance-v0111 \
-  --target-ref main \
-  --target-commit 8afe6714a0ccfcee83a18e2c1fe746b1b160a630
+  --review-set-id RSV-YYYYMMDD-release-slug \
+  --target-ref adm-v025-foundation-consistency-release-hygiene \
+  --target-commit <stable-non-review-sha>
 ```
 
 ### Step 6: Open the PR
 
 The normal PR workflow runs `existing-strict`. It proves that existing runtime review artifacts are structurally valid.
 
-For governance PRs, the PR description must also state whether `docs/REPOSITORY_GOVERNANCE.md` still matches the active GitHub ruleset.
+For governance PRs, the PR description must also state whether `docs/REPOSITORY_GOVERNANCE.md` still matches the active GitHub ruleset, or explicitly state that the ruleset audit was not performed in the agent environment.
 
-### Step 7: Run release-grade validation manually
+### Step 7: Run release-grade validation manually after merge
 
 After merge, run the GitHub workflow manually:
 
@@ -153,9 +169,9 @@ After merge, run the GitHub workflow manually:
 3. Click **Run workflow**.
 4. Select branch `main`.
 5. Set `review_gate_mode` to `complete-set`.
-6. Provide the `review_set_id` (e.g., `RSV-20260708-review-set-scoping`).
-7. Provide the `target_ref` if the manual run occurs on a branch (e.g., `main`) different from the one used in the artifacts.
-8. Provide the `reviewed_commit` (stable SHA).
+6. Provide the `review_set_id`.
+7. Provide the `target_ref` used in the artifacts.
+8. Provide the `reviewed_commit` stable SHA.
 9. Run the workflow.
 
 The workflow should print the selected mode, target ref, and reviewed code commit before running the validator.
@@ -184,7 +200,7 @@ Fix: align all six files to the same `review_set_id`.
 
 Cause: one review points to a different reviewed code commit.
 
-Fix: verify the actual code-under-review SHA and align all six files.
+Fix: verify the actual content-under-review SHA and align all six files.
 
 ### Stale review set
 
@@ -204,12 +220,18 @@ Cause: the review ID does not match the required prefix and date pattern.
 
 Fix: use the correct prefix, date, and slug, for example `REV-SEC-20260708-auth-hardening`.
 
+### Ruleset audit claimed without evidence
+
+Cause: documentation or a PR claims repository governance readiness, but no manual GitHub ruleset audit evidence is provided.
+
+Fix: perform the audit in GitHub settings or state clearly that it was not performed by the agent.
+
 ## 7. Validator fixture tests
 
 Run the validator fixture test suite with:
 
 ```bash
-python scripts/test_validate_reviews.py
+python3 scripts/test_validate_reviews.py
 ```
 
 The test suite covers both the happy path and expected failure modes for malformed, incomplete, duplicate, mismatched, or stale scoped review sets.

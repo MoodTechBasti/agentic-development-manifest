@@ -45,6 +45,17 @@ Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM
 - [x] Add targeted fixture coverage for review-set filtering, target-ref filtering, and stale-review protection.
 - [x] Preserve the advisory, existing-strict, and complete-set distinction without adding workflow hardening or release automation.
 
+## Foundation Consistency and Release Hygiene Baseline (v0.25)
+
+This is a consolidation baseline after Roadmap Phase 6. It is not Roadmap Phase 7.
+
+- [x] Accept v0.25 as a foundation consistency and release hygiene baseline.
+- [x] Synchronize status and version language across canonical ADM documents without pretending older standards were newly created in v0.25.
+- [x] Modernize `docs/RELEASE_RUNBOOK.md` with generic release examples and final tag semantics.
+- [x] Clarify manual GitHub ruleset audit expectations before governance-relevant releases.
+- [x] Preserve Roadmap Phase 7 as open and unimplemented.
+- [x] Avoid new runtime code, workflow hardening, release automation, provider SDKs, MCP integration, adapter expansion, branch-protection changes, and v1 release-candidate claims.
+
 ## Roadmap Phase 7: Handover and Session Continuity
 
 - [ ] Define reliable session-continuity behavior for future agents using repository-owned evidence.
@@ -72,7 +83,8 @@ Minimum criteria:
 - Roadmap Phase 0 through Roadmap Phase 5 are accepted and reflected in the specification.
 - Roadmap Phase 6 through Roadmap Phase 9 are documented with explicit scope and non-scope.
 - Roadmap phases remain distinct from ADM lifecycle phases.
-- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, and Review and Validation Hardening have accepted ADR coverage.
+- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, Review and Validation Hardening, and Foundation Consistency and Release Hygiene have accepted ADR coverage.
 - Deferred adapters are not treated as implemented or accepted without current tool-behavior verification.
 - v1 release candidates have a complete six-role review set and manual release-grade `complete-set` validation.
+- Governance-relevant v1 release candidates include manual GitHub ruleset audit evidence.
 - v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, additional validator hardening, or release automation unless those are accepted by later explicit roadmap phases and ADRs.

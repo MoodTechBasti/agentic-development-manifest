@@ -1,4 +1,8 @@
-# ADM — AI Foundation Standard (v0.20 Draft)
+# ADM — AI Foundation Standard
+
+> Origin: accepted in v0.20 as Roadmap Phase 3
+> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Scope: architecture standard, not AI runtime implementation
 
 Der AI Foundation Standard definiert die Mindestarchitektur für KI-Funktionen, bevor produktbezogene KI-Features, Provider-Integrationen oder Tool-Ausführungen gebaut werden.
 
@@ -84,7 +88,7 @@ Eine Prompt Registry muss mindestens beschreiben:
 - Evaluationsstatus und bekannte Risiken.
 - Änderungsregeln für produktkritische Prompts.
 
-Prompts dürfen später in Dateien, Datenbanken oder Konfiguration liegen. v0.20 erzwingt keine konkrete Ablageform.
+Prompts dürfen später in Dateien, Datenbanken oder Konfiguration liegen. Der AI Foundation Standard erzwingt keine konkrete Ablageform.
 
 ## 5. Tool Registry
 

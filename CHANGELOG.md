@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.25] — 2026-07-08
+
+### Foundation Consistency and Release Hygiene Baseline
+
+- Added `docs/decisions/ADR-20260708-foundation-consistency-release-hygiene-baseline.md` to accept v0.25 as a consolidation baseline after v0.24.
+- Synchronized version and status language across canonical ADM documents while preserving the origin version of earlier standards.
+- Updated `docs/RELEASE_RUNBOOK.md` to replace the old v0.13-centered example with generic release inputs and final tag semantics.
+- Clarified that governance-relevant releases require a manual external GitHub ruleset audit; source files alone do not prove active repository settings.
+- Updated `docs/REPOSITORY_GOVERNANCE.md`, `docs/REVIEW_RUNBOOK.md`, `docs/OPERATING_SYSTEM.md`, foundation standards, prompt standards, adapter README, `spec/ADM_v1_DRAFT.md`, `README.md`, and `ROADMAP.md` for the v0.25 baseline.
+- Kept v0.25 intentionally narrow: no Roadmap Phase 7 implementation, Handover linter, Handover Automation expansion, workflow hardening, release automation, runtime code, provider SDK integration, MCP integration, local tool profile, Gemini CLI adapter, Antigravity CLI adapter, branch-protection change, or v1 release-candidate claim.
+
 ## [v0.24] — 2026-07-08
 
 ### Review and Validation Hardening Baseline

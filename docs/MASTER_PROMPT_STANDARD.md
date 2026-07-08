@@ -1,4 +1,8 @@
-# ADM — Master Prompt Standard (v0.22 Draft)
+# ADM — Master Prompt Standard
+
+> Origin: accepted in v0.21 as Roadmap Phase 4
+> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Scope: model-neutral CLI-agent onboarding standard, not a tool adapter
 
 Der Master Prompt Standard definiert, wie die ADM-Spezifikation in eine modellneutrale Startanweisung für CLI-Agenten übersetzt wird.
 
@@ -59,7 +63,7 @@ Der Master Prompt muss Agenten zwingen, Projektzustand aus versionierten oder ex
 
 Rangfolge:
 
-1. `spec/ADM_v1_DRAFT.md`, `docs/CONSTITUTION.md`, Roadmap, Governance-Dokumente und accepted ADRs.
+1. `spec/ADM_v1_DRAFT.md`, `docs/CONSTITUTION.md`, Roadmap, Governance-Dokumente, Release-Dokumente, Foundation Standards und accepted ADRs.
 2. Versionierte Runtime-Artefakte wie `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/`, `.ai/agents/`.
 3. Kuratierte Projektkontexte wie `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`.
 4. Lokale transiente Dateien nur als nicht-kanonische Arbeitshilfe.
@@ -156,7 +160,16 @@ Ein vollständiges Review-Set umfasst:
 
 Review-Artefakte müssen auf denselben `review_set_id`, `target_ref` und stabilen `target_commit` gebunden sein.
 
-## 10. Foundation Trigger
+## 10. Release Hygiene Contract
+
+Der Master Prompt muss die v0.25 Release-Hygiene-Regel beachten:
+
+- Der `target_commit` in Reviews ist der stabile nicht-review Commit.
+- Review-Artefakte werden danach hinzugefügt.
+- Der Release-Tag zeigt erst nach Merge und erfolgreicher manueller `complete-set`-Validierung auf den finalen `main`-Commit.
+- GitHub-Ruleset-Audits bleiben externe manuelle Prüfungen und dürfen nicht aus Source-Dateien behauptet werden.
+
+## 11. Foundation Trigger
 
 Der Prompt muss Aufgaben erkennen, die zusätzliche Foundation-Dokumente relevant machen.
 
@@ -164,7 +177,7 @@ SaaS-bezogene Aufgaben müssen den SaaS Foundation Standard beachten, wenn sie U
 
 AI-bezogene Aufgaben müssen den AI Foundation Standard beachten, wenn sie Provider, Prompts, Tools, Evaluation, Routing, Fallback, Caching, Safety, AI Cost Tracking, AI Observability, Audit oder AI Artifacts betreffen.
 
-## 11. Handover Contract
+## 12. Handover Contract
 
 Der Master Prompt muss signifikante Sitzungen mit einem strukturierten Handover abschließen.
 
@@ -180,7 +193,7 @@ Der Handover muss mindestens dokumentieren:
 
 Handover darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Freigaben oder erledigte Arbeit erfinden.
 
-## 12. Adapter-Grenze
+## 13. Adapter-Grenze
 
 Roadmap Phase 4 definiert den kanonischen Master Prompt.
 
@@ -199,13 +212,13 @@ Adapter-Prompts dürfen nicht:
 - GitHub-Governance, CI, Review-Validierung, ADRs, PR-Hygiene oder Handover-Pflichten umgehen,
 - hidden memory, Chatverlauf, Tool-Cache oder lokale Tool-Profile als Projektwahrheit behandeln.
 
-## 13. Roadmap-Phase-4-Grenze
+## 14. Roadmap-Phase-4-Grenze
 
 Roadmap Phase 4 definiert die Master-Prompt-Semantik. Sie ersetzt weder die ADM-Spezifikation noch Roadmap Phase 2 SaaS Foundation, Roadmap Phase 3 AI Foundation oder Roadmap Phase 5 Adapter Prompts.
 
 Der Master Prompt muss diese Standards operationalisieren, nicht neu erfinden.
 
-## 14. Final Audit
+## 15. Final Audit
 
 Vor einer Master-Prompt-Standard-Freigabe wird objektiv geprüft:
 
@@ -215,6 +228,7 @@ Vor einer Master-Prompt-Standard-Freigabe wird objektiv geprüft:
 - Scope-Deklaration vor Umsetzung.
 - ADR- und Review-Regeln.
 - Quality-Gate-Evidenz.
+- Release-Hygiene-Evidenz.
 - Handover-Pflichten.
 - SaaS- und AI-Foundation-Anbindung.
 - Adapter-Grenze.
