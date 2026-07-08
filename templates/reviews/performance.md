@@ -4,10 +4,13 @@ template_type: review
 review_type: performance
 role: SRE and Performance Lead
 template_status: accepted
-version: 1.1.0
+version: 1.2.0
 last_updated: 2026-07-08
 runtime_target: .ai/reviews/
 review_id: ""
+review_set_id: ""
+target_ref: ""
+target_commit: ""
 review_status: PENDING
 review_date: ""
 reviewer_agent: ""
@@ -25,6 +28,9 @@ measurement_type: not_applicable
 | Field | Value |
 | --- | --- |
 | Review ID | REV-PERF-[YYYYMMDD]-[feature-slug] |
+| Review set ID | RSV-[YYYYMMDD]-[feature-slug] |
+| Target ref | PR-[number], release branch, or named ref |
+| Target commit | Git commit SHA being reviewed |
 | Review date | [YYYY-MM-DD] |
 | Reviewer agent | SRE and Performance Lead |
 | Target | [ADR ID, commit hash, feature, or path] |
