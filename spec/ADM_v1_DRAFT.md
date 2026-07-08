@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.26 Draft)
+# ADM — Spezifikation (v0.25 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.26 Draft
-- **Zustand**: Review Archive Policy Accepted
+- **Version**: v0.25 Draft
+- **Zustand**: Foundation Consistency and Release Hygiene Baseline Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar oder klar als extern markiert.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -59,11 +59,8 @@ Ein vollständiges Review-Set besteht aus sechs Rollen:
 ### Review-Artefakte
 
 - Templates liegen unter `templates/reviews/`.
-- Ausgefüllte aktive Berichte liegen direkt unter `.ai/reviews/`.
-- Archivierte historische Review-Sets dürfen später unter `.ai/reviews/archive/<review_set_id>/` liegen.
+- Ausgefüllte Berichte liegen unter `.ai/reviews/`.
 - Dateinamen müssen der `review_id` entsprechen, zum Beispiel `REV-ARCH-YYYYMMDD-slug.md`.
-
-Archivierung ist keine Fehlerverbergung. Aktuelle fehlerhafte Reviews müssen repariert werden; sie dürfen nicht verschoben werden, nur um den normalen Validatorpfad grün zu machen.
 
 ## 6. Review-Validierungsmodi
 
@@ -76,8 +73,6 @@ Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 | `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
 v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden.
-
-v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv in normale Validierung einbezieht.
 
 ## 7. Release Gate Policy
 
@@ -93,11 +88,9 @@ Ein Release oder Git-Tag ist nur zulässig, wenn ein vollständiges Review-Set v
 
 Das `.ai/` Verzeichnis dient als persistente Memory Layer für Agenten.
 
-- **Versioniert**: `.ai/reviews/`, `.ai/reviews/archive/`, `.ai/decisions/`, `.ai/handover/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/`, `.ai/README.md`.
+- **Versioniert**: `.ai/reviews/`, `.ai/decisions/`, `.ai/handover/`, `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/`, `.ai/README.md`.
 - **Ignoriert oder lokal behandelt**: `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/`, `.ai/local/`, `.ai/sessions/`.
 - **Regel**: Keine temporären Chat-Marker, Rohlogs, Secrets, privaten lokalen Pfade oder flüchtigen Notizen im Repository.
-
-Aktive Review-Artefakte liegen direkt unter `.ai/reviews/`. Archivierte Review-Artefakte sind historische Evidenz unter `.ai/reviews/archive/<review_set_id>/` und werden vom Standard-Validatorpfad nicht rekursiv geprüft.
 
 ## 9. Project-owned Memory
 
@@ -106,7 +99,7 @@ Project-owned memory ist dauerhaftes Projektwissen, das dem Repository gehört u
 Autoritätshierarchie:
 
 1. Kanonische Repository-Dokumente: Spezifikation, Constitution, Governance, Foundation Standards, Master Prompt Standard, Adapter Prompt Standard, ADRs, Runbooks.
-2. Versionierte Runtime-Artefakte: Reviews, Review-Archive, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
+2. Versionierte Runtime-Artefakte: Reviews, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
 3. Working-Artefakte: Tasks, Planung, offene Fragen, geprüfte Research-Zusammenfassungen.
 4. Lokale transiente Artefakte: Scratch, Logs, Cache, Experimente.
 5. Hidden model memory und Chatverlauf: nie autoritative Projektwahrheit.
@@ -147,22 +140,102 @@ Handover Automation darf keine Checks, Commits, Review-Votes, Rollen, CI-Ergebni
 
 Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memory, Chatverlauf, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-v0.26 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
+v0.25 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
 
-## 12. Foundation Standards
+## 12. SaaS Foundation Standard
 
-SaaS Foundation Standard, AI Foundation Standard, Master Prompt Standard und Adapter Prompt Standard bleiben gültige Roadmap-Standards. v0.26 verändert deren technische Semantik nicht.
+Der SaaS Foundation Standard ist der kanonische **Roadmap-Phase-2-Block** für neue SaaS-Systeme. Das ist bewusst von **Lifecycle Phase 2 — Architecture Competition** aus Abschnitt 3 getrennt.
 
-## 13. Review Archive Policy
+Ziel ist eine kleine, explizite Foundation vor Produktfeatures. ADM erzwingt keinen bestimmten Anbieter und keine Microservice-Architektur. Der Default ist Modular Monolith First.
 
-Die Review Archive Policy ist ein Governance-Hygiene-Block nach v0.25 und vor Roadmap Phase 7.
+Pflichtbereiche:
 
-Sie definiert:
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Identity | User, Authentifizierung und technische Identitäten |
+| Organization | Besitz, Vertrag, Abrechnung und Teamverwaltung |
+| Tenant | Daten-, Konfigurations-, Limit-, Job-, Storage- und Audit-Isolation |
+| Workspace | Arbeitsbereiche unterhalb von Organization oder Tenant |
+| Membership | Einladungen, Rollen, Deaktivierung und Besitzwechsel |
+| Roles and Permissions | serverseitige Autorisierung und kritische Aktionen |
+| Billing Readiness | Plan-, Subscription- und Provider-Adapter-Modell ohne Lock-in |
+| Entitlements and Quotas | Feature-Gates, Nutzungslimits und Planlogik |
+| Usage and Cost | Kostenaggregation pro User, Workspace, Tenant, Feature, Request, Worker-Zeit und Provider |
+| Jobs and Workers | Idempotenz, Retries, Backoff, Timeouts, Dead-Letter und Status |
+| Observability and Admin | Logs, Metrics, Request IDs, Audit Logs und Support-Diagnose |
+| Data Lifecycle | Upload, Processing, Export, Archive, Delete, Backup und Restore |
+| DX and Testing | lokaler Startpfad, Mocks, Fake Billing, Seed-Daten und Foundation-Tests |
 
-- direkte `.ai/reviews/*.md` Dateien als aktive Review-Fläche,
-- `.ai/reviews/archive/<review_set_id>/` als spätere historische Ablage,
-- keine historische Migration innerhalb von v0.26,
-- keine Änderung an `scripts/validate_reviews.py`,
-- einen gezielten Regressionstest für den nicht-rekursiven Standardpfad.
+Roadmap Phase 2 implementiert keine konkrete Produktlogik, keine echte Payment-Integration, keine AI Provider Architecture, kein Modellrouting und keine Prompt Registry.
 
-Roadmap Phase 7 bleibt offen, bis diese Archivierungssemantik akzeptiert und überprüft ist.
+## 13. AI Foundation Standard
+
+Der AI Foundation Standard ist der kanonische **Roadmap-Phase-3-Block** für KI-Funktionen. Das ist bewusst von **Lifecycle Phase 3 — Devil's Advocate** aus Abschnitt 3 getrennt.
+
+Ziel ist eine kleine, explizite KI-Foundation vor produktbezogenen KI-Features. ADM erzwingt keinen LLM-Provider, kein Runtime-Framework, keine Prompt-Datenbank und keine Tool-Ausführungsengine.
+
+Pflichtbereiche:
+
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Provider Abstraction | Austauschbare Provider- und Modellfähigkeiten ohne SDK-Lock-in |
+| Prompt Registry | Prompt-IDs, Versionen, Owner, Inputs, Outputs, Safety-Annahmen und Änderungsregeln |
+| Tool Registry | erlaubte Tools, Permissions, Side Effects, Audit, Rate Limits und Human-Approval-Punkte |
+| Evaluation | Golden Cases, Negative Cases, Qualitätskriterien, Kosten, Latenz und Regressionserkennung |
+| AI Cost Tracking | Kostenaggregation pro User, Tenant, Feature, Prompt, Tool, Provider, Request, Job und Cache-Verhalten |
+| Routing | Auswahlregeln für Provider, Modellklasse, Qualität, Kosten, Latenz oder lokale Ausführung |
+| Fallback | Verhalten bei Fehlern, Timeouts, Kostenlimits, Safety-Blocks oder Qualitätsproblemen |
+| Caching | Cachebarkeit, Tenant-Kontext, Prompt-Version, TTL, Invalidierung und Data Lifecycle |
+| Safety Rules | Grenzen für Datenklassen, Prompt Injection, Tools, PII, Secrets, Logs, Cache und Evaluation |
+| Observability and Audit | Request IDs, Provider-, Modell-, Prompt-, Tool-, Kosten-, Token-, Latenz- und Fallback-Metadaten |
+| AI Artifact Lifecycle | Prompts, Antworten, Tool-Inputs, Tool-Outputs, Embeddings, Evaluation, Cache und Worker-Zwischenstände |
+
+Roadmap Phase 3 implementiert keine konkrete KI-Funktion, keine Provider-SDK-Integration, keine echten Modellaufrufe, keine echte Tool-Ausführung, keine Prompt-Datenbank, keine neue Validator- oder Workflow-Erzwingung und keine Provider-Secrets.
+
+## 14. Master Prompt Standard
+
+Der Master Prompt Standard ist der kanonische **Roadmap-Phase-4-Block** für CLI-Agenten-Onboarding. Das ist bewusst von **Lifecycle Phase 4 — Simplification** aus Abschnitt 3 getrennt.
+
+Ziel ist eine modellneutrale Startanweisung, die ADM-Regeln in operative Agentenschritte übersetzt. Der Master Prompt ist kein Tool-Adapter, keine Runtime-Engine, kein Validator und keine Freigabeinstanz.
+
+Pflichtbereiche:
+
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Authority Order | Repository-Dokumente, `.ai/`-Artefakte und Chatverlauf werden klar priorisiert |
+| Required Initialization | Agenten lesen relevante kanonische Dokumente vor Umsetzung |
+| Scope Declaration | Rolle, Ziel, Scope, Non-Scope und Risiken werden vor Umsetzung genannt |
+| Operating Rules | Keine erfundenen Fakten, Checks, Commits, Rollen, Reviews oder Freigaben |
+| Quality Gate Contract | Checks, Review-Status und CI-Readiness werden belegbar gemeldet |
+| Review Contract | Complete-set und Review-Artefakte bleiben versioniert und scoped |
+| Foundation Triggers | SaaS- und AI-Foundation werden bei passenden Tasks aktiviert |
+| Handover Contract | Signifikante Sitzungen enden mit prüfbarer Übergabe |
+| Adapter Boundary | Tool-spezifische Prompts bleiben dünne Schichten unterhalb des Master Prompts |
+
+Roadmap Phase 4 implementiert keinen Tool-Adapter, keine Runtime, keine Provider-Integration, keine Workflow-Änderung und keinen MCP.
+
+## 15. Adapter Prompt Standard
+
+Der Adapter Prompt Standard ist der kanonische **Roadmap-Phase-5-Block** für tool-spezifische CLI-Agenten-Prompts.
+
+Adapter sind dünne, untergeordnete Schichten unter `prompts/master_prompt.md`. Sie dürfen Tool-Bedienung erklären, aber keine ADM-Regel abschwächen.
+
+Pflichtbereiche:
+
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Canonical dependency | Adapter verweisen auf `prompts/master_prompt.md` und ersetzen ihn nicht |
+| Tool capability boundary | Adapter unterscheiden Tool-Fähigkeit von Tool-Wahrheit |
+| Tool state boundary | Hidden memory, Chatverlauf, lokale Profile und Cache bleiben nicht autoritativ |
+| Forbidden overrides | Adapter dürfen Governance, Reviews, ADRs, Checks und Handover nicht umgehen |
+| Deferred adapters | Nicht geprüfte Tools bleiben explizit zurückgestellt |
+
+Roadmap Phase 5 implementiert keinen Runtime-Code, keine Provider-SDKs, keine MCP-Integration, keine lokale Tool-Profile und keine zusätzlichen Tool-Adapter ohne aktuelle Verifikation.
+
+## 16. Roadmap Continuation and v1 Readiness
+
+Roadmap Phase 6 bis Phase 9 sind dokumentierte künftige Blöcke nach den ersten fünf Roadmap-Phasen.
+
+v1-Readiness erfordert synchronisierte Spezifikation, Roadmap, Changelog, ADRs und Review-Artefakte. Ein v1 Release Candidate braucht ein vollständiges sechs Rollen Review-Set und manuelle release-grade `complete-set` Validierung.
+
+v1 erfordert keine Runtime, Provider-SDKs, MCP-Integration, lokalen Tool-Profile, Workflow-Änderungen oder Release-Automation, solange diese nicht durch spätere explizite Roadmap-Phasen und ADRs akzeptiert werden.
