@@ -80,9 +80,13 @@ This is an operational review-storage hygiene baseline after v0.26. It is not Ro
 
 ## Roadmap Phase 7: Handover and Session Continuity
 
-- [ ] Define reliable session-continuity behavior for future agents using repository-owned evidence.
-- [ ] Evaluate handover linting, prefill, and cross-checking without turning automation into approval truth.
-- [ ] Keep chat history, hidden model memory, local profiles, scratch files, and raw logs non-authoritative.
+- [x] Accept v0.28 as the Session Continuity Baseline for Roadmap Phase 7.
+- [x] Define reliable session-continuity behavior for future agents using repository-owned evidence.
+- [x] Define `.ai/handover/README.md` as the durable handover discovery and commit policy.
+- [x] Harden `templates/HANDOVER_TEMPLATE.md` with continuity status, target refs, target commits, review-set IDs, and latest evidence fields.
+- [x] Keep chat history, hidden model memory, local profiles, scratch files, raw logs, and tool caches non-authoritative.
+- [x] Evaluate handover linting, prefill, and cross-checking as future possibilities without turning automation into approval truth.
+- [x] Avoid runtime code, real automation, Handover linter, workflow changes, release automation, provider SDKs, MCP integration, adapter expansion, branch-protection changes, Review Archive Migration, Phase 8 work, and v1 release-candidate claims.
 
 ## Roadmap Phase 8: Adapter Expansion and Tool Verification
 
@@ -102,11 +106,11 @@ ADM may be considered v1-ready only when the accepted standards, governance evid
 
 Minimum criteria:
 
-- Roadmap Phase 0 through Roadmap Phase 5 are accepted and reflected in the specification.
-- Roadmap Phase 6 through Roadmap Phase 9 are documented with explicit scope and non-scope.
+- Roadmap Phase 0 through Roadmap Phase 7 are accepted and reflected in the specification.
+- Roadmap Phase 8 through Roadmap Phase 9 are documented with explicit scope and non-scope.
 - Roadmap phases remain distinct from ADM lifecycle phases.
-- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy, and Review Archive Migration Batch 1 have accepted ADR coverage.
+- Governance, review validation, release validation, project-owned memory, agent registry, handover automation, SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Roadmap Continuation, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy, Review Archive Migration Batch 1, and Session Continuity Baseline have accepted ADR coverage.
 - Deferred adapters are not treated as implemented or accepted without current tool-behavior verification.
 - v1 release candidates have a complete six-role review set and manual release-grade `complete-set` validation.
 - Governance-relevant v1 release candidates include manual GitHub ruleset audit evidence.
-- v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, additional validator hardening, release automation, or additional review archive migration unless those are accepted by later explicit roadmap phases and ADRs.
+- v1 does not require runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, additional validator hardening, release automation, additional review archive migration, Handover linting, or adapter expansion unless those are accepted by later explicit roadmap phases and ADRs.
