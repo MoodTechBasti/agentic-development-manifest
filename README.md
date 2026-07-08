@@ -1,4 +1,4 @@
-# Agentic Development Manifest (ADM) — v0.22 Draft
+# Agentic Development Manifest (ADM) — v0.23 Draft
 
 Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem für autonome Multi-Agenten-Softwareentwicklung.
 
@@ -6,7 +6,7 @@ Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem
 
 ADM definiert einen standardisierten, dateibasierten Prozess für moderne KI-Coding-Agenten wie Claude Code CLI, Codex CLI, Antigravity, Gemini CLI und GPT-Modelle.
 
-Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards und Adapter Prompt Standards als Single Source of Truth des Projekts.
+Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation und v1-Readiness-Kriterien als Single Source of Truth des Projekts.
 
 Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 
@@ -30,6 +30,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/decisions/ADR-20260708-ai-foundation-standard.md` — Roadmap Phase 3 AI Foundation Standard architecture decision
 - `docs/decisions/ADR-20260708-master-prompt-standard.md` — Roadmap Phase 4 Master Prompt Standard architecture decision
 - `docs/decisions/ADR-20260708-adapter-prompt-standard.md` — Roadmap Phase 5 Adapter Prompt Standard architecture decision
+- `docs/decisions/ADR-20260708-roadmap-continuation-v1-readiness.md` — Roadmap continuation and v1 readiness architecture decision
 - `.ai/agents/README.md` — Agent Registry runtime policy
 - `templates/HANDOVER_TEMPLATE.md` — reusable structured handover template
 - `prompts/adapters/` — tool-specific adapter prompts layered below the canonical master prompt
@@ -43,4 +44,4 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.22 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, and Roadmap Phase 5 Adapter Prompt Standard architecture are accepted. The initial adapter set includes Claude Code CLI, Codex CLI, and Generic CLI Agent. Gemini CLI and Antigravity CLI remain deferred adapter candidates.
+v0.23 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, Roadmap Phase 5 Adapter Prompt Standard, and Roadmap Continuation with v1 Readiness Criteria architecture are accepted. Roadmap Phase 6 through Roadmap Phase 9 are now documented as planned future blocks, not implemented mechanisms. The initial adapter set includes Claude Code CLI, Codex CLI, and Generic CLI Agent. Gemini CLI and Antigravity CLI remain deferred adapter candidates.
