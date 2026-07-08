@@ -1,8 +1,12 @@
-# ADM — Adapter Prompt Standard (v0.22 Draft)
+# ADM — Adapter Prompt Standard
+
+> Origin: accepted in v0.22 as Roadmap Phase 5
+> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Scope: prompt-layer standard, not runtime integration
 
 The Adapter Prompt Standard defines how ADM tool-specific adapter prompts may layer on top of the canonical Master Prompt without replacing it.
 
-It is the canonical **Roadmap Phase 5** standard. Roadmap Phase 5 is not an implementation phase for runtime integrations, local tool profiles, provider SDKs, workflows, validators, or MCP servers.
+It is the canonical **Roadmap Phase 5** standard. Roadmap Phase 5 is not an implementation phase for runtime integrations, local tool profiles, provider SDKs, workflows, validators, release automation, or MCP servers.
 
 ## Architecture Philosophy
 
@@ -16,7 +20,7 @@ Mandatory principles:
 4. Adapter prompts may add tool-specific usage guidance only when it preserves canonical ADM behavior.
 5. Adapter prompts must not invent repository truth, checks, commits, roles, approvals, review votes, CI results, or completed work.
 6. Adapter prompts must not treat hidden model memory, chat history, tool cache, local profile state, or proprietary tool context as authoritative project truth.
-7. Adapter prompts must not bypass GitHub governance, CI, review validation, ADR requirements, or handover obligations.
+7. Adapter prompts must not bypass GitHub governance, CI, review validation, ADR requirements, release hygiene, or handover obligations.
 
 ## 1. Core Vocabulary
 
@@ -55,6 +59,7 @@ An ADM-compliant adapter prompt must define:
 - forbidden overrides,
 - required initialization behavior,
 - validation and reporting expectations,
+- release-hygiene expectations,
 - handover expectations,
 - fallback behavior when tool behavior is unavailable or unclear.
 
@@ -69,8 +74,9 @@ Each adapter prompt should use this structure:
 3. Tool-specific operating guidance.
 4. Forbidden behavior.
 5. Quality gate handling.
-6. Handover handling.
-7. Output expectations.
+6. Release hygiene handling.
+7. Handover handling.
+8. Output expectations.
 
 Adapter prompts should reference canonical files instead of duplicating their full contents.
 
@@ -95,10 +101,11 @@ Adapter prompts must not:
 - skip ADR triggers,
 - skip review-set requirements,
 - skip PR hygiene,
+- skip release hygiene,
 - skip local validation or mark unrun checks as passed,
 - treat a tool's approval, plan mode, cache, memory, or local profile as repository approval,
 - introduce provider secrets, local machine paths, private URLs, raw logs, or hidden context into the repository,
-- create branches, commits, pull requests, release tags, workflow changes, validator changes, or local tool profiles unless the human maintainer explicitly approved that task scope.
+- create branches, commits, pull requests, release tags, workflow changes, validator changes, local tool profiles, runtime integrations, or MCP integrations unless the human maintainer explicitly approved that task scope.
 
 ## 7. Initial Adapter Set
 
@@ -126,7 +133,7 @@ Adapter prompts are not provider adapters and not AI runtime architecture.
 
 They do not define provider abstraction, model routing, prompt registry, evaluation, caching, AI cost tracking, AI artifact lifecycle, tool execution, or safety rules beyond preserving existing ADM requirements.
 
-## 10. Relationship to Governance and Review
+## 10. Relationship to Governance, Review, and Release Hygiene
 
 Adapter work affects agent onboarding semantics. Material adapter prompt changes require:
 
@@ -134,7 +141,8 @@ Adapter work affects agent onboarding semantics. Material adapter prompt changes
 - documentation synchronization,
 - a complete six-role review set for roadmap phase acceptance or governance-significant changes,
 - local validation before PR-ready claims,
-- release-grade complete-set validation before tagging.
+- release-grade complete-set validation before tagging,
+- correct distinction between the reviewed target commit and the final tag commit.
 
 ## 11. Final Audit
 
@@ -143,6 +151,6 @@ Before accepting adapter prompt work, verify:
 - canonical master prompt remains authoritative,
 - no adapter weakens repository-backed truth,
 - no adapter depends on hidden memory, chat history, tool cache, or local profile state,
-- no adapter bypasses GitHub governance, CI, review validation, ADRs, PR hygiene, or handover duties,
+- no adapter bypasses GitHub governance, CI, review validation, ADRs, PR hygiene, release hygiene, or handover duties,
 - adapter set remains intentionally small,
 - README, Roadmap, Changelog, Specification, Operating System, Master Prompt Standard, and prompt files are synchronized.
