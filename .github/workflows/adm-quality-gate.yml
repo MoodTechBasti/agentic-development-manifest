@@ -2,10 +2,20 @@ name: ADM Quality Gate
 
 on:
   push:
-    branches: [main, master, dev]
+    branches: [main, master, dev, 'release/**']
   pull_request:
-    branches: [main, master, dev]
+    branches: [main, master, dev, 'release/**']
   workflow_dispatch:
+    inputs:
+      review_gate_mode:
+        description: ADM review validation mode for manual runs
+        required: true
+        default: existing-strict
+        type: choice
+        options:
+          - advisory
+          - existing-strict
+          - complete-set
 
 jobs:
   line-limit-check:
@@ -32,10 +42,32 @@ jobs:
             exit 1
           fi
 
-      - name: Run ADM review validator advisory check
+      - name: Run ADM review validator
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          REF_NAME: ${{ github.ref_name }}
+          REF: ${{ github.ref }}
+          DISPATCH_MODE: ${{ inputs.review_gate_mode }}
         run: |
-          if [ -f "scripts/validate_reviews.py" ]; then
-            python scripts/validate_reviews.py --path . --advisory
-          else
-            echo "ADM review validator not found; advisory check skipped."
+          set -eu
+
+          if [ ! -f "scripts/validate_reviews.py" ]; then
+            echo "ADM review validator not found; review check skipped."
+            exit 0
           fi
+
+          mode="advisory"
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            mode="${DISPATCH_MODE:-existing-strict}"
+          elif [[ "$BASE_REF" == release/* ]] || [[ "$REF" == refs/heads/release/* ]]; then
+            mode="complete-set"
+          elif [ "$BASE_REF" = "main" ] || [ "$BASE_REF" = "master" ]; then
+            mode="existing-strict"
+          elif [ "$REF" = "refs/heads/main" ] || [ "$REF" = "refs/heads/master" ]; then
+            mode="existing-strict"
+          fi
+
+          echo "ADM review validation mode: $mode"
+          python scripts/validate_reviews.py --path . --mode "$mode"
