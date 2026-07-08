@@ -10,12 +10,12 @@ runtime_target: .ai/reviews/
 review_id: REV-PERF-20260708-foundation-consistency-release-hygiene
 review_set_id: RSV-20260708-foundation-consistency-release-hygiene
 target_ref: adm-v025-foundation-consistency-release-hygiene
-target_commit: 7b7715475f1f9d6dda6687e1b6bea9fa5338f210
+target_commit: 63fa9f3f2437c87b817b57036ce85045002ce2f6
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: SRE and Performance Lead
 target: v0.25 Foundation Consistency and Release Hygiene Baseline
-target_files: [README.md, ROADMAP.md, CHANGELOG.md, spec/ADM_v1_DRAFT.md, docs/RELEASE_RUNBOOK.md, docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/OPERATING_SYSTEM.md, docs/SAAS_FOUNDATION_BLUEPRINT.md, docs/AI_FOUNDATION_STANDARD.md, docs/MASTER_PROMPT_STANDARD.md, docs/ADAPTER_PROMPT_STANDARD.md, prompts/adapters/README.md, docs/decisions/ADR-20260708-foundation-consistency-release-hygiene-baseline.md]
+target_files: [README.md, ROADMAP.md, CHANGELOG.md, spec/ADM_v1_DRAFT.md, docs/RELEASE_RUNBOOK.md, docs/REPOSITORY_GOVERNANCE.md, docs/REVIEW_RUNBOOK.md, docs/OPERATING_SYSTEM.md, docs/SAAS_FOUNDATION_BLUEPRINT.md, docs/AI_FOUNDATION_STANDARD.md, docs/MASTER_PROMPT_STANDARD.md, docs/ADAPTER_PROMPT_STANDARD.md, prompts/adapters/README.md, docs/decisions/ADR-20260708-foundation-consistency-release-hygiene-baseline.md, docs/decisions/ADR-20260708-stable-reviewed-code-sha.md]
 ci_ready: true
 confidence_score: 9
 ---
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed performance and operational impact of the v0.25 documentation-only consistency and release hygiene baseline.
+Reviewed performance and operational impact of the v0.25 documentation-only consistency and release hygiene baseline, including stable reviewed-code SHA ADR status normalization.
 
 ## Findings
 
@@ -32,6 +32,7 @@ Reviewed performance and operational impact of the v0.25 documentation-only cons
 - Strengths: Normal PR validation remains `existing-strict`; release-grade `complete-set` remains explicit and manual.
 - Strengths: The release runbook reduces operational ambiguity without adding automation overhead.
 - Strengths: Documentation changes remain within existing repository architecture.
+- Strengths: Stable reviewed-code SHA status normalization changes documentation truth only, not runtime behavior.
 - Risk: Documentation simplification can reduce lookup detail if future agents need historical nuance; affected standard documents should remain under review.
 
 ## Performance Gates
