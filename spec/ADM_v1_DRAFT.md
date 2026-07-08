@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.28 Draft)
+# ADM — Spezifikation (v0.29 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.28 Draft
-- **Zustand**: Roadmap Phase 7 Session Continuity Baseline Accepted
+- **Version**: v0.29 Draft
+- **Zustand**: Roadmap Phase 8 Tool Verification Discovery Baseline Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar oder klar als extern markiert.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Review Archive Migration, Handovers, Session Continuity, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Review Archive Migration, Handovers, Session Continuity, Tool Verification, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -205,7 +205,21 @@ Initial akzeptierte Adapter sind Claude Code CLI, Codex CLI und Generic CLI Agen
 
 Roadmap Phase 5 implementiert keine Runtime, keine Provider-SDKs, keine echte Tool-Integration, keine lokalen Tool-Profile, keine MCP-Integration, keine Schemas, keine Validatoren, keine Workflows, keine Release-Automation und keine Provider-Secrets.
 
-## 17. Roadmap Continuation, Review Hardening, and Foundation Hygiene
+## 17. Tool Verification Discovery Baseline
+
+Tool Verification ist der kanonische **Roadmap-Phase-8-Discovery- und Governance-Block** für deferred oder future CLI-Tool-Adapter.
+
+Ziel ist nicht Adapter-Implementierung, sondern die vorgelagerte Prüfung, ob ein konkretes Tool aktuelles, reviewbares Verhalten zeigt, das einen dünnen Adapter unterhalb von `prompts/master_prompt.md` rechtfertigt.
+
+Pflichtbereiche: Tool identity, Instruction model, Repository access, Planning behavior, Edit behavior, Command behavior, Review behavior, Tool state boundary, Governance risks und Generic fallback.
+
+Gemini CLI und Antigravity CLI bleiben deferred candidates. Sie dürfen nicht als akzeptierte Adapter gelten, bevor aktuelles Tool-Verhalten dokumentiert, reviewed und explizit in einem späteren Adapter-PR freigegeben wurde.
+
+Roadmap Phase 8 v0.29 implementiert keine neuen Adapter, keine Runtime, keine Provider-SDKs, keine MCP-Integration, keine lokalen Tool-Profile, keine Validatoren, keine Workflows, keine Release-Automation und keine v1-Release-Candidate-Semantik.
+
+Die kanonische Policy liegt in `docs/TOOL_VERIFICATION.md`.
+
+## 18. Roadmap Continuation, Review Hardening, and Foundation Hygiene
 
 Roadmap Continuation ist der kanonische v0.23-Planungsblock nach Roadmap Phase 5. Er definiert Roadmap Phase 6 bis Roadmap Phase 9 und v1-Readiness-Kriterien, ohne die späteren Mechanismen zu implementieren.
 
@@ -219,11 +233,11 @@ Review Archive Migration Batch 1 ist der kanonische v0.27-Archivierungsmigration
 
 Session Continuity Baseline ist der kanonische v0.28-Roadmap-Phase-7-Block. Er definiert repository-owned Sitzungsfortsetzung, Handover-Discovery, Continuity-Status, Ambiguitätsbehandlung und Evidenzgrenzen ohne Linter, Workflow, Runtime oder neue Validator-Semantik.
 
-v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand.
+Tool Verification Discovery Baseline ist der kanonische v0.29-Roadmap-Phase-8-Block. Er definiert Tool-Verifikationskriterien vor deferred oder future Adapter-PRs, ohne Gemini CLI, Antigravity CLI oder andere neue Adapter zu akzeptieren.
 
-Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
+v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand. Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
 
-## 18. PR Hygiene Policy
+## 19. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -231,7 +245,7 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 19. Agent Onboarding Contract
+## 20. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
 
@@ -243,8 +257,9 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - Die Pflicht, `docs/SAAS_FOUNDATION_BLUEPRINT.md` zu lesen, wenn eine Aufgabe SaaS-Architektur, Mandanten, Billing, Jobs, Observability, Admin, Data Lifecycle oder Foundation-Standards betrifft.
 - Die Pflicht, `docs/AI_FOUNDATION_STANDARD.md` zu lesen, wenn eine Aufgabe KI-Provider, Prompts, Tools, Evaluation, Routing, Fallback, Caching, Safety, AI Cost Tracking, KI-Artefakte oder AI Foundation Standards betrifft.
 - Die Pflicht, `docs/RELEASE_RUNBOOK.md` zu lesen, wenn eine Aufgabe Release-Hygiene, Review-Tagging, stable target commits oder release-grade Validation betrifft.
+- Die Pflicht, `docs/TOOL_VERIFICATION.md` zu lesen, wenn eine Aufgabe deferred Adapter, future Adapter, Tool-Verhalten, CLI-spezifische Fähigkeiten, Tool-State-Grenzen oder Adapter-Eignung betrifft.
 
-## 20. Quality Gates / Definition of Done
+## 21. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
@@ -253,6 +268,7 @@ Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Diese
 - **AI Foundation**: KI-Features dürfen Provider, Prompts, Tools, Evaluation, Kosten, Routing, Fallback, Caching, Safety, Observability und KI-Artefakt-Lifecycle nicht implizit oder undokumentiert umgehen.
 - **Master Prompt**: Agenten dürfen Autoritätsmodell, Scope-Deklaration, Quality-Gate-Evidenz, Review-Scope, Handover-Pflichten oder Adapter-Grenzen nicht implizit umgehen.
 - **Adapter Prompt**: Adapter dürfen den kanonischen Master Prompt nicht ersetzen, Tool-State nicht als Wahrheit nutzen und keine ADM-Governance umgehen.
+- **Tool Verification**: Deferred oder future Adapter dürfen nicht vorgeschlagen, akzeptiert oder als umgesetzt dargestellt werden, bevor aktuelles Tool-Verhalten dokumentiert, reviewed und explizit freigegeben wurde.
 - **Session Continuity**: Agenten müssen repository-owned Handover- und Projektzustandsevidenz prüfen, Ambiguität melden und nicht aus Chatverlauf, hidden memory, lokalen Profilen oder Scratch rekonstruieren.
 - **Roadmap and Review Validation**: Roadmap-Phasen müssen von Lifecycle-Phasen getrennt bleiben; v1-Readiness-Kriterien dürfen keine deferred oder nicht akzeptierten Mechanismen als umgesetzt behandeln; normale PR-Gates dürfen nicht versehentlich zu release-grade `complete-set`-Gates werden.
 - **Review Archive Policy**: Archivierte Review-Sets bleiben historische Evidenz; aktuelle Validatorfehler dürfen nicht durch Archivierung versteckt werden.

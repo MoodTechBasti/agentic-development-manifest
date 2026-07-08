@@ -1,4 +1,4 @@
-# Agentic Development Manifest (ADM) — v0.28 Draft
+# Agentic Development Manifest (ADM) — v0.29 Draft
 
 Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem für autonome Multi-Agenten-Softwareentwicklung.
 
@@ -8,7 +8,7 @@ ADM definiert einen standardisierten, dateibasierten Prozess für moderne KI-Cod
 
 Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Session Continuity, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening, Foundation Consistency and Release Hygiene, Review Archive Policy sowie Review Archive Migration als Single Source of Truth des Projekts.
 
-Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
+Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit. Deferred oder zukünftige Tool-Adapter benötigen Tool Verification, bevor sie als Adapter-PR geeignet sind.
 
 ## Dokumentation
 
@@ -20,6 +20,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/AI_FOUNDATION_STANDARD.md` — technischer Roadmap-Phase-3 AI Foundation Standard
 - `docs/MASTER_PROMPT_STANDARD.md` — technischer Roadmap-Phase-4 Master Prompt Standard
 - `docs/ADAPTER_PROMPT_STANDARD.md` — technischer Roadmap-Phase-5 Adapter Prompt Standard
+- `docs/TOOL_VERIFICATION.md` — Roadmap-Phase-8 Discovery- und Governance-Gate für deferred/future Adapter
 - `docs/REVIEW_VALIDATION.md` — Review-Validator und Gate-Modi
 - `docs/REVIEW_RUNBOOK.md` — operativer Ablauf für vollständige Review-Sets
 - `docs/RELEASE_RUNBOOK.md` — manueller Release-Validierungs- und Tagging-Ablauf
@@ -37,6 +38,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/decisions/ADR-20260708-review-archive-policy.md` — Review Archive Policy baseline decision
 - `docs/decisions/ADR-20260708-review-archive-migration-batch-1.md` — Review Archive Migration Batch 1 decision
 - `docs/decisions/ADR-20260708-session-continuity-baseline.md` — Roadmap Phase 7 Session Continuity Baseline decision
+- `docs/decisions/ADR-20260708-tool-verification-discovery-baseline.md` — Roadmap Phase 8 Tool Verification Discovery Baseline decision
 - `.ai/agents/README.md` — Agent Registry runtime policy
 - `.ai/handover/README.md` — Handover discovery and Session Continuity policy
 - `templates/HANDOVER_TEMPLATE.md` — reusable structured handover template
@@ -51,7 +53,7 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.28 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, Roadmap Phase 5 Adapter Prompt Standard, Roadmap Continuation with v1 Readiness Criteria, Roadmap Phase 6 Review and Validation Hardening Baseline, Foundation Consistency and Release Hygiene Baseline, Review Archive Policy, Review Archive Migration Batch 1, and Roadmap Phase 7 Session Continuity Baseline architecture are accepted.
+v0.29 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, Roadmap Phase 3 AI Foundation Standard, Roadmap Phase 4 Master Prompt Standard, Roadmap Phase 5 Adapter Prompt Standard, Roadmap Continuation with v1 Readiness Criteria, Roadmap Phase 6 Review and Validation Hardening Baseline, Foundation Consistency and Release Hygiene Baseline, Review Archive Policy, Review Archive Migration Batch 1, Roadmap Phase 7 Session Continuity Baseline architecture, and Roadmap Phase 8 Tool Verification Discovery Baseline are accepted.
 
 v0.26 defines the Review Archive Policy baseline. Historical review sets may live under `.ai/reviews/archive/<review_set_id>/`, and the standard validator path continues to validate direct `.ai/reviews/*.md` files only.
 
@@ -59,4 +61,6 @@ v0.27 migrates completed historical review sets up to v0.25 into `.ai/reviews/ar
 
 v0.28 defines repository-owned Session Continuity for future agents. New sessions must derive continuation state from canonical repository documents, `.ai/handover/`, reviews, tasks, memory, decisions, and agent registry evidence before using transient chat or model context.
 
-v0.28 does not implement Handover linting, Handover Automation expansion, workflow changes, release automation, runtime code, MCP integration, provider SDKs, Gemini CLI adapter, Antigravity CLI adapter, branch-protection changes, review index generation, additional review archive migration, Phase 8 work, or a v1 release candidate.
+v0.29 defines Tool Verification as a required discovery and governance gate before deferred or future adapter prompts. Gemini CLI and Antigravity CLI remain deferred candidates.
+
+v0.29 does not implement Gemini CLI adapter, Antigravity CLI adapter, any other new adapter, runtime code, MCP integration, provider SDKs, local tool profiles, workflow changes, validator changes, release automation, Handover linting, branch-protection changes, review index generation, additional review archive migration, Phase 9 work, or a v1 release candidate.

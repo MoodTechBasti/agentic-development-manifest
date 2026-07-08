@@ -1,10 +1,10 @@
 # ADM — Operating System
 
-> Status: v0.28 synchronized draft
+> Status: v0.29 synchronized draft
 > Last updated: 2026-07-08
 > Scope: file-based ADM project operating model, not runtime implementation
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Review-Archive, Memory, Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Review-Archive, Memory, Standards, Tool Verification und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht aus Chat-Erinnerung, hidden model memory, Tool-Cache oder lokalen Scratch-Dateien rekonstruieren müssen.
 
@@ -252,14 +252,25 @@ Adapter Prompts verhindern, dass tool-spezifische Bedienhinweise in den kanonisc
 
 Roadmap Phase 5 ist kein Implementierungsauftrag für Runtime-Code, Provider-SDKs, echte Tool-Integration, lokale Tool-Profile, MCP-Integration, Schemas, Validatoren, Workflows, Release-Automation oder Provider-Secrets.
 
-## 13. Sitzungs-Lifecycle
+## 13. Tool Verification
+
+Tool Verification ist der Roadmap-Phase-8-Discovery- und Governance-Block für deferred oder future CLI-Tool-Adapter. Die kanonische Beschreibung liegt in `docs/TOOL_VERIFICATION.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-tool-verification-discovery-baseline.md`.
+
+Ein Tool-Verification-bezogener Agent muss prüfen, ob sein Task deferred Adapter, future Adapter, Gemini CLI, Antigravity CLI, Tool-Verhalten, CLI-Fähigkeiten, Tool-State-Grenzen, lokale Profile, Cache, hidden memory, Review-Verhalten oder Adapter-Eignung betrifft.
+
+Tool Verification ist kein Implementierungsauftrag für Gemini CLI Adapter, Antigravity CLI Adapter, neue Adapter, Runtime-Code, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Validatoren, Workflows oder Release-Automation.
+
+Gemini CLI und Antigravity CLI bleiben deferred candidates, bis aktuelles Tool-Verhalten dokumentiert, reviewed und explizit in einem späteren Adapter-PR freigegeben wurde.
+
+## 14. Sitzungs-Lifecycle
 
 1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, Adapter-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
-2. Continuity-Prüfung: neuesten relevanten Handover, Repository-Evidenz, offene Risiken und Ambiguitäten prüfen.
-3. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
-4. Task-Übernahme: Aufgabe als aktiv markieren.
-5. Ausführung: lokal arbeiten, testen und dokumentieren.
-6. Review: Self-Review und Spezialreviews ausführen.
+2. Tool-Verification-Prüfung: `docs/TOOL_VERIFICATION.md` lesen, wenn deferred oder future Adapter, Tool-Verhalten, CLI-Fähigkeiten oder Tool-State-Grenzen betroffen sind.
+3. Continuity-Prüfung: neuesten relevanten Handover, Repository-Evidenz, offene Risiken und Ambiguitäten prüfen.
+4. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
+5. Task-Übernahme: Aufgabe als aktiv markieren.
+6. Ausführung: lokal arbeiten, testen und dokumentieren.
+7. Review: Self-Review und Spezialreviews ausführen.
 7. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
 8. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
 9. Commit: Änderungen versionieren.

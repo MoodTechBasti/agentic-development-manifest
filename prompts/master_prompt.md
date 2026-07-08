@@ -44,7 +44,8 @@ Before changing production code or governance documents, perform these steps in 
 14. Check active tasks in `.ai/tasks/` if they exist.
 15. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
 16. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
-17. State your role, scope, assumptions, exclusions, risks, continuity status, and planned next action before implementation.
+17. Read `docs/TOOL_VERIFICATION.md` if the task affects deferred adapters, future adapters, tool behavior, CLI-specific capabilities, tool-state boundaries, or adapter eligibility.
+18. State your role, scope, assumptions, exclusions, risks, continuity status, and planned next action before implementation.
 
 For tiny typo-only changes, keep the initialization proportional, but never skip files that define the directly affected rule.
 
@@ -84,6 +85,7 @@ Continuity status values are `READY`, `PARTIAL`, `BLOCKED`, and `UNKNOWN`.
 - Do not treat the AI Foundation Standard as a mandate to build an AI platform; use the smallest explicit model that preserves provider abstraction, prompt governance, tool boundaries, evaluation, cost tracking, routing, fallback, caching, safety, observability, audit, and AI artifact lifecycle.
 - Do not treat the Master Prompt Standard as a tool-specific adapter; it defines canonical agent behavior only.
 - Do not treat Adapter Prompt Standard or adapter files as permission to bypass canonical ADM rules.
+- Do not create, propose, or treat deferred/future adapters as accepted unless current Tool Verification evidence exists and a later explicit adapter PR approves them.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
 - Do not create vendor lock-in unless explicitly justified.
@@ -100,7 +102,7 @@ Before implementation, declare:
 - files or areas explicitly out of scope
 - assumptions and unknowns
 - continuity status from repository evidence
-- whether SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, review governance, release governance, handover governance, or session-continuity governance is affected
+- whether SaaS Foundation, AI Foundation, Master Prompt Standard, Adapter Prompt Standard, Tool Verification, review governance, release governance, handover governance, or session-continuity governance is affected
 - next planned action
 
 If the scope is unclear, read and plan first. Do not implement before the task boundary is understood.
@@ -160,6 +162,7 @@ Create a Decision Record when you:
 - define or materially change AI Foundation semantics
 - define or materially change Master Prompt semantics
 - define or materially change Adapter Prompt semantics
+- define or materially change Tool Verification or deferred/future Adapter eligibility semantics
 - intentionally skip a required quality gate
 
 Do not create an ADR for a small typo, formatting fix, or status sync unless it changes governance, architecture, or standard semantics.
@@ -215,6 +218,7 @@ For adapter-prompt work, preserve explicit decisions for:
 - hidden memory, chat history, tool cache, and local profile boundaries
 - forbidden overrides of ADM governance, checks, reviews, ADRs, PR hygiene, handovers, and session continuity
 - deferred adapter candidates such as Gemini CLI and Antigravity CLI
+- Tool Verification evidence before proposing deferred or future adapters
 
 Never treat an adapter prompt as repository approval, review approval, CI truth, permission escalation, or release authority.
 
