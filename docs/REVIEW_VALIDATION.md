@@ -6,9 +6,11 @@ This document describes the validation layer for completed ADM review artifacts.
 
 Reusable templates live in `templates/reviews/`.
 
-Completed review artifacts live in `.ai/reviews/`.
+Completed active review artifacts live in `.ai/reviews/`.
 
-The validator checks completed review artifacts only. It does not validate reusable templates as if they were completed reviews.
+Archived historical review artifacts may live under `.ai/reviews/archive/<review_set_id>/` after their release or governance purpose is complete.
+
+The validator checks completed active review artifacts only in the configured review directory. It does not validate reusable templates as if they were completed reviews.
 
 ## Commands
 
@@ -42,6 +44,29 @@ The baseline preserves the existing mode boundaries:
 - `complete-set` is the release-grade and phase-transition gate and must remain scoped by review set, target ref, and target commit.
 
 The baseline explicitly does not add workflow enforcement, release automation, schema language, provider integration, MCP integration, local tool profiles, or mandatory complete review sets for ordinary PRs.
+
+## v0.26 review archive policy
+
+v0.26 accepts the Review Archive Policy baseline.
+
+The active review validation area is the direct Markdown file set under `.ai/reviews/`.
+
+Historical review sets may later be archived under:
+
+```text
+.ai/reviews/archive/<review_set_id>/
+```
+
+The standard validator path is intentionally non-recursive for `.ai/reviews/`. Archived files under `.ai/reviews/archive/**` are ignored by normal validation runs against `.ai/reviews/`.
+
+This policy preserves two separate concerns:
+
+- active validation remains focused on current direct review artifacts,
+- archived review files remain versioned historical evidence.
+
+Do not archive a review set merely to bypass a current validation failure. Malformed current reviews must be fixed, not hidden.
+
+v0.26 documents and tests this boundary, but does not change `scripts/validate_reviews.py` and does not move existing review artifacts.
 
 ## Review set scoping
 

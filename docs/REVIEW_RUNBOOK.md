@@ -1,6 +1,6 @@
 # ADM Review Runbook
 
-This runbook describes the operational happy path for creating and validating a complete ADM review set.
+This runbook describes the operational happy path for creating, validating, and eventually archiving ADM review sets.
 
 ## 1. When to use a complete review set
 
@@ -39,6 +39,18 @@ The accepted v0.25 baseline keeps these guardrails:
 - Release runbook examples must stay generic enough that stale version-specific values are not copied blindly.
 - Repository ruleset audit remains a manual external check before governance-relevant releases.
 - Phase 7 handover/session-continuity work remains open until a later explicit PR and ADR.
+
+### v0.26 Review Archive Policy
+
+v0.26 defines the review archive boundary before any historical review migration.
+
+The accepted v0.26 baseline keeps these guardrails:
+
+- Direct `.ai/reviews/*.md` files are the active review validation area.
+- Historical review sets may later move to `.ai/reviews/archive/<review_set_id>/` after their release or governance purpose is complete.
+- Archived reviews remain repository-owned historical evidence.
+- Normal validation against `.ai/reviews/` does not recursively validate archive subdirectories.
+- v0.26 does not move historical review artifacts and does not change production validator logic.
 
 ## 3. Standard review roles
 
@@ -95,7 +107,7 @@ Example:
 
 ```text
 review_set_id: RSV-YYYYMMDD-release-slug
-target_ref: adm-v025-foundation-consistency-release-hygiene
+target_ref: adm-v026-review-archive-policy
 target_commit: <stable-non-review-sha>
 ```
 
@@ -150,7 +162,7 @@ python3 scripts/validate_reviews.py \
   --path . \
   --mode complete-set \
   --review-set-id RSV-YYYYMMDD-release-slug \
-  --target-ref adm-v025-foundation-consistency-release-hygiene \
+  --target-ref adm-v026-review-archive-policy \
   --target-commit <stable-non-review-sha>
 ```
 
@@ -176,7 +188,21 @@ After merge, run the GitHub workflow manually:
 
 The workflow should print the selected mode, target ref, and reviewed code commit before running the validator.
 
-## 6. Common failures
+## 6. Review archive path
+
+After a release or governance decision is complete, historical review sets may later be archived under:
+
+```text
+.ai/reviews/archive/<review_set_id>/
+```
+
+Archive migration is not automatic and must be done in a separate explicit PR.
+
+Do not move the review set that is still being used for current release-grade validation. Archive only after the release or governance evidence is complete and recoverable from the repository history.
+
+Archived review files keep their original review metadata. Do not retarget archived reviews to a newer branch, newer commit, or newer release.
+
+## 7. Common failures
 
 ### Missing role
 
@@ -208,6 +234,12 @@ Cause: old reviews exist but do not match the requested `review_set_id`, `target
 
 Fix: create or select the correct scoped review set for the current target. Do not weaken the scope filter to make stale reviews pass.
 
+### Archived review set unexpectedly ignored
+
+Cause: archived reviews live under `.ai/reviews/archive/**`, while normal validation reads direct `.ai/reviews/*.md` files only.
+
+Fix: keep the current active review set directly under `.ai/reviews/`. Use archive paths only for historical sets whose release or governance purpose is complete.
+
 ### PASSED with ci_ready false
 
 Cause: the review says it passed but is not CI-ready.
@@ -226,7 +258,7 @@ Cause: documentation or a PR claims repository governance readiness, but no manu
 
 Fix: perform the audit in GitHub settings or state clearly that it was not performed by the agent.
 
-## 7. Validator fixture tests
+## 8. Validator fixture tests
 
 Run the validator fixture test suite with:
 
@@ -234,4 +266,4 @@ Run the validator fixture test suite with:
 python3 scripts/test_validate_reviews.py
 ```
 
-The test suite covers both the happy path and expected failure modes for malformed, incomplete, duplicate, mismatched, or stale scoped review sets.
+The test suite covers both the happy path and expected failure modes for malformed, incomplete, duplicate, mismatched, stale scoped review sets, and archived review subdirectories ignored by the standard validator path.

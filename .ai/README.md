@@ -8,7 +8,8 @@ It is not a generic scratch directory.
 
 The following `.ai/` content may be committed when it is intentional, reviewable, non-sensitive, and relevant to project governance or future agent handover:
 
-- `.ai/reviews/*.md` for completed runtime review artifacts
+- `.ai/reviews/*.md` for completed runtime review artifacts in the active review area
+- `.ai/reviews/archive/<review_set_id>/*.md` for archived historical review artifacts after their release or governance purpose is complete
 - `.ai/decisions/*.md` for project-specific runtime decisions
 - `.ai/handover/*.md` for durable session handovers
 - `.ai/memory/*.md` for curated durable memory notes
@@ -24,6 +25,24 @@ Runtime review artifacts must use their `review_id` as filename, for example:
 ```
 
 Do not use static role filenames such as `.ai/reviews/security.md` for completed runtime reviews.
+
+## Review archive policy
+
+Direct files under `.ai/reviews/` are the active review validation area.
+
+Historical review sets may later be moved to:
+
+```text
+.ai/reviews/archive/<review_set_id>/
+```
+
+Archive directories preserve historical review evidence. They are not scratch space and must not be used to hide malformed current reviews.
+
+Archived review files should keep their original frontmatter unless a later accepted ADR defines explicit migration metadata. Their `review_set_id`, `target_ref`, `target_commit`, review vote, and CI-readiness fields remain historical truth.
+
+The standard review validator path validates direct `.ai/reviews/*.md` files only. It does not recursively validate `.ai/reviews/archive/**` during normal `existing-strict` or `complete-set` runs against `.ai/reviews/`.
+
+v0.26 defines this policy but does not move existing review artifacts.
 
 ## Agent Registry
 
