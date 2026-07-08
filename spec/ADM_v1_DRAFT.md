@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.20 Draft)
+# ADM — Spezifikation (v0.21 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.20 Draft
-- **Zustand**: AI Foundation Standard Accepted
+- **Version**: v0.21 Draft
+- **Zustand**: Master Prompt Standard Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards und AI Foundation Standards müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers, SaaS Foundation Standards, AI Foundation Standards und Master Prompt Standards müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -92,7 +92,7 @@ Project-owned memory ist dauerhaftes Projektwissen, das dem Repository gehört u
 
 ### Autoritätshierarchie
 
-1. Kanonische Repository-Dokumente: Spezifikation, Constitution, Governance, Foundation Standards, ADRs, Runbooks.
+1. Kanonische Repository-Dokumente: Spezifikation, Constitution, Governance, Foundation Standards, Master Prompt Standard, ADRs, Runbooks.
 2. Versionierte Runtime-Artefakte: Reviews, Handovers, akzeptierte Projektentscheidungen, kuratierte Memory-Notizen.
 3. Working-Artefakte: Tasks, Planung, offene Fragen, geprüfte Research-Zusammenfassungen.
 4. Lokale transiente Artefakte: Scratch, Logs, Cache, Experimente.
@@ -194,7 +194,36 @@ Roadmap Phase 3 implementiert keine konkrete KI-Funktion, keine Provider-SDK-Int
 
 Roadmap Phase 3 baut auf Roadmap Phase 2 auf. KI-Kosten, KI-Jobs, KI-Artefakte, KI-Logs und KI-Tools müssen an User-, Tenant-, Permission-, Quota-, Billing- und Data-Lifecycle-Entscheidungen anschließen.
 
-## 14. PR Hygiene Policy
+## 14. Master Prompt Standard
+
+Der Master Prompt Standard ist der kanonische **Roadmap-Phase-4-Block** für CLI-Agenten-Onboarding. Das ist bewusst von **Lifecycle Phase 4 — Simplification** aus Abschnitt 3 getrennt.
+
+Ziel ist eine modellneutrale Startanweisung, die ADM-Regeln in operative Agentenschritte übersetzt. Der Master Prompt ist kein Tool-Adapter, keine Runtime-Engine, kein Validator und keine Freigabeinstanz.
+
+### Pflichtbereiche
+
+Ein ADM-konformer Master Prompt muss mindestens folgende Bereiche entscheiden oder operationalisieren:
+
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Authority Order | Repository-Dokumente, `.ai/`-Artefakte und kuratierter Kontext vor Chat, hidden memory oder Tool-Cache |
+| Required Initialization | Pflichtlektüre und relevante `.ai/`-Prüfung vor Umsetzung |
+| Scope Declaration | Rolle, Ziel, betroffene Bereiche, ausgeschlossene Bereiche, Annahmen, Risiken und nächste Aktion |
+| Operating Rules | Verbot erfundener Dateien, Commits, Checks, Rollen, CI-Ergebnisse, Review-Votes oder Freigaben |
+| Decision Rules | ADR-Auslöser und proportionale Governance für kleine Änderungen |
+| Quality Gate Contract | Lokale Checks, Review-Validatoren und vollständige Review-Sets für Governance-Änderungen |
+| Review Contract | Sechs Rollen, gemeinsamer `review_set_id`, `target_ref` und stabiler `target_commit` |
+| Foundation Triggers | Pflichtkontext für SaaS Foundation und AI Foundation bei betroffenen Aufgaben |
+| Handover Contract | Strukturierte Übergabe mit Checks, Risiken, geänderten Dateien, Review-Status und nächsten Schritten |
+| Adapter Boundary | Trennung zwischen kanonischem Master Prompt und späteren tool-spezifischen Adapter-Prompts |
+
+### Grenzen
+
+Roadmap Phase 4 implementiert keine Runtime, keine Provider- oder Tool-Integration, keine CLI-spezifischen Adapter-Prompts, keine lokalen Tool-Profile, keine MCP-Integration, keine Schemas, keine Validatoren und keine Workflow-Änderungen ohne gesondertes GO.
+
+Roadmap Phase 4 operationalisiert Roadmap Phase 1, Roadmap Phase 2 und Roadmap Phase 3. Sie ersetzt diese Standards nicht.
+
+## 15. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -202,21 +231,23 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 15. Agent Onboarding Contract
+## 16. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
 
-- Die notwendige Initialisierung (Lese-Reihenfolge der Doku und Agent Registry).
+- Die notwendige Initialisierung (Lese-Reihenfolge der Doku, Master Prompt Standard und Agent Registry).
 - Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
 - Die Regeln für Handover und Decision Records.
+- Die Pflicht, `docs/MASTER_PROMPT_STANDARD.md` zu lesen, wenn eine Aufgabe Agenten-Onboarding, Prompt-Verhalten, Autoritätsmodell, Scope-Deklaration, Checks, Review-Routing, Handover-Regeln oder Adapter-Grenzen betrifft.
 - Die Pflicht, `docs/SAAS_FOUNDATION_BLUEPRINT.md` zu lesen, wenn eine Aufgabe SaaS-Architektur, Mandanten, Billing, Jobs, Observability, Admin, Data Lifecycle oder Foundation-Standards betrifft.
 - Die Pflicht, `docs/AI_FOUNDATION_STANDARD.md` zu lesen, wenn eine Aufgabe KI-Provider, Prompts, Tools, Evaluation, Routing, Fallback, Caching, Safety, AI Cost Tracking, KI-Artefakte oder AI Foundation Standards betrifft.
 
-## 16. Quality Gates / Definition of Done
+## 17. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
 - **Testing**: Neue Logik muss durch Tests abgedeckt sein.
 - **SaaS Foundation**: Produktfeatures dürfen Foundation-Grenzen wie Tenant, Permissions, Billing Readiness, Quotas, Jobs, Observability und Data Lifecycle nicht implizit oder undokumentiert umgehen.
 - **AI Foundation**: KI-Features dürfen Provider, Prompts, Tools, Evaluation, Kosten, Routing, Fallback, Caching, Safety, Observability und KI-Artefakt-Lifecycle nicht implizit oder undokumentiert umgehen.
+- **Master Prompt**: Agenten dürfen Autoritätsmodell, Scope-Deklaration, Quality-Gate-Evidenz, Review-Scope, Handover-Pflichten oder Adapter-Grenzen nicht implizit umgehen.
 - **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.

@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.21] — 2026-07-08
+
+### Master Prompt Standard
+
+- Added `docs/MASTER_PROMPT_STANDARD.md` as the Roadmap Phase 4 Master Prompt Standard.
+- Added canonical Master Prompt vocabulary for authority order, agent onboarding, scope declaration, quality gate contract, handover contract, foundation triggers, and adapter prompt boundaries.
+- Added `docs/decisions/ADR-20260708-master-prompt-standard.md` to record the accepted Roadmap Phase 4 architecture decision.
+- Hardened `prompts/master_prompt.md` with explicit authority order, Roadmap Phase 4 context, scope rules, Master Prompt rules, proportional ADR guidance, and adapter-scope boundaries.
+- Clarified that Roadmap Phase 4 Master Prompt is distinct from Lifecycle Phase 4 — Simplification.
+- Synchronized `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `README.md`, and `ROADMAP.md`.
+- Kept v0.21 documentation-only: no runtime code, provider SDK integration, tool integration, CLI-specific adapter prompt, local tool profile, MCP integration, schema, validator change, workflow change, release automation, or release tag.
+
 ## [v0.20] — 2026-07-08
 
 ### AI Foundation Standard

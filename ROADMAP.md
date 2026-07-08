@@ -29,7 +29,8 @@ Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM
 
 ## Roadmap Phase 4: Master Prompt
 
-- Convert the specification into a model-neutral CLI-agent master prompt.
+- [x] Convert the specification into a model-neutral CLI-agent master prompt.
+- [x] Define Master Prompt Standard authority order, initialization contract, scope declaration, quality gate contract, review contract, foundation triggers, handover contract, and adapter boundary.
 
 ## Roadmap Phase 5: Adapters
 

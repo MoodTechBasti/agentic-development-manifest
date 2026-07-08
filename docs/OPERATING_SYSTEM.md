@@ -1,6 +1,6 @@
-# ADM — Operating System (v0.20 Draft)
+# ADM — Operating System (v0.21 Draft)
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards, AI-Foundation-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards, AI-Foundation-Standards, Master-Prompt-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 ## Zweck
 
@@ -236,9 +236,38 @@ Roadmap Phase 3 ist kein Implementierungsauftrag für Provider-SDKs, Modellaufru
 
 Wenn ein Agent AI Foundation Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
 
+## Master Prompt Standard
+
+Der Master Prompt Standard ist der Roadmap-Phase-4-Architekturblock für modellneutrales CLI-Agenten-Onboarding. Die kanonische Beschreibung liegt in `docs/MASTER_PROMPT_STANDARD.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-master-prompt-standard.md`.
+
+Das ist bewusst von Lifecycle Phase 4 — Simplification aus `spec/ADM_v1_DRAFT.md` getrennt.
+
+### Zweck
+
+Der Master Prompt verhindert, dass frische Agenten-Sitzungen Projektzustand aus Chatverlauf, hidden memory oder Tool-Cache ableiten.
+
+Ein Master-Prompt-bezogener Agent muss prüfen, ob sein Task eine der folgenden Grenzen betrifft:
+
+- Autoritätsmodell und repository-backed truth.
+- Required Initialization und Pflichtlektüre.
+- Rollen-, Scope-, Annahmen- und Risiko-Deklaration vor Umsetzung.
+- Operating Rules gegen erfundene Fakten, Checks, Commits, Rollen, Review-Votes, CI-Ergebnisse oder Freigaben.
+- Decision Rules, ADR-Auslöser und proportionale Governance.
+- Quality Gate Contract, PR-Ready Checks und Complete-Set-Validierung.
+- Review Contract und stabile Review-Scope-Bindung.
+- Foundation Trigger für SaaS Foundation und AI Foundation.
+- Handover Contract und Übergabe-Evidenz.
+- Adapter Boundary zwischen kanonischem Master Prompt und tool-spezifischen Prompts.
+
+### Grenzen
+
+Roadmap Phase 4 ist kein Implementierungsauftrag für Runtime-Code, Provider- oder Tool-Integration, CLI-spezifische Adapter-Prompts, lokale Tool-Profile, MCP-Integration, Schemas, Validatoren oder Workflows.
+
+Wenn ein Agent Master Prompt Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
+
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
+1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
