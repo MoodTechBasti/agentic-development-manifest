@@ -1,4 +1,4 @@
-# ADM — Operating System (v0.9 Draft)
+# ADM — Operating System (v0.10 Draft)
 
 Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
@@ -55,21 +55,41 @@ Die Standard-Reviews des Multi-Agenten-Parlaments sind:
 
 ## Review-Validierung
 
-Ausgefüllte Review-Artefakte unter `.ai/reviews/` können lokal geprüft werden:
+Ausgefüllte Review-Artefakte unter `.ai/reviews/` können lokal geprüft werden.
+
+Advisory-Modus für frühe Entwicklungsarbeit:
 
 ```bash
-python scripts/validate_reviews.py --path .
+python scripts/validate_reviews.py --path . --mode advisory
+```
+
+Strikter Modus für vorhandene Review-Artefakte:
+
+```bash
+python scripts/validate_reviews.py --path . --mode existing-strict
+```
+
+Vollständiger Review-Set-Modus für Release-Gates:
+
+```bash
+python scripts/validate_reviews.py --path . --mode complete-set
 ```
 
 Der Validator prüft das YAML-Frontmatter, Pflichtfelder, Review-ID-Präfixe, Review-Status, `runtime_target: .ai/reviews/`, `ci_ready` und optional den Confidence Score.
 
-Im GitHub-Workflow läuft die Review-Validierung vorerst im Advisory-Modus:
+`complete-set` geht weiter: alle sechs Standard-Review-Typen müssen vorhanden, `PASSED` und `ci_ready: true` sein.
 
-```bash
-python scripts/validate_reviews.py --path . --advisory
-```
+Im GitHub-Workflow wird die Review-Validierung kontextabhängig ausgeführt:
 
-Damit wird die Struktur sichtbar geprüft, ohne normale Entwicklungsarbeit durch fehlende Review-Instanzen hart zu blockieren. Ein hartes Merge-Gate für Review-Vollständigkeit kann später ergänzt werden.
+| Kontext | Modus |
+| --- | --- |
+| Feature-Branch / `dev` | `advisory` |
+| PR nach `main` / `master` | `existing-strict` |
+| Push auf `main` / `master` | `existing-strict` |
+| `release/**` | `complete-set` |
+| Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
+
+Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges Review-Gate erhalten.
 
 ## Sitzungs-Lifecycle
 
@@ -111,7 +131,7 @@ Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 
 - ausgeführte Review-Vorlagen
 - Review-Dateien unter `.ai/reviews/`
-- Ergebnis von `scripts/validate_reviews.py`, falls Reviews erzeugt wurden
+- Ergebnis von `scripts/validate_reviews.py`, inklusive Modus
 - blockierende Votes
 - CI-readiness status
 
