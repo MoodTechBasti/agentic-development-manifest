@@ -1,10 +1,12 @@
-# ADM — Master Prompt Standard (v0.21 Draft)
+# ADM — Master Prompt Standard (v0.22 Draft)
 
 Der Master Prompt Standard definiert, wie die ADM-Spezifikation in eine modellneutrale Startanweisung für CLI-Agenten übersetzt wird.
 
 Er ist der kanonische **Roadmap-Phase-4-Standard**. Diese Roadmap-Phase ist nicht identisch mit **Lifecycle Phase 4 — Simplification** aus `spec/ADM_v1_DRAFT.md`.
 
 Ziel ist kein Tool-Adapter und kein Anbieterprofil. Ziel ist ein kleiner, überprüfbarer Master Prompt, der jedem Agenten vor Arbeitsbeginn dieselben Autoritäten, Grenzen, Qualitätsregeln und Übergabepflichten gibt.
+
+Tool-spezifische Adapter-Prompts gehören zu Roadmap Phase 5 und liegen unter `prompts/adapters/`. Sie dürfen diesen Standard nicht ersetzen oder abschwächen.
 
 ## Architektur-Philosophie
 
@@ -18,6 +20,7 @@ Pflichtprinzipien:
 4. Der Prompt darf keine Repository-Wahrheit erfinden.
 5. Der Prompt muss Scope, Rolle, Checks, Reviews und Handover erzwingen.
 6. Der Prompt darf keine Runtime-, Provider-, Workflow- oder Validator-Änderung implizieren.
+7. Der Prompt darf nicht durch tool-spezifische Adapter-Prompts abgeschwächt werden.
 
 ## 1. Kernbegriffe
 
@@ -48,6 +51,7 @@ Ein ADM-konformer Master Prompt muss mindestens folgende Bereiche abdecken:
 - SaaS-Foundation-Trigger.
 - AI-Foundation-Trigger.
 - Verbot von Provider-, Tool-, Runtime-, Workflow- oder Validator-Scope-Creep ohne explizites GO.
+- Verbot, tool-spezifische Adapter-Prompts als kanonische ADM-Spezifikation zu behandeln.
 
 ## 3. Autoritätsmodell
 
@@ -90,6 +94,7 @@ Vor Änderungen muss ein Agent mindestens prüfen:
 - Relevante Foundation-Standards.
 - Agent Registry, wenn vorhanden und relevant.
 - Aktive Tasks, letzter Handover, kuratierte Memory und accepted Decisions, wenn vorhanden und relevant.
+- Adapter Prompt Standard und relevante Adapter-Prompts, wenn eine Aufgabe tool-spezifisches Agentenverhalten oder Adapter-Grenzen betrifft.
 
 Die Initialisierung darf nicht als mechanisches Abhaken ohne Relevanzprüfung verstanden werden. Der Agent muss daraus Scope, Annahmen und Risiken ableiten.
 
@@ -113,6 +118,7 @@ Der Master Prompt muss eine ADR-Pflicht auslösen, wenn eine Änderung:
 - Architektur oder Modulgrenzen verändert,
 - Governance, Review, Release oder Handover-Semantik verändert,
 - SaaS Foundation oder AI Foundation Semantik verändert,
+- Master Prompt oder Adapter Prompt Semantik verändert,
 - Security, Tenant Isolation, Billing, Cost, Data Lifecycle oder Provider-Verhalten betrifft,
 - eine Qualitätsregel ausnimmt,
 - erforderliche Checks bewusst überspringt.
@@ -178,21 +184,24 @@ Handover darf keine Checks, Commits, CI-Ergebnisse, Review-Votes, Freigaben oder
 
 Roadmap Phase 4 definiert den kanonischen Master Prompt.
 
-Nicht Teil von Roadmap Phase 4:
+Roadmap Phase 5 definiert tool-spezifische Adapter-Prompts unter `prompts/adapters/`.
 
-- Claude-spezifische Adapter-Prompts,
-- Codex-spezifische Adapter-Prompts,
-- Gemini-, Antigravity- oder IDE-spezifische Profile,
-- lokale Tool-Konfiguration,
-- MCP- oder Provider-Integration,
-- Runtime-Code,
-- neue Validator- oder Workflow-Erzwingung ohne gesondertes GO.
+Adapter-Prompts dürfen:
 
-Diese Themen gehören in spätere Roadmap-Phasen, tool-spezifische Adapter oder explizit freigegebene Implementierungs-PRs.
+- tool-spezifische Bedienhinweise ergänzen,
+- bekannte Tool-Risiken benennen,
+- auf CLI-Fähigkeiten wie Planung, Diff-Analyse, Terminal-Checks oder Handover-Unterstützung verweisen.
+
+Adapter-Prompts dürfen nicht:
+
+- den kanonischen Master Prompt ersetzen,
+- ADM-Autorität oder Required Initialization abschwächen,
+- GitHub-Governance, CI, Review-Validierung, ADRs, PR-Hygiene oder Handover-Pflichten umgehen,
+- hidden memory, Chatverlauf, Tool-Cache oder lokale Tool-Profile als Projektwahrheit behandeln.
 
 ## 13. Roadmap-Phase-4-Grenze
 
-Roadmap Phase 4 definiert die Master-Prompt-Semantik. Sie ersetzt weder die ADM-Spezifikation noch Roadmap Phase 2 SaaS Foundation oder Roadmap Phase 3 AI Foundation.
+Roadmap Phase 4 definiert die Master-Prompt-Semantik. Sie ersetzt weder die ADM-Spezifikation noch Roadmap Phase 2 SaaS Foundation, Roadmap Phase 3 AI Foundation oder Roadmap Phase 5 Adapter Prompts.
 
 Der Master Prompt muss diese Standards operationalisieren, nicht neu erfinden.
 
@@ -209,4 +218,4 @@ Vor einer Master-Prompt-Standard-Freigabe wird objektiv geprüft:
 - Handover-Pflichten.
 - SaaS- und AI-Foundation-Anbindung.
 - Adapter-Grenze.
-- Dokumentationskonsistenz mit README, ROADMAP, Spezifikation und Operating System.
+- Dokumentationskonsistenz mit README, ROADMAP, Spezifikation, Operating System und Adapter Prompt Standard.

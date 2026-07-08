@@ -1,6 +1,6 @@
-# ADM — Operating System (v0.21 Draft)
+# ADM — Operating System (v0.22 Draft)
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards, AI-Foundation-Standards, Master-Prompt-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory, SaaS-Foundation-Standards, AI-Foundation-Standards, Master-Prompt-Standards, Adapter-Prompt-Standards und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 ## Zweck
 
@@ -29,6 +29,8 @@ Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht
 ├── standards/
 └── playbooks/
 ```
+
+Tool-specific adapter prompts are stored under `prompts/adapters/`, not inside `.ai/`, because they are reusable prompt artifacts rather than runtime state.
 
 ## Agent Registry
 
@@ -72,10 +74,11 @@ Project-owned memory ist kuratiertes Projektwissen, das dem Repository gehört. 
 | Rang | Quelle | Bedeutung |
 | --- | --- | --- |
 | 1 | `spec/`, `docs/`, accepted ADRs | Kanonische Projektwahrheit |
-| 2 | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
-| 3 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/` | Kuratierter Kontext, Rollen und Arbeitszustand |
-| 4 | `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/` | Lokale transiente Daten |
-| 5 | Chatverlauf oder hidden model memory | Nicht autoritativ |
+| 2 | `prompts/master_prompt.md`, `prompts/adapters/` | Kanonische und abgeleitete Agenten-Startanweisungen |
+| 3 | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
+| 4 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/`, `.ai/agents/` | Kuratierter Kontext, Rollen und Arbeitszustand |
+| 5 | `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/` | Lokale transiente Daten |
+| 6 | Chatverlauf oder hidden model memory | Nicht autoritativ |
 
 ### Commit-Regeln
 
@@ -101,10 +104,11 @@ ADM trennt wiederverwendbare Vorlagen von ausgefüllten Laufzeit-Artefakten.
 - Ausgefüllte, konkrete Review-Berichte liegen unter `.ai/reviews/`.
 - Wiederverwendbare Handover-Vorlagen liegen unter `templates/HANDOVER_TEMPLATE.md`.
 - Ausgefüllte, konkrete Handovers liegen unter `.ai/handover/`.
+- Wiederverwendbare Adapter-Prompts liegen unter `prompts/adapters/`.
 - Leere Templates dürfen nicht in `.ai/reviews/` oder `.ai/handover/` abgelegt werden.
 - Ausgefüllte Reviews nutzen ihren `review_id` als Dateiname, nicht statische Rollennamen.
 
-Diese Trennung verhindert, dass Projektgedächtnis, Review-Historie, Handover-Historie und wiederverwendbare Schablonen vermischt werden.
+Diese Trennung verhindert, dass Projektgedächtnis, Review-Historie, Handover-Historie, Adapter-Prompts und wiederverwendbare Schablonen vermischt werden.
 
 ## Review-Vorlagen
 
@@ -265,9 +269,34 @@ Roadmap Phase 4 ist kein Implementierungsauftrag für Runtime-Code, Provider- od
 
 Wenn ein Agent Master Prompt Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
 
+## Adapter Prompt Standard
+
+Der Adapter Prompt Standard ist der Roadmap-Phase-5-Architekturblock für tool-spezifische CLI-Agenten-Prompts. Die kanonische Beschreibung liegt in `docs/ADAPTER_PROMPT_STANDARD.md`; die Architekturentscheidung liegt in `docs/decisions/ADR-20260708-adapter-prompt-standard.md`.
+
+Das ist bewusst von Lifecycle Phase 5 — Roadmap & Plan aus `spec/ADM_v1_DRAFT.md` getrennt.
+
+### Zweck
+
+Adapter Prompts verhindern, dass tool-spezifische Bedienhinweise in den kanonischen Master Prompt zurücklecken oder ADM-Governance umgehen.
+
+Ein Adapter-Prompt-bezogener Agent muss prüfen, ob sein Task eine der folgenden Grenzen betrifft:
+
+- Tool-spezifische CLI-Agenten-Prompts.
+- Adapter-Abhängigkeit zu `prompts/master_prompt.md`.
+- Claude Code CLI, Codex CLI oder Generic CLI Agent Adapter.
+- Deferred candidates wie Gemini CLI oder Antigravity CLI.
+- Tool capabilities, Tool-State-Grenzen, lokale Profile, Caches oder hidden memory.
+- Adapter-Regeln für Checks, Review-Scope, PR-Hygiene oder Handovers.
+
+### Grenzen
+
+Roadmap Phase 5 ist kein Implementierungsauftrag für Runtime-Code, Provider-SDKs, echte Tool-Integration, lokale Tool-Profile, MCP-Integration, Schemas, Validatoren, Workflows, Release-Automation oder Provider-Secrets.
+
+Wenn ein Agent Adapter Prompt Semantik ändert, braucht die Änderung ein ADR und ein vollständiges Review-Set.
+
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
+1. Initialisierung: Manifest, Agent Registry, Tasks, Memory, Entscheidungen, Master-Prompt-Dokumente, Adapter-Prompt-Dokumente, SaaS-Foundation-Dokumente, AI-Foundation-Dokumente und letzten Handover lesen, wenn relevant.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.

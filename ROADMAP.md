@@ -34,4 +34,6 @@ Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM
 
 ## Roadmap Phase 5: Adapters
 
-- Add adapter prompts for specific CLI tools only after the canonical standard is stable.
+- [x] Define Adapter Prompt Standard as a thin tool-specific layer below the canonical Master Prompt Standard.
+- [x] Add initial adapter prompts for Claude Code CLI, Codex CLI, and Generic CLI Agent.
+- [x] Defer Gemini CLI and Antigravity CLI adapters until their current tool behavior is explicitly verified.
