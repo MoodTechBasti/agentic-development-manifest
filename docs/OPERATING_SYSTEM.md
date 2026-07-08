@@ -226,4 +226,22 @@ Roadmap Phase 5 ist kein Implementierungsauftrag für Runtime-Code, Provider-SDK
 4. Ausführung: lokal arbeiten, testen und dokumentieren.
 5. Review: Self-Review und Spezialreviews ausführen.
 6. Review-Validierung: ausgefüllte Reviews mit `scripts/validate_reviews.py` prüfen, falls Review-Artefakte erstellt wurden.
-7. Übergabe: Ergebnis, Checks, Risiken, offene Punkte und nächste Rolle dokumentieren.
+7. Übergabe: Tasks, Memory, Metriken und Handover aktualisieren.
+8. Commit: Änderungen versionieren.
+
+## 13. Erweitertes Handover-Protokoll
+
+Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
+
+1. Session identity: `session_id`, Timestamp, outgoing agent, aktive Registry-Rolle und Ziel-Empfänger.
+2. Task State: abgeschlossene, offene und blockierte Tasks sowie relevante Task-Dateien.
+3. Changed Files: neue, geänderte und gelöschte repository-relative Pfade.
+4. Checks Run: ausgeführte Befehle, Resultate und Evidenz. Nicht gelaufene Checks müssen `NOT RUN` bleiben.
+5. Performance und Budgets: Messwerte, Nicht-Anwendbarkeit oder Decision Record für Verstöße.
+6. Review-Status: Review-Dateien, Validator-Modus, `review_set_id`, `target_ref`, stabiler `target_commit`, blockierende Votes und CI-readiness.
+7. Agent Routing: aktive Rolle, empfohlene nächste Registry-Rolle und Routing-Grund.
+8. Risikoanalyse: neu erkannte Risiken, offene Fragen und blockierende Annahmen.
+9. Nächste Schritte: konkrete nächste Aufgabe und empfohlene Rolle.
+10. Notes for next agent: knappe, nicht-sensitive Hinweise für die nächste Sitzung.
+
+Kein Agent darf eine größere Arbeit als abgeschlossen markieren, wenn der Handover nicht nachvollziehbar erklärt, was getan wurde, was geprüft wurde und was als Nächstes passieren muss.
