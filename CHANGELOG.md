@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.20] — 2026-07-08
+
+### AI Foundation Standard
+
+- Added `docs/AI_FOUNDATION_STANDARD.md` as the Roadmap Phase 3 AI Foundation Standard.
+- Added canonical AI vocabulary for provider abstraction, model capabilities, prompt registry, prompt versions, tool registry, evaluation, routing, fallback, caching, safety rules, AI cost tracking, observability, audit, and AI artifact lifecycle.
+- Added `docs/decisions/ADR-20260708-ai-foundation-standard.md` to record the accepted Roadmap Phase 3 architecture decision.
+- Clarified that Roadmap Phase 3 builds on Roadmap Phase 2 SaaS Foundation Standard instead of replacing user, tenant, permission, billing, quota, job, observability, or data-lifecycle boundaries.
+- Synchronized `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/SAAS_FOUNDATION_BLUEPRINT.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
+- Kept v0.20 documentation-only: no validator changes, workflow changes, schemas, runtime code, provider SDK integrations, prompt execution, tool execution, real model calls, or provider secrets.
+
 ## [v0.19] — 2026-07-08
 
 ### SaaS Foundation Standard

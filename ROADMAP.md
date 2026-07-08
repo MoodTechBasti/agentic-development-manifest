@@ -25,7 +25,7 @@ Roadmap phases describe the ADM standard roadmap. They are distinct from the ADM
 
 ## Roadmap Phase 3: AI Foundation Standard
 
-- Define provider abstraction, prompt registry, tool registry, evaluation, cost tracking, routing, fallback, caching, and safety rules.
+- [x] Define provider abstraction, prompt registry, tool registry, evaluation, AI cost tracking, routing, fallback, caching, safety rules, observability, audit, AI artifact lifecycle, and the boundary to the SaaS Foundation Standard.
 
 ## Roadmap Phase 4: Master Prompt
 

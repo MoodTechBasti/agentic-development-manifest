@@ -208,7 +208,7 @@ Mindestprüfung:
 - unklare Lösch- und Exportrechte.
 - sensible Daten in Logs oder Jobs.
 
-KI-spezifische Risiken werden in Roadmap Phase 3 vertieft. Roadmap Phase 2 muss nur sicherstellen, dass Kosten-, Tenant- und Daten-Grenzen auch für spätere KI-Funktionen anschlussfähig sind.
+KI-spezifische Risiken werden in Roadmap Phase 3 durch `docs/AI_FOUNDATION_STANDARD.md` vertieft. Roadmap Phase 2 muss sicherstellen, dass Kosten-, Tenant-, Permission-, Job- und Daten-Grenzen für spätere KI-Funktionen anschlussfähig sind.
 
 ## 11. Data Lifecycle
 
@@ -282,7 +282,7 @@ Nicht Teil von Roadmap Phase 2:
 - produktindividuelle Feature-Implementierung,
 - Microservice-Zerlegung ohne belegten Bedarf.
 
-Diese Themen folgen in späteren Roadmap-Phasen oder produktspezifischen ADRs.
+AI Provider Architecture, Prompt Registry, Evaluation Framework, Modellrouting, Fallback, Caching und Safety Rules sind durch Roadmap Phase 3 in `docs/AI_FOUNDATION_STANDARD.md` definiert. Sie bauen auf den SaaS-Grenzen auf und ersetzen sie nicht.
 
 ## 16. Final Audit
 

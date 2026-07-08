@@ -1,4 +1,4 @@
-# Agentic Development Manifest (ADM) — v0.19 Draft
+# Agentic Development Manifest (ADM) — v0.20 Draft
 
 Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem für autonome Multi-Agenten-Softwareentwicklung.
 
@@ -6,7 +6,7 @@ Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem
 
 ADM definiert einen standardisierten, dateibasierten Prozess für moderne KI-Coding-Agenten wie Claude Code CLI, Codex CLI, Antigravity, Gemini CLI und GPT-Modelle.
 
-Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation und SaaS Foundation Standards als Single Source of Truth des Projekts.
+Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews, project-owned memory, Agent Registry, Handover Automation, SaaS Foundation Standards und AI Foundation Standards als Single Source of Truth des Projekts.
 
 Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 
@@ -17,6 +17,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/OPERATING_SYSTEM.md` — `.ai/` als dateibasiertes Betriebssystem
 - `docs/MULTI_AGENT_PARLIAMENT.md` — Rollen und Entscheidungsprozess
 - `docs/SAAS_FOUNDATION_BLUEPRINT.md` — technischer Roadmap-Phase-2 SaaS Foundation Standard
+- `docs/AI_FOUNDATION_STANDARD.md` — technischer Roadmap-Phase-3 AI Foundation Standard
 - `docs/REVIEW_VALIDATION.md` — Review-Validator und Gate-Modi
 - `docs/REVIEW_RUNBOOK.md` — operativer Ablauf für vollständige Review-Sets
 - `docs/REPOSITORY_GOVERNANCE.md` — Branch protection, merge path, and release gate policy
@@ -24,6 +25,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/decisions/ADR-20260708-agent-registry.md` — Agent Registry architecture decision
 - `docs/decisions/ADR-20260708-handover-automation.md` — Handover Automation architecture decision
 - `docs/decisions/ADR-20260708-saas-foundation-standard.md` — Roadmap Phase 2 SaaS Foundation Standard architecture decision
+- `docs/decisions/ADR-20260708-ai-foundation-standard.md` — Roadmap Phase 3 AI Foundation Standard architecture decision
 - `.ai/agents/README.md` — Agent Registry runtime policy
 - `templates/HANDOVER_TEMPLATE.md` — reusable structured handover template
 - `spec/ADM_v1_DRAFT.md` — Spezifikation und ACP
@@ -36,4 +38,4 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.19 Draft. Project-owned memory, Agent Registry, Handover Automation, and Roadmap Phase 2 SaaS Foundation Standard architecture are accepted. The next major roadmap block is Roadmap Phase 3 AI Foundation Standard.
+v0.20 Draft. Project-owned memory, Agent Registry, Handover Automation, Roadmap Phase 2 SaaS Foundation Standard, and Roadmap Phase 3 AI Foundation Standard architecture are accepted. The next major roadmap block is Roadmap Phase 4 Master Prompt.
