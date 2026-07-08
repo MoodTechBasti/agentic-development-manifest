@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-COST-20260708-adapter-prompt-standard
 review_set_id: RSV-20260708-adapter-prompt-standard
 target_ref: adm-v022-adapter-prompt-standard
-target_commit: 9a04eb2bbd6770848fddac5afc2813cdec498977
+target_commit: d798d859af514e3ea445515c649e0f5440a9f1ee
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Cost Engineer
@@ -24,7 +24,7 @@ confidence_score: 9
 
 ## Scope
 
-Reviewed cost impact of the Adapter Prompt Standard, initial adapter prompts, ADR, and synchronized documentation.
+Reviewed cost impact of the Adapter Prompt Standard, initial adapter prompts, ADR, synchronized documentation, and authority-order correction.
 
 ## Findings
 
@@ -32,6 +32,7 @@ Reviewed cost impact of the Adapter Prompt Standard, initial adapter prompts, AD
 - Strengths: The adapter set is intentionally small, limiting documentation maintenance cost.
 - Strengths: The generic CLI adapter reduces pressure to create one adapter per tool too early.
 - Strengths: Deferred Gemini CLI and Antigravity CLI adapters avoid cost from maintaining unverified tool-specific assumptions.
+- Strengths: Runtime evidence stays above adapter prompts without adding an extra implementation mechanism.
 - Risk: If future adapter prompts duplicate canonical rules, documentation maintenance cost will rise.
 
 ## Cost Gates
