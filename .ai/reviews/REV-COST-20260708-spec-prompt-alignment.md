@@ -10,7 +10,7 @@ runtime_target: .ai/reviews/
 review_id: REV-COST-20260708-spec-prompt-alignment
 review_set_id: RSV-20260708-spec-prompt-alignment
 target_ref: adm-v015-spec-prompt-alignment
-target_commit: cf5006875161d274a5e38f58b122f7e1b362d3fb
+target_commit: 7576941cb3c2fc65cd5421c2f14f927b1b531454
 review_status: PASSED
 review_date: 2026-07-08
 reviewer_agent: Cost Engineer
