@@ -1,4 +1,4 @@
-# Agentic Development Manifest (ADM) — v0.1 Draft
+# Agentic Development Manifest (ADM) — v0.16 Draft
 
 Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem für autonome Multi-Agenten-Softwareentwicklung.
 
@@ -6,7 +6,7 @@ Ein entstehender, modellneutraler Standard und ein dateibasiertes Betriebssystem
 
 ADM definiert einen standardisierten, dateibasierten Prozess für moderne KI-Coding-Agenten wie Claude Code CLI, Codex CLI, Antigravity, Gemini CLI und GPT-Modelle.
 
-Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers und Architecture Decision Records als Single Source of Truth des Projekts.
+Statt langlebige Chatfenster offen zu halten, etabliert ADM Git, strukturierte Handovers, Architecture Decision Records, Reviews und project-owned memory als Single Source of Truth des Projekts.
 
 Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 
@@ -20,6 +20,7 @@ Der Chat ist nur ein temporärer Arbeitsplatz. Das Repository ist die Wahrheit.
 - `docs/REVIEW_VALIDATION.md` — Review-Validator und Gate-Modi
 - `docs/REVIEW_RUNBOOK.md` — operativer Ablauf für vollständige Review-Sets
 - `docs/REPOSITORY_GOVERNANCE.md` — Branch protection, merge path, and release gate policy
+- `docs/decisions/ADR-20260708-project-owned-memory.md` — Project-owned Memory architecture decision
 - `spec/ADM_v1_DRAFT.md` — Spezifikation und ACP
 
 ## Repository Governance
@@ -30,4 +31,4 @@ The expected repository settings are documented in `docs/REPOSITORY_GOVERNANCE.m
 
 ## Status
 
-v0.1 Draft. Noch kein stabiler Standard.
+v0.16 Draft. Project-owned memory is proposed as the next Phase 1 architecture block.
