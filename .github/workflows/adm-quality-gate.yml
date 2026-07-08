@@ -27,7 +27,7 @@ on:
 
 jobs:
   line-limit-check:
-    name: ADM quality checks
+    name: ADM Quality Gate
     runs-on: ubuntu-latest
 
     steps:
