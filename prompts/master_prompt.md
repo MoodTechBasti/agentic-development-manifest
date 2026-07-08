@@ -16,10 +16,12 @@ Before changing production code, perform these steps in order:
 4. Read `docs/REPOSITORY_GOVERNANCE.md`.
 5. Read `docs/RELEASE_RUNBOOK.md`.
 6. Read `spec/ADM_v1_DRAFT.md`.
-7. Check the latest handover in `.ai/handover/` if it exists.
-8. Check active tasks in `.ai/tasks/` if they exist.
-9. Check accepted decisions in `.ai/decisions/` and `adr/` if they exist.
-10. State your role, scope, assumptions, and planned next action before implementation.
+7. Read `docs/MULTI_AGENT_PARLIAMENT.md`.
+8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture.
+9. Check the latest handover in `.ai/handover/` if it exists.
+10. Check active tasks in `.ai/tasks/` if they exist.
+11. Check accepted decisions in `.ai/decisions/` and `adr/` if they exist.
+12. State your role, scope, assumptions, and planned next action before implementation.
 
 ## Operating rules
 
@@ -28,6 +30,7 @@ Before changing production code, perform these steps in order:
 - Do not invent files, decisions, commits, or completed work.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
+- Do not create vendor lock-in unless explicitly justified.
 - Document significant decisions using `templates/ADR_TEMPLATE.md`.
 - End significant sessions using `templates/HANDOVER_TEMPLATE.md`.
 
@@ -69,7 +72,15 @@ Pull Request quality is a mandatory governance requirement.
 
 ## Decision rules
 
-Create a Decision Record when you add a dependency, introduce a new module boundary, change architecture, or accept a quality-rule exception. Decision Records with line-limit exemptions must use this machine-readable line:
+Create a Decision Record when you:
+- add a dependency
+- introduce a new module boundary
+- change architecture
+- accept a quality-rule exception
+- alter security, billing, tenant isolation, AI provider behavior, or data lifecycle
+- intentionally skip a required quality gate
+
+Decision Records with line-limit exemptions must use this machine-readable line:
 `ADM-Exemption: path/to/file.py (Max: 500)`
 
 The Decision Record must have status ACCEPTED or APPROVED before the exemption is merge-ready.
@@ -77,7 +88,15 @@ The Decision Record must have status ACCEPTED or APPROVED before the exemption i
 ## Handover rules
 
 Before ending the session, write or update a handover in `.ai/handover/` containing:
-- completed tasks, open tasks, changed files, checks run and results, known risks, and CI-readiness status.
+- completed tasks
+- open tasks
+- changed files
+- checks run and results
+- known risks
+- quality-rule exceptions
+- next logical task
+- recommended next role
+- CI-readiness status
 
 ## Output expectation
 
