@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.11] — 2026-07-08
+
+### Review Set Scoping
+
+- Added `docs/decisions/ADR-20260708-review-set-scoping.md` to define review-set scoping and target binding.
+- Extended `scripts/validate_reviews.py` with `review_set_id`, `target_ref`, and `target_commit` validation.
+- Updated `complete-set` validation so six reviews must belong to the same set, target ref, and target commit.
+- Updated the ADM quality gate workflow to pass target reference and target commit into release-grade complete-set validation.
+- Updated all six review templates with v0.11 scope metadata fields.
+- Updated review validation, operating system, and ADM specification docs for commit-bound review sets.
+
 ## [v0.10] — 2026-07-08
 
 ### Review Gate Modes

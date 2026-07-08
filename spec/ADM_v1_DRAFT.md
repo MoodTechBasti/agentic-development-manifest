@@ -1,12 +1,12 @@
-# ADM — Spezifikation (v0.10 Draft)
+# ADM — Spezifikation (v0.11 Draft)
 
 Dieses Dokument spezifiziert den aktuellen Draft-Zustand des Agentic Development Manifest.
 
 ## Status
 
-- Version: v0.10 Draft
-- Zustand: Explicit Review Validation Modes
-- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und dreistufiger Review-Validierung
+- Version: v0.11 Draft
+- Zustand: Review Set Scoping and Target Binding
+- Ziel: modellneutraler Standard für CLI-basierte Softwareentwicklung mit verbindlichen Qualitätsleitplanken, automatisierter Durchsetzung, Agenten-Onboarding, lokaler Workspace-Initialisierung, standardisierten Review-Protokollen und commit-gebundener Review-Validierung
 
 ## Entwicklungs-Lifecycle
 
@@ -97,7 +97,19 @@ Standardrollen:
 - `templates/reviews/simplifier.md`
 - `templates/reviews/documentation.md`
 
-Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erforderliche Aktionen, finales Vote und CI-readiness enthalten.
+Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erforderliche Aktionen, finales Vote, CI-readiness und Review-Set-Scope enthalten.
+
+## Review Set Scoping
+
+Ein Review-Set ist die logische Einheit aus sechs zusammengehörigen Rollen-Reviews für denselben Zielstand.
+
+Jedes ausgefüllte Review-Artefakt muss diese Scope-Felder enthalten:
+
+- `review_set_id`: gemeinsame Set-ID im Format `RSV-YYYYMMDD-feature-slug`
+- `target_ref`: Zielreferenz wie `PR-2`, Branch-Name oder Release-Ref
+- `target_commit`: Git-Commit-SHA des geprüften Codes
+
+Ausgefüllte Review-Dateien sollen nicht unter statischen Rollennamen wie `.ai/reviews/architect.md` gespeichert werden. Stattdessen soll der `review_id` als Dateiname genutzt werden, zum Beispiel `.ai/reviews/REV-ARCH-20260708-review-set-scoping.md`.
 
 ## Review Validation
 
@@ -106,8 +118,9 @@ Jedes ausgefüllte Review muss einen Status, betroffene Dateien, Befunde, erford
 Der Validator ist ohne externe Python-Pakete implementiert und prüft:
 
 - YAML-Frontmatter am Dateianfang
-- Pflichtfelder wie `template_id`, `review_type`, `review_id`, `review_status`, `runtime_target` und `ci_ready`
+- Pflichtfelder wie `template_id`, `review_type`, `review_id`, `review_set_id`, `target_ref`, `target_commit`, `review_status`, `runtime_target` und `ci_ready`
 - gültige Review-Typen und Review-ID-Präfixe
+- gültige Review-Set-ID-Struktur
 - gültige Statuswerte
 - Konsistenz zwischen `review_status: PASSED` und `ci_ready: true`
 - optionalen Confidence Score zwischen 1 und 10
@@ -118,7 +131,7 @@ ADM definiert drei Review-Validierungsmodi:
 | --- | --- | --- |
 | `advisory` | Vorhandene Review-Artefakte prüfen, Fehler melden, Entwicklung nicht blockieren | Nein |
 | `existing-strict` | Vorhandene Review-Artefakte strikt prüfen, aber kein vollständiges Set verlangen | Ja, bei fehlerhaften vorhandenen Reviews |
-| `complete-set` | Alle sechs Standardreviews müssen vorhanden, `PASSED` und `ci_ready: true` sein | Ja |
+| `complete-set` | Alle sechs Standardreviews müssen vorhanden, `PASSED`, `ci_ready: true` und identisch gescoped sein | Ja |
 
 Lokale advisory Ausführung:
 
@@ -132,13 +145,13 @@ Lokale strenge Ausführung für vorhandene Reviews:
 python scripts/validate_reviews.py --path . --mode existing-strict
 ```
 
-Vollständiges Release-Gate:
+Vollständiges Release-Gate mit Scope-Bindung:
 
 ```bash
-python scripts/validate_reviews.py --path . --mode complete-set
+python scripts/validate_reviews.py --path . --mode complete-set --review-set-id RSV-20260708-review-set-scoping --target-ref PR-2 --target-commit <git-sha>
 ```
 
-Der ältere Befehl `--advisory` bleibt als Alias für `--mode advisory` gültig.
+Der ältere Befehl `--advisory` bleibt als Alias für `--mode advisory` gültig. `--strict`, `--set-id` und `--dir` bleiben als Kompatibilitätsformen für ältere Review-Skripte verfügbar.
 
 Das harte vollständige Review-Gate ist an `complete-set` gebunden und darf nur für Release-Kontexte, manuelle Release-Readiness-Prüfungen oder explizit definierte Phasenübergänge verwendet werden.
 
@@ -160,8 +173,10 @@ Der Review-Validator läuft im gleichen Workflow mit kontextabhängigem Modus:
 | Feature-Branch / `dev` | `advisory` |
 | PR nach `main` / `master` | `existing-strict` |
 | Push auf `main` / `master` | `existing-strict` |
-| `release/**` | `complete-set` |
+| `release/**` | `complete-set` mit `target_ref` und `target_commit` |
 | Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
+
+Für Pull Requests nutzt CI `target_ref: PR-<number>` und die PR-Head-SHA. Für Pushes nutzt CI den Branch-Namen und die Workflow-SHA.
 
 ## ADM Exemptions
 
