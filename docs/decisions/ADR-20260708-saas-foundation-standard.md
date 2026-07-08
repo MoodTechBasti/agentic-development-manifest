@@ -20,15 +20,15 @@
 
 ADM Phase 1 established the repository operating system: governance, release gates, project-owned memory, Agent Registry, and Handover Automation.
 
-The next gap is Phase 2: a canonical SaaS Foundation Standard. ADM already had a SaaS blueprint, but it was still an early draft and did not fully define the minimum architecture vocabulary for users, organizations, tenants, workspaces, roles, permissions, billing readiness, quotas, jobs, observability, admin systems, and data lifecycle.
+The next roadmap gap is Roadmap Phase 2: a canonical SaaS Foundation Standard. ADM already had a SaaS blueprint, but it was still an early draft and did not fully define the minimum architecture vocabulary for users, organizations, tenants, workspaces, roles, permissions, billing readiness, quotas, jobs, observability, admin systems, and data lifecycle.
 
 Without this standard, future product repositories can build features before the foundation is explicit. That creates predictable rework: tenant boundaries get added late, billing logic leaks into product code, jobs run in request paths, usage is counted without cost attribution, and admin or audit capabilities are missing when customer support begins.
 
-This ADR promotes the SaaS blueprint into a Phase 2 standard.
+This ADR promotes the SaaS blueprint into a Roadmap Phase 2 standard. Roadmap phases in `ROADMAP.md` are distinct from the ADM lifecycle phases in `spec/ADM_v1_DRAFT.md`.
 
 ## 2. Decision
 
-ADM adopts the SaaS Foundation Standard as the canonical Phase 2 architecture block.
+ADM adopts the SaaS Foundation Standard as the canonical Roadmap Phase 2 architecture block.
 
 The standard defines the minimum architecture concepts that must be considered before building product-specific SaaS features:
 
@@ -66,27 +66,27 @@ It does not add:
 - real jobs or queues,
 - release automation.
 
-Future PRs may add schema, validator, checklist, or workflow support only after the Phase 2 vocabulary remains stable.
+Future PRs may add schema, validator, checklist, or workflow support only after the Roadmap Phase 2 vocabulary remains stable.
 
 ## 4. Relationship to Phase 1
 
-The SaaS Foundation Standard depends on Phase 1 but does not replace it.
+The SaaS Foundation Standard depends on Roadmap Phase 1 but does not replace it.
 
 - Project-owned Memory stores durable SaaS decisions and constraints when future agents need them.
 - Agent Registry can route SaaS architecture work to suitable roles.
 - Handover Automation must record SaaS-related risks, open decisions, checks, and next steps.
 - Review Governance remains the approval mechanism for architecture-critical changes.
 
-## 5. Relationship to Phase 3 AI Foundation
+## 5. Relationship to Roadmap Phase 3 AI Foundation
 
-Phase 2 prepares for AI-heavy SaaS systems but does not define the full AI layer.
+Roadmap Phase 2 prepares for AI-heavy SaaS systems but does not define the full AI layer.
 
-Phase 2 must make AI costs, tenant boundaries, data lifecycle, jobs, and observability possible. Phase 3 will define provider abstraction, prompt registry, tool registry, evaluation, routing, fallback, caching, and AI-specific safety rules.
+Roadmap Phase 2 must make AI costs, tenant boundaries, data lifecycle, jobs, and observability possible. Roadmap Phase 3 will define provider abstraction, prompt registry, tool registry, evaluation, routing, fallback, caching, and AI-specific safety rules.
 
 ## 6. Evidence
 
-- `ROADMAP.md` marks Phase 1 as complete and names Phase 2 as SaaS Foundation Standard.
-- `README.md` states that Phase 2 is the next major block after v0.18.
+- `ROADMAP.md` marks Roadmap Phase 1 as complete and names Roadmap Phase 2 as SaaS Foundation Standard.
+- `README.md` states that the next major roadmap block after v0.18 is SaaS Foundation Standard.
 - `docs/SAAS_FOUNDATION_BLUEPRINT.md` already contained the core topics but needed canonical vocabulary, boundaries, and phase scoping.
 - `spec/ADM_v1_DRAFT.md` already requires foundation build before product features.
 
@@ -105,13 +105,13 @@ Phase 2 must make AI costs, tenant boundaries, data lifecycle, jobs, and observa
 ### Alternative C: Skip SaaS Foundation and move directly to AI Foundation
 
 - Description: Define provider abstraction, prompt registry, evaluation, and routing before SaaS basics.
-- Reason for rejection: AI systems still need tenancy, cost attribution, jobs, observability, permissions, and data lifecycle. Skipping Phase 2 would push SaaS risk into Phase 3.
+- Reason for rejection: AI systems still need tenancy, cost attribution, jobs, observability, permissions, and data lifecycle. Skipping Roadmap Phase 2 would push SaaS risk into Roadmap Phase 3.
 
 ## 8. Trade-offs
 
 ### Pros
 
-- Creates a clear Phase 2 standard before product-specific implementation.
+- Creates a clear Roadmap Phase 2 standard before product-specific implementation.
 - Reduces late rework around tenant, billing, permission, job, cost, and audit boundaries.
 - Keeps ADM provider-neutral and modular-monolith-first.
 - Gives future validators a stable target without implementing enforcement yet.
