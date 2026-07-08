@@ -107,6 +107,16 @@ This is an operational review-storage hygiene baseline after v0.29. It is not Ro
 - [x] Preserve original review file contents and metadata.
 - [x] Avoid production validator logic changes, workflow changes, release automation, review index generation, Roadmap Phase 9 implementation, v1 release-candidate claims, runtime code, provider SDKs, MCP integration, adapter expansion, Handover linting, and branch-protection changes.
 
+## Foundation Hygiene Cleanup (v0.31)
+
+This is a pre-Phase-9 foundation hygiene cleanup after v0.30. It is not Roadmap Phase 9.
+
+- [x] Finalize stale v0.29 and v0.30 ADR review-evidence wording after their review sets and release tags exist.
+- [x] Clarify release evidence paths so local terminal validation and GitHub manual workflow evidence are not conflated.
+- [x] Strengthen PR validation evidence reporting in `.github/pull_request_template.md`.
+- [x] Improve complete-set validator output clarity without changing validation semantics.
+- [x] Avoid workflow changes, release automation, new validator modes, recursive archive validation, review index generation, Roadmap Phase 9 implementation, v1 release-candidate claims, runtime code, provider SDKs, MCP integration, adapter expansion, Handover linting, and branch-protection changes.
+
 ## Roadmap Phase 9: v1 Release Candidate Criteria
 
 - [ ] Define the exact evidence required for a v1 release candidate.
