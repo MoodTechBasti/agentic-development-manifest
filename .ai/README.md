@@ -12,6 +12,7 @@ The following `.ai/` content may be committed when it is intentional, reviewable
 - `.ai/reviews/archive/<review_set_id>/*.md` for archived historical review artifacts after their release or governance purpose is complete
 - `.ai/decisions/*.md` for project-specific runtime decisions
 - `.ai/handover/*.md` for durable session handovers
+- `.ai/handover/README.md` for the Session Continuity discovery and commit policy
 - `.ai/memory/*.md` for curated durable memory notes
 - `.ai/knowledge/*.md` for curated project knowledge or research summaries
 - `.ai/tasks/*.md` for active or planned work state that must survive handover
@@ -57,7 +58,7 @@ Agent Registry files are not:
 
 Use `.ai/agents/README.md` to document the registry policy. Future projects may add `registry.md`, `registry.yml`, or role-specific files when the role model needs more structure.
 
-## Handover Automation
+## Handover Automation and Session Continuity
 
 Structured handovers under `.ai/handover/` may be committed when they describe meaningful session state for future agents.
 
@@ -71,7 +72,13 @@ Handover Automation may later prefill, lint, or validate handover structure, but
 - approvals
 - completed work
 
-Concrete handovers should use `templates/HANDOVER_TEMPLATE.md`, keep repository-relative paths, and record missing checks as `NOT RUN` instead of pretending they passed.
+Session Continuity defines how future agents consume durable handover evidence before implementation.
+
+Concrete handovers should use `templates/HANDOVER_TEMPLATE.md`, follow `.ai/handover/README.md`, keep repository-relative paths, and record missing checks as `NOT RUN` instead of pretending they passed.
+
+When the latest handover is missing, stale, malformed, or ambiguous, agents must report `UNKNOWN` or `AMBIGUOUS` instead of reconstructing project state from chat history, hidden model memory, local scratch files, raw logs, local tool profiles, or tool caches.
+
+A handover `Continuity status` is not approval, CI truth, review approval, merge readiness, release readiness, or tag permission.
 
 ## Project-owned memory
 
