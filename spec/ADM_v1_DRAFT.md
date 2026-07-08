@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.18 Draft)
+# ADM — Spezifikation (v0.19 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.18 Draft
-- **Zustand**: Handover Automation Architecture Accepted
+- **Version**: v0.19 Draft
+- **Zustand**: SaaS Foundation Standard Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews und Handovers müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Handovers und Foundation-Standards müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -96,16 +96,6 @@ Project-owned memory ist dauerhaftes Projektwissen, das dem Repository gehört u
 4. Lokale transiente Artefakte: Scratch, Logs, Cache, Experimente.
 5. Hidden model memory und Chatverlauf: nie autoritative Projektwahrheit.
 
-### Speicherklassen
-
-| Klasse | Zweck | Beispiel |
-| --- | --- | --- |
-| `canonical` | Normative Projektwahrheit | `spec/`, `docs/decisions/`, `docs/REPOSITORY_GOVERNANCE.md` |
-| `runtime` | Ausgeführte Agentenarbeit | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` |
-| `working` | Koordination kommender Arbeit | `.ai/tasks/`, `.ai/planning/` |
-| `knowledge` | Kuratierte Recherche und Projektkontext | `.ai/knowledge/`, `.ai/memory/` |
-| `transient` | Lokale Tool-Ausgaben | `.ai/tmp/`, `.ai/cache/`, `.ai/logs/` |
-
 Memory-Dateien müssen knapp, quellenbewusst, nicht-sensitiv und für zukünftige Agenten prüfbar sein.
 
 ## 10. Agent Registry
@@ -138,25 +128,41 @@ Die kanonischen Positionen sind:
 - `.ai/handover/` für konkrete Session-Handovers.
 - `templates/HANDOVER_TEMPLATE.md` für die wiederverwendbare Vorlage.
 
-### Maschinenprüfbare Konzepte
-
-Spätere Automatisierung darf nur klar begrenzte Felder maschinenprüfen:
-
-| Feldgruppe | Beispiele |
-| --- | --- |
-| Identität | `session_id`, `timestamp`, `outgoing_agent`, `active_role` |
-| Scope | `changed_files`, `target_ref`, `target_commit`, `review_set_id` |
-| Qualität | Checks, Review-Status, CI-readiness, blockierende Votes |
-| Routing | empfohlener nächster Registry-Agent und Routing-Grund |
-| Zustand | erledigte, offene und blockierte Tasks |
-
-### Grenzen
-
 Handover Automation darf keine Checks, Commits, Review-Votes, Rollen, CI-Ergebnisse oder Freigaben erfinden.
 
 Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memory, Chatverlauf, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-## 12. PR Hygiene Policy
+## 12. SaaS Foundation Standard
+
+Der SaaS Foundation Standard ist der kanonische Phase-2-Block für neue SaaS-Systeme.
+
+Ziel ist eine kleine, explizite Foundation vor Produktfeatures. ADM erzwingt keinen bestimmten Anbieter und keine Microservice-Architektur. Der Default ist Modular Monolith First.
+
+### Pflichtbereiche
+
+Ein SaaS-Foundation-Entwurf muss mindestens folgende Bereiche entscheiden oder bewusst als nicht anwendbar markieren:
+
+| Bereich | Mindestentscheidung |
+| --- | --- |
+| Identity | User, Authentifizierung und technische Identitäten |
+| Organization | Besitz, Vertrag, Abrechnung und Teamverwaltung |
+| Tenant | Daten-, Konfigurations-, Limit-, Job-, Storage- und Audit-Isolation |
+| Workspace | Arbeitsbereiche unterhalb von Organization oder Tenant |
+| Membership | Einladungen, Rollen, Deaktivierung und Besitzwechsel |
+| Roles and Permissions | serverseitige Autorisierung und kritische Aktionen |
+| Billing Readiness | Plan-, Subscription- und Provider-Adapter-Modell ohne Lock-in |
+| Entitlements and Quotas | Feature-Gates, Nutzungslimits und Planlogik |
+| Usage and Cost | Kostenaggregation pro User, Workspace, Tenant, Feature, Request, Worker-Zeit und Provider |
+| Jobs and Workers | Idempotenz, Retries, Backoff, Timeouts, Dead-Letter und Status |
+| Observability and Admin | Logs, Metrics, Request IDs, Audit Logs und Support-Diagnose |
+| Data Lifecycle | Upload, Processing, Export, Archive, Delete, Backup und Restore |
+| DX and Testing | lokaler Startpfad, Mocks, Fake Billing, Seed-Daten und Foundation-Tests |
+
+### Grenzen
+
+Phase 2 implementiert keine konkrete Produktlogik, keine echte Payment-Integration, keine AI Provider Architecture, kein Modellrouting und keine Prompt Registry. Diese Themen folgen in späteren Phasen oder produktspezifischen ADRs.
+
+## 13. PR Hygiene Policy
 
 Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 
@@ -164,17 +170,19 @@ Pull Requests müssen die Selbsterklärung des Agenten widerspiegeln.
 - **Vorlage**: Die Nutzung von `.github/pull_request_template.md` ist verpflichtend.
 - **Qualität**: Ein PR ohne inhaltlich wertvolle Summary und Validierung ist ein Governance-Fehler.
 
-## 13. Agent Onboarding Contract
+## 14. Agent Onboarding Contract
 
 Jeder Agent muss seine Arbeit mit dem `prompts/master_prompt.md` beginnen. Dieser Prompt definiert:
 
 - Die notwendige Initialisierung (Lese-Reihenfolge der Doku und Agent Registry).
 - Die verpflichtenden Qualitäts-Checks (`check_limits.py`, `validate_reviews.py`).
 - Die Regeln für Handover und Decision Records.
+- Die Pflicht, `docs/SAAS_FOUNDATION_BLUEPRINT.md` zu lesen, wenn eine Aufgabe SaaS-Architektur, Mandanten, Billing, Jobs, Observability, Admin, Data Lifecycle oder Foundation-Standards betrifft.
 
-## 14. Quality Gates / Definition of Done
+## 15. Quality Gates / Definition of Done
 
 - **Line-Limit**: Quellcodedateien dürfen 300 Zeilen nicht überschreiten (automatisch geprüft durch `scripts/check_limits.py`).
 - **Exemptions**: Ausnahmen erfordern ein ACCEPTED ADR mit dem Tag `ADM-Exemption: path/to/file (Max: lines)`.
 - **Testing**: Neue Logik muss durch Tests abgedeckt sein.
+- **SaaS Foundation**: Produktfeatures dürfen Foundation-Grenzen wie Tenant, Permissions, Billing Readiness, Quotas, Jobs, Observability und Data Lifecycle nicht implizit oder undokumentiert umgehen.
 - **Handover**: Jede signifikante Sitzung endet mit einem strukturierten Handover, das Checks, Risiken, geänderte Dateien, Review-Status, aktive Rolle und nächste Schritte nachvollziehbar dokumentiert.
