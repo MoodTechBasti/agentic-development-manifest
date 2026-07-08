@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.22] — 2026-07-08
+
+### Adapter Prompt Standard
+
+- Added `docs/ADAPTER_PROMPT_STANDARD.md` as the Roadmap Phase 5 Adapter Prompt Standard.
+- Added canonical Adapter vocabulary for adapter prompts, canonical prompt dependency, adapter boundaries, tool capabilities, and tool state.
+- Added `docs/decisions/ADR-20260708-adapter-prompt-standard.md` to record the accepted Roadmap Phase 5 architecture decision.
+- Added initial adapter prompts under `prompts/adapters/` for Claude Code CLI, Codex CLI, and Generic CLI Agent.
+- Deferred Gemini CLI and Antigravity CLI adapters until their current tool behavior is explicitly verified.
+- Synchronized `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/MASTER_PROMPT_STANDARD.md`, `prompts/master_prompt.md`, `README.md`, and `ROADMAP.md`.
+- Kept v0.22 documentation-only: no runtime code, provider SDK integration, real tool integration, local tool profile, MCP integration, schema, validator change, workflow change, release automation, release tag, Gemini CLI adapter, Antigravity CLI adapter, or provider secrets.
+
 ## [v0.21] — 2026-07-08
 
 ### Master Prompt Standard
