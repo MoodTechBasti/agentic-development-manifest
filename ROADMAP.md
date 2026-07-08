@@ -19,7 +19,7 @@
 
 ## Phase 2: SaaS Foundation Standard
 
-- Define users, organizations, tenants, workspaces, permissions, billing readiness, quotas, jobs, workers, observability, and admin systems.
+- [x] Define users, organizations, tenants, workspaces, memberships, roles, permissions, billing readiness, entitlements, quotas, usage and cost tracking, jobs, workers, observability, audit logs, admin diagnostics, data lifecycle, developer experience, testing, and performance budgets.
 
 ## Phase 3: AI Foundation Standard
 
