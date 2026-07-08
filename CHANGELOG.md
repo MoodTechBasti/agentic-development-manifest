@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.15] — 2026-07-08
+
+### Specification and Agent Compliance Alignment
+
+- Canonically restructured `spec/ADM_v1_DRAFT.md` into a logical "canonical structured ADM specification" covering governance, release policy, and PR hygiene.
+- Hardened `prompts/master_prompt.md` with mandatory validation scripts (`validate_reviews.py`), PR hygiene rules, and new documentation reading requirements.
+- Synced `ROADMAP.md` by marking governance/release hardening as completed and refocusing Phase 1 on project-owned memory.
+- Enforced strict PR hygiene: no placeholders, no empty fields, and verified checkboxes.
+- Created a complete six-role ADM review set for the v0.15 specification alignment.
+
 ## [v0.14] — 2026-07-08
 
 ### Release Baseline Hardening
