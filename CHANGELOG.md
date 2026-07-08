@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.16] — 2026-07-08
+
+### Project-owned Memory Architecture
+
+- Added `docs/decisions/ADR-20260708-project-owned-memory.md` to define repository-owned memory as an auditable, portable, model-neutral project layer.
+- Updated `spec/ADM_v1_DRAFT.md` with project-owned memory authority, storage classes, and runtime artifact policy.
+- Updated `docs/OPERATING_SYSTEM.md` with memory authority order, commit rules, and memory-file requirements.
+- Extended `.ai/README.md` to clarify durable memory, knowledge, task, and decision artifact policies.
+- Updated `prompts/master_prompt.md` so agents check curated `.ai/memory/` and `.ai/knowledge/` during initialization.
+- Updated `README.md` and `ROADMAP.md` to reflect the v0.16 draft focus.
+
 ## [v0.15] — 2026-07-08
 
 ### Specification and Agent Compliance Alignment
