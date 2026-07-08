@@ -25,11 +25,23 @@ The validator checks completed review artifacts only. It does not validate reusa
 | --- | --- | --- | --- |
 | `advisory` | No | No | Feature branches, local exploration, early agent work |
 | `existing-strict` | Yes | No | PRs to `main` / `master`, strict syntax and metadata checks |
-| `complete-set` | Yes | Yes, scoped | Release branches and manual release-readiness checks |
+| `complete-set` | Yes | Yes, scoped | Release branches, phase transitions, and manual release-readiness checks |
 
 `complete-set` requires one passing, CI-ready review for every standard ADM review type: `architect`, `security`, `performance`, `cost`, `simplifier`, and `documentation`.
 
 Each completed artifact in `complete-set` mode must use `review_status: PASSED` and `ci_ready: true`.
+
+## v0.24 hardening baseline
+
+v0.24 accepts the current three-mode model as the Roadmap Phase 6 review and validation hardening baseline.
+
+The baseline preserves the existing mode boundaries:
+
+- `advisory` is feedback-only and must not become a release signal.
+- `existing-strict` is the normal PR gate and must not require six reviews.
+- `complete-set` is the release-grade and phase-transition gate and must remain scoped by review set, target ref, and target commit.
+
+The baseline explicitly does not add workflow enforcement, release automation, schema language, provider integration, MCP integration, local tool profiles, or mandatory complete review sets for ordinary PRs.
 
 ## Review set scoping
 
