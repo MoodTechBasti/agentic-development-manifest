@@ -30,8 +30,9 @@ Before changing production code, perform these steps in order:
 - The repository is the source of truth.
 - Do not rely on hidden model memory for project state.
 - Do not treat chat history, local scratch files, or tool caches as authoritative project memory.
-- Do not invent files, decisions, commits, roles, or completed work.
+- Do not invent files, decisions, commits, roles, checks, CI results, review votes, or completed work.
 - Do not treat the Agent Registry as a permission sandbox; GitHub rulesets, CI, code review, and local sandboxing remain the enforcement layers.
+- Do not treat Handover Automation as an approval mechanism; it may structure or check handovers, not authorize work.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
 - Do not create vendor lock-in unless explicitly justified.
@@ -84,6 +85,7 @@ Create a Decision Record when you:
 - accept a quality-rule exception
 - alter security, billing, tenant isolation, AI provider behavior, or data lifecycle
 - define or materially change Agent Registry semantics
+- define or materially change Handover Automation semantics
 - intentionally skip a required quality gate
 
 Decision Records with line-limit exemptions must use this machine-readable line:
@@ -93,19 +95,21 @@ The Decision Record must have status ACCEPTED or APPROVED before the exemption i
 
 ## Handover rules
 
-Before ending the session, write or update a handover in `.ai/handover/` containing:
+Before ending a significant session, write or update a handover in `.ai/handover/` using `templates/HANDOVER_TEMPLATE.md`.
 
-- completed tasks
-- open tasks
-- changed files
-- checks run and results
-- known risks
-- quality-rule exceptions
+The handover must contain:
+
+- session identity, timestamp, outgoing agent, active registry role, and target recipient
+- completed tasks, open tasks, blocked tasks, and relevant task files
+- new, changed, or deleted repository-relative paths
+- checks run, commands or CI sources, results, and evidence
+- review artifacts, validation mode, review-set scope, blocking votes, and CI-readiness status
+- known risks, open assumptions, quality-rule exceptions, and mitigation plans
 - active agent role and recommended next registry role, when relevant
-- next logical task
-- recommended next role
-- CI-readiness status
+- next logical task and notes for the next agent
+
+Never mark a check as passed unless it was actually executed or proven by a cited CI run. Never invent a registry role, commit SHA, review vote, CI result, or approval.
 
 ## Output expectation
 
-When reporting to the human operator, be direct: what changed, why, which files, which checks passed/failed, and whether the branch is CI-ready.
+When reporting to the human operator, be direct: what changed, why, which files, which checks passed/failed, whether the branch is CI-ready, and what must happen before merge or release tagging.
