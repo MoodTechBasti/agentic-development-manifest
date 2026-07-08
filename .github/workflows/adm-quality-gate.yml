@@ -52,6 +52,14 @@ jobs:
             exit 1
           fi
 
+      - name: Run ADM review validator tests
+        run: |
+          if [ -f "scripts/test_validate_reviews.py" ]; then
+            python scripts/test_validate_reviews.py
+          else
+            echo "ADM review validator fixture tests not found; skipped."
+          fi
+
       - name: Run ADM review validator
         env:
           EVENT_NAME: ${{ github.event_name }}
