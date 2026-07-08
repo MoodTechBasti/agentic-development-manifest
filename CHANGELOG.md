@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.10] — 2026-07-08
+
+### Review Gate Modes
+
+- Added `docs/decisions/ADR-20260708-review-validation-modes.md` to define explicit ADM review validation modes.
+- Extended `scripts/validate_reviews.py` with `--mode advisory`, `--mode existing-strict`, and `--mode complete-set`.
+- Kept `--advisory` as a backward-compatible alias for `--mode advisory`.
+- Updated `.github/workflows/adm-quality-gate.yml` to select the review validation mode by branch context and manual workflow input.
+- Updated review validation, operating system, and ADM specification docs to describe the three-stage gate model.
+
 ## [v0.9] — 2026-07-08
 
 ### Advisory Review Validation
