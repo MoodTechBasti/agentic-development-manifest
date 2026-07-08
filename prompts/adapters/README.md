@@ -10,6 +10,7 @@ Adapter prompts are downstream from:
 4. `prompts/master_prompt.md`
 5. accepted ADRs and governance documents
 6. `docs/RELEASE_RUNBOOK.md` and release-hygiene rules when release claims are made
+7. `docs/TOOL_VERIFICATION.md` when deferred or future adapters are considered
 
 ## Rule
 
@@ -25,7 +26,7 @@ An adapter may explain how to operate a specific CLI tool. It must not weaken AD
 | `codex_cli.md` | Adapter for Codex CLI sessions. |
 | `generic_cli_agent.md` | Fallback adapter for unknown or future CLI agents. |
 
-Gemini CLI and Antigravity CLI are deferred candidates after v0.25. They are not accepted adapter prompts until a later explicit PR verifies current tool behavior and adds them.
+Gemini CLI and Antigravity CLI are deferred candidates after v0.29. They are not accepted adapter prompts until current Tool Verification evidence exists and a later explicit PR verifies current tool behavior, documents the adapter scope, and adds them.
 
 ## Forbidden Content
 

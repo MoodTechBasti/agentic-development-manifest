@@ -1,7 +1,7 @@
 # ADM — Master Prompt Standard
 
 > Origin: accepted in v0.21 as Roadmap Phase 4
-> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Current sync: v0.29 Tool Verification Discovery Baseline
 > Scope: model-neutral CLI-agent onboarding standard, not a tool adapter
 
 Der Master Prompt Standard definiert, wie die ADM-Spezifikation in eine modellneutrale Startanweisung für CLI-Agenten übersetzt wird.
@@ -99,6 +99,7 @@ Vor Änderungen muss ein Agent mindestens prüfen:
 - Agent Registry, wenn vorhanden und relevant.
 - Aktive Tasks, letzter Handover, kuratierte Memory und accepted Decisions, wenn vorhanden und relevant.
 - Adapter Prompt Standard und relevante Adapter-Prompts, wenn eine Aufgabe tool-spezifisches Agentenverhalten oder Adapter-Grenzen betrifft.
+- Tool Verification, wenn eine Aufgabe deferred Adapter, future Adapter, Tool-Verhalten, CLI-Fähigkeiten, Tool-State-Grenzen oder Adapter-Eignung betrifft.
 
 Die Initialisierung darf nicht als mechanisches Abhaken ohne Relevanzprüfung verstanden werden. Der Agent muss daraus Scope, Annahmen und Risiken ableiten.
 
@@ -123,6 +124,7 @@ Der Master Prompt muss eine ADR-Pflicht auslösen, wenn eine Änderung:
 - Governance, Review, Release oder Handover-Semantik verändert,
 - SaaS Foundation oder AI Foundation Semantik verändert,
 - Master Prompt oder Adapter Prompt Semantik verändert,
+- Tool Verification oder deferred/future Adapter-Eignung verändert,
 - Security, Tenant Isolation, Billing, Cost, Data Lifecycle oder Provider-Verhalten betrifft,
 - eine Qualitätsregel ausnimmt,
 - erforderliche Checks bewusst überspringt.
@@ -210,6 +212,7 @@ Adapter-Prompts dürfen nicht:
 - den kanonischen Master Prompt ersetzen,
 - ADM-Autorität oder Required Initialization abschwächen,
 - GitHub-Governance, CI, Review-Validierung, ADRs, PR-Hygiene oder Handover-Pflichten umgehen,
+- Tool Verification für deferred oder future Adapter überspringen,
 - hidden memory, Chatverlauf, Tool-Cache oder lokale Tool-Profile als Projektwahrheit behandeln.
 
 ## 14. Roadmap-Phase-4-Grenze

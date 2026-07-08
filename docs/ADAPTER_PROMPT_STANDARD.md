@@ -1,7 +1,7 @@
 # ADM — Adapter Prompt Standard
 
 > Origin: accepted in v0.22 as Roadmap Phase 5
-> Current sync: v0.25 Foundation Consistency and Release Hygiene Baseline
+> Current sync: v0.29 Tool Verification Discovery Baseline
 > Scope: prompt-layer standard, not runtime integration
 
 The Adapter Prompt Standard defines how ADM tool-specific adapter prompts may layer on top of the canonical Master Prompt without replacing it.
@@ -116,10 +116,10 @@ Roadmap Phase 5 starts with a deliberately small adapter set:
 | Claude Code CLI | Initial adapter | High operational relevance and current usage. |
 | Codex CLI | Initial adapter | Confirms model-neutral behavior across a second CLI agent. |
 | Generic CLI Agent | Initial adapter | Safe fallback for unknown or future CLI tools. |
-| Gemini CLI | Deferred candidate | Needs current tool-behavior verification before specialization. |
-| Antigravity CLI | Deferred candidate | Needs current tool-behavior verification before specialization. |
+| Gemini CLI | Deferred candidate | Requires Tool Verification before any later adapter PR. |
+| Antigravity CLI | Deferred candidate | Requires Tool Verification before any later adapter PR. |
 
-Deferred candidates must not be treated as accepted adapter prompts until a later explicit PR adds them.
+Deferred candidates must not be treated as accepted adapter prompts until current tool behavior is verified, documented, reviewed, and a later explicit PR adds them.
 
 ## 8. Relationship to Master Prompt Standard
 
@@ -144,7 +144,15 @@ Adapter work affects agent onboarding semantics. Material adapter prompt changes
 - release-grade complete-set validation before tagging,
 - correct distinction between the reviewed target commit and the final tag commit.
 
-## 11. Final Audit
+## 11. Relationship to Tool Verification
+
+Tool Verification is the Roadmap Phase 8 discovery and governance gate before deferred or future adapter acceptance.
+
+Before proposing a new tool-specific adapter, agents must read `docs/TOOL_VERIFICATION.md` and show current evidence for tool identity, instruction model, repository access, planning behavior, edit behavior, command behavior, review behavior, tool-state boundaries, governance risks, and Generic CLI Agent fallback.
+
+Tool Verification does not itself accept an adapter. It only establishes whether a later adapter PR is eligible for review.
+
+## 12. Final Audit
 
 Before accepting adapter prompt work, verify:
 
@@ -153,4 +161,5 @@ Before accepting adapter prompt work, verify:
 - no adapter depends on hidden memory, chat history, tool cache, or local profile state,
 - no adapter bypasses GitHub governance, CI, review validation, ADRs, PR hygiene, release hygiene, or handover duties,
 - adapter set remains intentionally small,
+- deferred or future adapters have current Tool Verification evidence before proposal,
 - README, Roadmap, Changelog, Specification, Operating System, Master Prompt Standard, and prompt files are synchronized.

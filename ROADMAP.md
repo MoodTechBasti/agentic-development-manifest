@@ -90,9 +90,12 @@ This is an operational review-storage hygiene baseline after v0.26. It is not Ro
 
 ## Roadmap Phase 8: Adapter Expansion and Tool Verification
 
-- [ ] Verify current tool behavior before accepting any additional tool-specific adapter.
-- [ ] Keep Gemini CLI and Antigravity CLI deferred until explicitly verified and approved.
-- [ ] Keep adapters thin, downstream from `prompts/master_prompt.md`, and free from runtime or provider lock-in.
+- [x] Accept v0.29 as the Tool Verification Discovery Baseline for Roadmap Phase 8.
+- [x] Define Tool Verification as a required discovery and governance gate before any deferred or future tool-specific adapter.
+- [x] Keep Gemini CLI and Antigravity CLI deferred until explicitly verified and approved in a later adapter PR.
+- [x] Keep adapters thin, downstream from `prompts/master_prompt.md`, and free from runtime or provider lock-in.
+- [x] Avoid new adapters, runtime code, provider SDKs, MCP integration, local tool profiles, workflow changes, validator changes, release automation, Handover linting, branch-protection changes, Review Archive Migration, Phase 9 work, and v1 release-candidate claims in v0.29.
+- [ ] Accept a future verified adapter only after current tool behavior is documented, reviewed, and explicitly approved.
 
 ## Roadmap Phase 9: v1 Release Candidate Criteria
 

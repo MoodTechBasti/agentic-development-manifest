@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.29] — 2026-07-08
+
+### Roadmap Phase 8 Tool Verification Discovery Baseline
+
+- Added `docs/decisions/ADR-20260708-tool-verification-discovery-baseline.md` to accept Roadmap Phase 8 as a Tool Verification Discovery Baseline.
+- Added `docs/TOOL_VERIFICATION.md` to define the discovery and governance evidence required before deferred or future adapter prompts can be proposed.
+- Kept Gemini CLI and Antigravity CLI deferred; v0.29 accepts no new adapter prompts.
+- Synchronized `ROADMAP.md`, `README.md`, `spec/ADM_v1_DRAFT.md`, `docs/OPERATING_SYSTEM.md`, `docs/ADAPTER_PROMPT_STANDARD.md`, `docs/MASTER_PROMPT_STANDARD.md`, `prompts/master_prompt.md`, and `prompts/adapters/README.md` for Tool Verification semantics.
+- Kept v0.29 intentionally narrow: no Gemini CLI adapter, Antigravity CLI adapter, runtime code, provider SDK integration, MCP integration, local tool profile, workflow change, validator change, release automation, Handover linter, branch-protection change, Review Archive Migration, Phase 9 implementation, or v1 release-candidate claim.
+
 ## [v0.28] — 2026-07-08
 
 ### Roadmap Phase 7 Session Continuity Baseline
