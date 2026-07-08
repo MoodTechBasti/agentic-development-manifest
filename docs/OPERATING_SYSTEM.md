@@ -64,7 +64,9 @@ Jedes ausgefüllte Review-Artefakt muss die folgenden Scope-Felder enthalten:
 - `target_ref`: Zielreferenz, zum Beispiel `PR-2` oder `release/v1`
 - `target_commit`: Git-Commit-SHA des geprüften Codes
 
-Ein Release-Gate darf nur grün werden, wenn alle sechs Rollen dieselbe `review_set_id`, dieselbe `target_ref` und denselben `target_commit` verwenden.
+`target_commit` bezeichnet den geprüften Code-Stand. Es ist nicht zwingend der Workflow-Commit, der die Review-Artefakte enthält. Review-Artefakte sollen deshalb nach dem Code-Commit geschrieben werden und weiterhin auf den stabilen geprüften Code-Commit zeigen.
+
+Ein Release-Gate darf nur grün werden, wenn alle sechs Rollen dieselbe `review_set_id`, dieselbe `target_ref` und denselben stabilen `target_commit` verwenden.
 
 ## Review-Validierung
 
@@ -99,8 +101,10 @@ Im GitHub-Workflow wird die Review-Validierung kontextabhängig ausgeführt:
 | Feature-Branch / `dev` | `advisory` |
 | PR nach `main` / `master` | `existing-strict` |
 | Push auf `main` / `master` | `existing-strict` |
-| `release/**` | `complete-set` mit `target_ref` und `target_commit` |
+| `release/**` | `complete-set` mit `target_ref` und stabilem geprüftem `target_commit` |
 | Manuell per `workflow_dispatch` | auswählbar, Standard `existing-strict` |
+
+Die Workflow-Automation ermittelt den stabilen geprüften Commit standardmäßig als letzten Commit außerhalb `.ai/reviews/`. Manuelle Runs können diesen Wert mit `reviewed_commit` explizit setzen.
 
 Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review-Instanzen hart blockiert wird, während Release-Zweige ein echtes vollständiges und commit-gebundenes Review-Gate erhalten.
 
@@ -145,7 +149,7 @@ Jeder Handover unter `.ai/handover/` muss mindestens enthalten:
 - ausgeführte Review-Vorlagen
 - Review-Dateien unter `.ai/reviews/`
 - Ergebnis von `scripts/validate_reviews.py`, inklusive Modus und Scope
-- `review_set_id`, `target_ref` und `target_commit`
+- `review_set_id`, `target_ref` und stabiler geprüfter `target_commit`
 - blockierende Votes
 - CI-readiness status
 
