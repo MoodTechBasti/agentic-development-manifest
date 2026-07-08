@@ -1,11 +1,11 @@
-# ADM — Spezifikation (v0.26 Draft)
+# ADM — Spezifikation (v0.27 Draft)
 
 Das Agentic Development Manifest (ADM) ist ein modellneutraler, dateibasierter Standard für die Softwareentwicklung mit KI-Agenten. Dieses Dokument dient als kanonische Spezifikation des Regelwerks.
 
 ## 1. Status / Version
 
-- **Version**: v0.26 Draft
-- **Zustand**: Review Archive Policy Accepted
+- **Version**: v0.27 Draft
+- **Zustand**: Review Archive Migration Batch 1 Accepted
 - **Letztes Update**: 2026-07-08
 
 ## 2. ADM Prinzipien
@@ -14,7 +14,7 @@ ADM basiert auf drei Grundpfeilern, die eine langfristige Wartbarkeit und Modell
 
 1. **Modell-Neutralität**: Der Standard setzt keine spezifischen LLM-Provider oder proprietären Features voraus. Alle Logik ist lokal ausführbar oder klar als extern markiert.
 2. **CLI-First**: Die Interaktion und Validierung erfolgt primär über Terminal-Tools. Das Repository ist für Agenten ohne grafische Oberfläche optimiert.
-3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
+3. **Repository-Backed Truth**: Das Repository ist die einzige Quelle der Wahrheit. Projektgedächtnis, Entscheidungen, Rollen, Reviews, Review Archive Policy, Review Archive Migration, Handovers, SaaS Foundation Standards, AI Foundation Standards, Master Prompt Standards, Adapter Prompt Standards, Roadmap Continuation, v1-Readiness-Kriterien, Review and Validation Hardening sowie Foundation Consistency and Release Hygiene müssen als Dateien versioniert oder bewusst als lokal/transient ausgeschlossen sein.
 
 ## 3. Entwicklungs-Lifecycle
 
@@ -72,7 +72,7 @@ Der Validator `scripts/validate_reviews.py` unterstützt drei Modi:
 | `existing-strict` | Prüft vorhandene Reviews strikt auf Struktur. | Pull Requests, normale Pushes. |
 | `complete-set` | Erzwingt alle 6 Rollen, PASSED-Status und Scope-Bindung. | Releases, Phasenübergänge. |
 
-v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht.
+v0.24 akzeptiert diese drei Modi als Review and Validation Hardening Baseline. Normale PRs dürfen dadurch nicht versehentlich complete-set-pflichtig werden. v0.26 akzeptiert, dass der Standardpfad direkte `.ai/reviews/*.md` Dateien prüft und `.ai/reviews/archive/**` nicht rekursiv einbezieht. v0.27 migriert abgeschlossene historische Review-Sets bis v0.25 in dieses Archivmodell.
 
 ## 7. Release Gate Policy
 
@@ -140,7 +140,7 @@ Handover Automation darf keine Checks, Commits, Review-Votes, Rollen, CI-Ergebni
 
 Sie darf nicht mergen, taggen, Branch Protection ändern oder hidden model memory, Chatverlauf, Scratch-Dateien, Rohlogs, private Pfade oder Secrets als autoritative Quellen verwenden.
 
-v0.26 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
+v0.27 implementiert keine Roadmap Phase 7, keinen Handover-Linter und keine Handover-Automation.
 
 ## 12. SaaS Foundation Standard
 
@@ -249,13 +249,15 @@ Foundation Consistency and Release Hygiene Baseline ist der kanonische v0.25-Kon
 
 Review Archive Policy ist der kanonische v0.26-Archivierungsregelblock. Er definiert `.ai/reviews/archive/<review_set_id>/` als spätere historische Review-Ablage, ohne alte Reviews zu verschieben oder Produktionsvalidatorlogik zu ändern.
 
+Review Archive Migration Batch 1 ist der kanonische v0.27-Archivierungsmigrationsblock. Er verschiebt abgeschlossene historische Review-Sets bis v0.25 nach `.ai/reviews/archive/<review_set_id>/`, ohne Review-Metadaten umzuschreiben.
+
 Das ist bewusst von Lifecycle Phase 5 — Roadmap & Plan und Lifecycle Phase 6 — Foundation Build aus Abschnitt 3 getrennt.
 
 v1-Readiness verlangt mindestens synchronisierte Roadmap-Phasen, Spezifikation, README, Changelog, akzeptierte ADRs, vollständige sechs Rollen Review-Evidenz, manuelle Ruleset-Audit-Evidenz für governance-relevante Releases und release-grade `complete-set`-Validierung für den Zielzustand.
 
 Deferred Adapter wie Gemini CLI und Antigravity CLI dürfen nicht als akzeptiert gelten, bevor ihr aktuelles Tool-Verhalten verifiziert und explizit freigegeben wurde.
 
-v0.26 implementiert keine Roadmap Phase 7, Handover-Automation, Workflow-Härtung, Release-Automation, Runtime, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Gemini CLI Adapter, Antigravity CLI Adapter, Review-Archivmigration oder Provider-Secrets.
+v0.27 implementiert keine Roadmap Phase 7, Handover-Automation, Workflow-Härtung, Release-Automation, Runtime, Provider-SDKs, MCP-Integration, lokale Tool-Profile, Gemini CLI Adapter, Antigravity CLI Adapter, Review-Index-Generierung oder Provider-Secrets.
 
 ## 17. PR Hygiene Policy
 
