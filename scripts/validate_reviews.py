@@ -256,6 +256,8 @@ def main() -> int:
     for label, value in (('Review set scope', review_set_id), ('Target ref scope', args.target_ref), ('Target commit scope', args.target_commit)):
         if value:
             print(f'{label}: {value}')
+    if mode == 'complete-set':
+        print('Complete-set scope filters are applied after structural validation.')
     files = review_files(reviews_path)
     if not files:
         if mode == 'complete-set':
