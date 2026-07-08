@@ -1,6 +1,6 @@
-# ADM — Operating System (v0.11 Draft)
+# ADM — Operating System (v0.16 Draft)
 
-Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
+Dieses Dokument beschreibt das dateibasierte Kontrollzentrum eines ADM-konformen Projekts. Es speichert Projektzustand, Rollen, Tasks, Entscheidungen, Reviews, Memory und Übergaben so, dass verschiedene CLI-Tools und Modelle weiterarbeiten können.
 
 ## Zweck
 
@@ -29,6 +29,42 @@ Der Projektzustand muss aus dem Repository lesbar sein. Ein Agent darf ihn nicht
 ├── standards/
 └── playbooks/
 ```
+
+## Project-owned Memory
+
+Project-owned memory ist kuratiertes Projektwissen, das dem Repository gehört. Es darf nicht mit versteckter Modell-Memory, Chatverlauf, Tool-Cache oder lokalen Scratch-Dateien verwechselt werden.
+
+### Autorität
+
+| Rang | Quelle | Bedeutung |
+| --- | --- | --- |
+| 1 | `spec/`, `docs/`, accepted ADRs | Kanonische Projektwahrheit |
+| 2 | `.ai/reviews/`, `.ai/handover/`, `.ai/decisions/` | Versionierte Runtime-Historie |
+| 3 | `.ai/memory/`, `.ai/knowledge/`, `.ai/tasks/` | Kuratierter Kontext und Arbeitszustand |
+| 4 | `.ai/tmp/`, `.ai/logs/`, `.ai/cache/`, `.ai/scratch/` | Lokale transiente Daten |
+| 5 | Chatverlauf oder hidden model memory | Nicht autoritativ |
+
+### Commit-Regeln
+
+Versioniert werden darf nur, was zukünftige Agenten oder Maintainer brauchen, um Entscheidungen, Zustand, Risiken oder nächste Schritte zu rekonstruieren.
+
+Nicht versioniert werden dürfen:
+
+- Secrets, Tokens, Credentials oder private URLs.
+- Private lokale Pfade und maschinenspezifische Tool-Profile.
+- Rohlogs, Chat-Marker, NotebookLM-Quellenmarker oder Prompt-Experimente.
+- Ungeprüfte Recherche-Rohdaten.
+- Kurzlebige Scratch-Notizen.
+
+### Memory-Dateien
+
+Kuratierte Memory-Dateien unter `.ai/memory/` müssen:
+
+- einen klaren Zweck haben,
+- eine kurze Gültigkeits- oder Kontextbeschreibung enthalten,
+- bekannte Unsicherheiten nennen,
+- repository-relative Pfade verwenden,
+- nicht-sensitiv und reviewbar sein.
 
 ## Template- und Laufzeit-Trennung
 
@@ -110,7 +146,7 @@ Diese Trennung verhindert, dass normale Entwicklungsarbeit durch fehlende Review
 
 ## Sitzungs-Lifecycle
 
-1. Initialisierung: Manifest, Tasks, Entscheidungen und letzten Handover lesen.
+1. Initialisierung: Manifest, Tasks, Memory, Entscheidungen und letzten Handover lesen.
 2. Registrierung: Rolle, Mission und Arbeitsumfang eintragen.
 3. Task-Übernahme: Aufgabe als aktiv markieren.
 4. Ausführung: lokal arbeiten, testen und dokumentieren.

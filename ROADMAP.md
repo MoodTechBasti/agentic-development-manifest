@@ -13,7 +13,7 @@
 - [x] Define decision records.
 - [x] Define research and review protocols.
 - [x] Define repository governance and release hardening.
-- [ ] Define project-owned memory (next major architecture block).
+- [ ] Define project-owned memory (v0.16 proposed architecture decision).
 - [ ] Define agent registry.
 - [ ] Define handover automation.
 

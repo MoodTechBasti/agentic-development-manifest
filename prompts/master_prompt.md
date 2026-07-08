@@ -20,13 +20,15 @@ Before changing production code, perform these steps in order:
 8. Read `docs/SAAS_FOUNDATION_BLUEPRINT.md` if the task affects SaaS architecture.
 9. Check the latest handover in `.ai/handover/` if it exists.
 10. Check active tasks in `.ai/tasks/` if they exist.
-11. Check accepted decisions in `.ai/decisions/` and `adr/` if they exist.
-12. State your role, scope, assumptions, and planned next action before implementation.
+11. Check curated project memory in `.ai/memory/` and `.ai/knowledge/` if it exists and is relevant to the task.
+12. Check accepted decisions in `.ai/decisions/`, `docs/decisions/`, and `adr/` if they exist.
+13. State your role, scope, assumptions, and planned next action before implementation.
 
 ## Operating rules
 
 - The repository is the source of truth.
 - Do not rely on hidden model memory for project state.
+- Do not treat chat history, local scratch files, or tool caches as authoritative project memory.
 - Do not invent files, decisions, commits, or completed work.
 - Prefer small, explicit, testable modules.
 - Keep source files below 300 lines unless an accepted Decision Record grants an exemption.
@@ -73,6 +75,7 @@ Pull Request quality is a mandatory governance requirement.
 ## Decision rules
 
 Create a Decision Record when you:
+
 - add a dependency
 - introduce a new module boundary
 - change architecture
@@ -88,6 +91,7 @@ The Decision Record must have status ACCEPTED or APPROVED before the exemption i
 ## Handover rules
 
 Before ending the session, write or update a handover in `.ai/handover/` containing:
+
 - completed tasks
 - open tasks
 - changed files
