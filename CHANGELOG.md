@@ -193,3 +193,100 @@
 - Updated the ADM quality gate workflow to pass target reference and target commit into release-grade complete-set validation.
 - Updated all six review templates with v0.11 scope metadata fields.
 - Updated review validation, operating system, and ADM specification docs for commit-bound review sets.
+
+## [v0.10] — 2026-07-08
+
+### Review Validation Modes
+
+- Added `docs/REVIEW_VALIDATION.md` to document ADM review validation behavior, modes, and metadata requirements.
+- Extended `scripts/validate_reviews.py` with explicit `advisory`, `existing-strict`, and `complete-set` modes.
+- Preserved backward-compatible `--advisory` and `--strict` flags.
+- Updated `ADM Quality Gate` so feature branches use advisory validation, normal protected-branch paths use existing-strict validation, and release branches use complete-set validation.
+- Added `docs/decisions/ADR-20260708-review-validation-modes.md`.
+
+## [v0.9] — 2026-07-08
+
+### ADR Review Metadata
+
+- Added machine-readable metadata to all review templates:
+  - `review_id`
+  - `review_set_id`
+  - `target_commit`
+  - `review_status`
+  - `ci_ready`
+  - optional `confidence_score`
+- Added `scripts/validate_reviews.py` to validate completed `.ai/reviews/*.md` frontmatter.
+- Added `.ai/reviews/.gitkeep` so completed review output has a stable runtime target.
+- Updated `docs/MULTI_AGENT_PARLIAMENT.md` and `prompts/master_prompt.md` to require completed review artifacts.
+- Added `docs/decisions/ADR-20260708-review-metadata.md`.
+
+## [v0.8] — 2026-07-08
+
+### Review Template Standard
+
+- Added six reusable review templates under `templates/reviews/`:
+  - Architect
+  - Security
+  - Performance
+  - Cost
+  - Simplifier
+  - Documentation
+- Added `templates/reviews/README.md` to document template usage, runtime output location, and CI-readiness semantics.
+- Added `docs/decisions/ADR-20260708-review-template-standard.md`.
+- Updated `docs/MULTI_AGENT_PARLIAMENT.md`, `spec/ADM_v1_DRAFT.md`, and `prompts/master_prompt.md` to reference the review template standard.
+
+## [v0.7] — 2026-07-08
+
+### Governance and Release Hygiene
+
+- Added `docs/decisions/ADR-20260708-governance-release-hygiene.md`.
+- Added `scripts/check_limits.py` to enforce the 300-line file limit while excluding transient, vendor, and VCS directories.
+- Added `.github/workflows/adm-quality-gate.yml` to run the line-limit check on pull requests and pushes.
+- Updated `docs/OPERATING_SYSTEM.md`, `docs/CONSTITUTION.md`, `spec/ADM_v1_DRAFT.md`, `README.md`, and `prompts/master_prompt.md` with governance and release hygiene requirements.
+
+## [v0.6] — 2026-07-08
+
+### Master Prompt v0.1
+
+- Added `prompts/master_prompt.md`, the first CLI-first model-neutral ADM master prompt.
+- Added `docs/decisions/ADR-20260708-master-prompt-v0.md`.
+- Updated `README.md` and `spec/ADM_v1_DRAFT.md`.
+
+## [v0.5] — 2026-07-08
+
+### ACP + Spezifikation v0.1
+
+- Added `spec/ADM_v1_DRAFT.md` and `docs/ACP.md`.
+- Added `docs/decisions/ADR-20260708-spec-and-acp.md`.
+- Updated `README.md`.
+
+## [v0.4] — 2026-07-08
+
+### Decision Records
+
+- Added `templates/ADR_TEMPLATE.md`.
+- Added `docs/decisions/ADR-20260708-adopt-adr-process.md`.
+- Updated `docs/OPERATING_SYSTEM.md` and `README.md` with ADR policy.
+
+## [v0.3] — 2026-07-08
+
+### Initial Documentation
+
+- Added `docs/VISION.md`.
+- Added `docs/CONSTITUTION.md`.
+- Added `docs/OPERATING_SYSTEM.md`.
+- Added `docs/MULTI_AGENT_PARLIAMENT.md`.
+- Added `.ai/README.md`.
+
+## [v0.2] — 2026-07-08
+
+### Repository Foundation
+
+- Added `.ai/`, `docs/`, `spec/`, and `templates/` structure.
+- Added `.gitkeep` placeholders for initial ADM repository folders.
+
+## [v0.1] — 2026-07-08
+
+### Initial Baseline
+
+- Added initial README and repository purpose.
